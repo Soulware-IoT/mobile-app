@@ -14,6 +14,7 @@ import 'package:tcompro/shared/infrastructure/local/database.dart';
 import 'package:tcompro/shared/infrastructure/network/network_checker.dart';
 import 'package:tcompro/shared/infrastructure/remote/supabase.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
+import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
 import 'package:tcompro/shared/presentation/session/profile/profile_cubit.dart';
 
 class DependencyInjectorWidget extends StatelessWidget {
@@ -67,7 +68,20 @@ class DependencyInjectorWidget extends StatelessWidget {
                 ProfileCubit(context.read<ProfileRepository>()),
           ),
         ],
-        child: child,
+        child: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            switch (state) {
+              case Authenticated(:final userId) ||
+                  OfflineAuthenticated(:final userId):
+                context.read<ProfileCubit>().loadProfile(userId);
+              case NotAuthenticated():
+                context.read<ProfileCubit>().clear();
+              default:
+                break;
+            }
+          },
+          child: child,
+        ),
       ),
     );
   }

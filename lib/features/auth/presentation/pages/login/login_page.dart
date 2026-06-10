@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcompro/shared/presentation/widgets/auth_brand_header.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_form_card.dart';
-import 'package:tcompro/shared/presentation/widgets/auth_google_button.dart';
 import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_register_link.dart';
-import 'package:tcompro/features/auth/presentation/pages/register/register_page.dart';
+import 'package:tcompro/shared/presentation/router/app_router.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
+import 'package:tcompro/shared/presentation/widgets/auth_brand_header.dart';
+import 'package:tcompro/shared/presentation/widgets/auth_google_button.dart';
 import 'package:tcompro/shared/presentation/widgets/oauth_divider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,11 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     await context.read<AuthCubit>().googleLogin();
   }
 
-  void _goToRegister() {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const RegisterPage()));
-  }
+  void _goToRegister() => context.go(AppRoutes.register);
 
   @override
   Widget build(BuildContext context) {

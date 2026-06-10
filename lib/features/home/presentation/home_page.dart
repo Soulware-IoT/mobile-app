@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
           builder: (context, state) {
             switch (state) {
               case NoProfile():
-                return const SizedBox.shrink();
+                return const Text("vas a caer");
 
               case ProfileLoading():
                 return const CircularProgressIndicator();

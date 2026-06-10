@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcompro/shared/infrastructure/local/database.dart';
 import 'package:tcompro/shared/infrastructure/local/database_key_store.dart';
 import 'package:tcompro/shared/presentation/di/dependency_injector_widget.dart';
-import 'package:tcompro/shared/presentation/session/session_guard.dart';
+import 'package:tcompro/shared/presentation/router/app_router.dart';
 import 'package:tcompro/shared/presentation/theme/theme.dart';
 
 import 'shared/infrastructure/remote/supabase.dart';
@@ -45,12 +45,14 @@ class MainApp extends StatelessWidget {
       supabaseUrl: supabaseUrl,
       secureStorage: secureStorage,
       database: database,
-      child: MaterialApp(
-        title: "T'Compro",
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        debugShowCheckedModeBanner: true,
-        home: const SessionGuard(),
+      child: Builder(
+        builder: (context) => MaterialApp.router(
+          title: "T'Compro",
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          debugShowCheckedModeBanner: true,
+          routerConfig: createRouter(context),
+        ),
       ),
     );
   }

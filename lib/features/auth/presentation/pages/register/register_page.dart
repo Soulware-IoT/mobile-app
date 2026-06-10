@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tcompro/features/auth/presentation/pages/register/widgets/register_form_card.dart';
+import 'package:tcompro/shared/presentation/router/app_router.dart';
 import 'package:tcompro/features/auth/presentation/pages/register/widgets/register_login_link.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
@@ -41,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
     await context.read<AuthCubit>().googleRegister();
   }
 
-  void _goToLogin() => Navigator.of(context).pop();
+  void _goToLogin() => context.go(AppRoutes.login);
 
   @override
   Widget build(BuildContext context) {

@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcompro/shared/presentation/widgets/auth_brand_header.dart';
 import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_form_card.dart';
 import 'package:tcompro/shared/presentation/widgets/auth_google_button.dart';
-import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_oauth_divider.dart';
 import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_register_link.dart';
 import 'package:tcompro/features/auth/presentation/pages/register/register_page.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
+import 'package:tcompro/shared/presentation/widgets/oauth_divider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     onSubmit: _login,
                   ),
                   const SizedBox(height: 16),
-                  const LoginOauthDivider(),
+                  const OAuthDivider(),
                   const SizedBox(height: 16),
                   AuthGoogleButton(loading: loading, onPressed: _googleLogin),
                   const SizedBox(height: 32),

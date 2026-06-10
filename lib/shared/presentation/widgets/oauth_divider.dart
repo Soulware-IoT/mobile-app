@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginOauthDivider extends StatelessWidget {
-  const LoginOauthDivider({super.key});
+class OAuthDivider extends StatelessWidget {
+  const OAuthDivider({super.key});
 
   @override
   Widget build(BuildContext context) {

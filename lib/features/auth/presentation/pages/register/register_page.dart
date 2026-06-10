@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tcompro/features/auth/presentation/pages/register/widgets/register_form_card.dart';
+import 'package:tcompro/features/auth/presentation/pages/register/widgets/register_login_link.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
+import 'package:tcompro/shared/presentation/widgets/auth_brand_header.dart';
+import 'package:tcompro/shared/presentation/widgets/auth_google_button.dart';
+import 'package:tcompro/shared/presentation/widgets/oauth_divider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -11,6 +16,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -24,13 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _register() async {
-    if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
-      return;
-    }
-
+    if (!_formKey.currentState!.validate()) return;
     await context.read<AuthCubit>().register(
       email: _emailController.text.trim(),
       password: _passwordController.text,
@@ -41,77 +41,54 @@ class _RegisterPageState extends State<RegisterPage> {
     await context.read<AuthCubit>().googleRegister();
   }
 
+  void _goToLogin() => Navigator.of(context).pop();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
+            );
           }
         },
         builder: (context, state) {
           final loading = state is AuthLoading;
 
-          return Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: _emailController,
-                  enabled: !loading,
-                  decoration: const InputDecoration(labelText: 'Email'),
-                ),
-
-                const SizedBox(height: 16),
-
-                TextField(
-                  controller: _passwordController,
-                  enabled: !loading,
-                  obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                ),
-
-                const SizedBox(height: 16),
-
-                TextField(
-                  controller: _confirmPasswordController,
-                  enabled: !loading,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm Password',
-                  ),
-                ),
-
-                const SizedBox(height: 24),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: loading ? null : _register,
-                    child: const Text('Register'),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: loading ? null : _googleRegister,
-                    child: const Text('Continue with Google'),
-                  ),
-                ),
-
-                if (loading) ...[
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 48),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   const SizedBox(height: 24),
-                  const CircularProgressIndicator(),
+                  const AuthBrandHeader(authCaption: 'Crea tu cuenta'),
+                  const SizedBox(height: 48),
+                  RegisterFormCard(
+                    formKey: _formKey,
+                    emailController: _emailController,
+                    passwordController: _passwordController,
+                    confirmPasswordController: _confirmPasswordController,
+                    loading: loading,
+                    onSubmit: _register,
+                  ),
+                  const SizedBox(height: 16),
+                  const OAuthDivider(),
+                  const SizedBox(height: 16),
+                  AuthGoogleButton(
+                    loading: loading,
+                    onPressed: _googleRegister,
+                  ),
+                  const SizedBox(height: 32),
+                  RegisterLoginLink(loading: loading, onLogin: _goToLogin),
                 ],
-              ],
+              ),
             ),
           );
         },

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tcompro/shared/infrastructure/local/database.dart';
+import 'package:tcompro/shared/infrastructure/local/database_key_store.dart';
 import 'package:tcompro/shared/presentation/di/dependency_injector_widget.dart';
 import 'package:tcompro/shared/presentation/session/session_guard.dart';
 
@@ -9,21 +12,44 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: '.env');
-  await initializeSupabase();
+  final String supabaseUrl = await initializeSupabase();
 
-  runApp(const MainApp());
+  const secureStorage = FlutterSecureStorage();
+  final database = await openAppDatabase(
+    const DatabaseKeyStore(secureStorage),
+  );
+
+  runApp(
+    MainApp(
+      supabaseUrl: supabaseUrl,
+      secureStorage: secureStorage,
+      database: database,
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final String supabaseUrl;
+  final FlutterSecureStorage secureStorage;
+  final AppDatabase database;
+
+  const MainApp({
+    super.key,
+    required this.supabaseUrl,
+    required this.secureStorage,
+    required this.database,
+  });
 
   @override
   Widget build(BuildContext context) {
     return DependencyInjectorWidget(
+      supabaseUrl: supabaseUrl,
+      secureStorage: secureStorage,
+      database: database,
       child: MaterialApp(
         title: "T'Compro",
         debugShowCheckedModeBanner: true,
-        home: SessionGuard(),
+        home: const SessionGuard(),
       ),
     );
   }

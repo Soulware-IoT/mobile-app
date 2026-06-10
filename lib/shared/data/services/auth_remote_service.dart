@@ -1,10 +1,10 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tcompro/shared/data/services/base/remote/remote_service.dart';
 
-class AuthService extends RemoteService {
+class AuthRemoteService extends RemoteService {
   final String authCallbackUrl = "com.soulware.tcompro://auth-callback";
 
-  AuthService(super.supabase);
+  AuthRemoteService(super.supabase);
 
   Future<AuthResponse> register({
     required String email,
@@ -35,7 +35,10 @@ class AuthService extends RemoteService {
   }
 
   Future<bool> googleLogin() async {
-    return await supabase.auth.signInWithOAuth(OAuthProvider.google);
+    return await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: authCallbackUrl,
+    );
   }
 
   Future<void> logout() async {

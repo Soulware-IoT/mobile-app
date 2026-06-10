@@ -16,6 +16,12 @@ class Authenticated extends AuthState {
   const Authenticated(this.userId);
 }
 
+final class OfflineAuthenticated extends AuthState {
+  final String userId;
+
+  const OfflineAuthenticated(this.userId);
+}
+
 final class NotAuthenticated extends AuthState {
   const NotAuthenticated();
 }

@@ -14,12 +14,27 @@ dependencies:
   supabase_flutter: ^2.12.4
   flutter_dotenv: ^6.0.1
   flutter_bloc: ^9.1.1
+  drift: ^2.33.0
+  sqlite3: ^3.3.2
+  flutter_secure_storage: ^10.3.1
+  path_provider: ^2.1.5
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  drift_dev: ^2.33.0
+  build_runner: ^2.4.15
+
+# Bundles the SQLite3MultipleCiphers build of sqlite3 (provides SQLCipher-
+# compatible encryption). Replaces the retired sqlcipher_flutter_libs package;
+# delivered via Dart build hooks / native assets.
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlite3mc
 
 flutter:
 

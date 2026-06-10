@@ -46,4 +46,5 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/brand/icon.png
 

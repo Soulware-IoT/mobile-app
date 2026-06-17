@@ -1,18 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tcompro/shared/data/repositories/auth_repository_impl.dart';
-import 'package:tcompro/shared/data/services/auth_local_service.dart';
-import 'package:tcompro/shared/data/services/auth_remote_service.dart';
-import 'package:tcompro/shared/domain/model/auth_session.dart';
-import 'package:tcompro/shared/infrastructure/network/network_checker.dart';
+import 'package:cocina360/shared/data/repositories/auth_repository_impl.dart';
+import 'package:cocina360/shared/data/services/auth_local_service.dart';
+import 'package:cocina360/shared/data/services/auth_remote_service.dart';
+import 'package:cocina360/shared/domain/model/auth_session.dart';
+import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 
 class MockAuthRemoteService extends Mock implements AuthRemoteService {}
+
 class MockAuthLocalService extends Mock implements AuthLocalService {}
+
 class MockNetworkChecker extends Mock implements NetworkChecker {}
+
 class MockSupabaseClient extends Mock implements SupabaseClient {}
+
 class MockGoTrueClient extends Mock implements GoTrueClient {}
+
 class MockSession extends Mock implements Session {}
+
 class MockUser extends Mock implements User {}
 
 void main() {
@@ -41,105 +47,133 @@ void main() {
   });
 
   group('currentSession', () {
-    test('retorna ActiveSession y cachea el id de usuario cuando existe una sesión remota', () async {
-      // Arrange
-      final mockSession = MockSession();
-      final mockUser = MockUser();
-      when(() => mockUser.id).thenReturn('user-123');
-      when(() => mockSession.user).thenReturn(mockUser);
-      when(() => mockGoTrueClient.currentSession).thenReturn(mockSession);
-      when(() => mockLocalService.cacheUserId('user-123')).thenAnswer((_) async {});
+    test(
+      'retorna ActiveSession y cachea el id de usuario cuando existe una sesión remota',
+      () async {
+        // Arrange
+        final mockSession = MockSession();
+        final mockUser = MockUser();
+        when(() => mockUser.id).thenReturn('user-123');
+        when(() => mockSession.user).thenReturn(mockUser);
+        when(() => mockGoTrueClient.currentSession).thenReturn(mockSession);
+        when(
+          () => mockLocalService.cacheUserId('user-123'),
+        ).thenAnswer((_) async {});
 
-      // Act
-      final result = await authRepository.currentSession();
+        // Act
+        final result = await authRepository.currentSession();
 
-      // Assert
-      expect(result, isA<ActiveSession>());
-      expect((result as ActiveSession).userId, 'user-123');
-      verify(() => mockLocalService.cacheUserId('user-123')).called(1);
-    });
+        // Assert
+        expect(result, isA<ActiveSession>());
+        expect((result as ActiveSession).userId, 'user-123');
+        verify(() => mockLocalService.cacheUserId('user-123')).called(1);
+      },
+    );
 
-    test('retorna OfflineSession cuando no hay sesión remota, existe usuario en caché y el dispositivo está desconectado', () async {
-      // Arrange
-      when(() => mockGoTrueClient.currentSession).thenReturn(null);
-      when(() => mockLocalService.getCachedUserId()).thenAnswer((_) async => 'cached-user-123');
-      when(() => mockNetworkChecker.isConnected).thenAnswer((_) async => false);
+    test(
+      'retorna OfflineSession cuando no hay sesión remota, existe usuario en caché y el dispositivo está desconectado',
+      () async {
+        // Arrange
+        when(() => mockGoTrueClient.currentSession).thenReturn(null);
+        when(
+          () => mockLocalService.getCachedUserId(),
+        ).thenAnswer((_) async => 'cached-user-123');
+        when(
+          () => mockNetworkChecker.isConnected,
+        ).thenAnswer((_) async => false);
 
-      // Act
-      final result = await authRepository.currentSession();
+        // Act
+        final result = await authRepository.currentSession();
 
-      // Assert
-      expect(result, isA<OfflineSession>());
-      expect((result as OfflineSession).userId, 'cached-user-123');
-    });
+        // Assert
+        expect(result, isA<OfflineSession>());
+        expect((result as OfflineSession).userId, 'cached-user-123');
+      },
+    );
 
-    test('retorna NoSession cuando no hay sesión remota, existe usuario en caché y el dispositivo está conectado', () async {
-      // Arrange
-      when(() => mockGoTrueClient.currentSession).thenReturn(null);
-      when(() => mockLocalService.getCachedUserId()).thenAnswer((_) async => 'cached-user-123');
-      when(() => mockNetworkChecker.isConnected).thenAnswer((_) async => true);
+    test(
+      'retorna NoSession cuando no hay sesión remota, existe usuario en caché y el dispositivo está conectado',
+      () async {
+        // Arrange
+        when(() => mockGoTrueClient.currentSession).thenReturn(null);
+        when(
+          () => mockLocalService.getCachedUserId(),
+        ).thenAnswer((_) async => 'cached-user-123');
+        when(
+          () => mockNetworkChecker.isConnected,
+        ).thenAnswer((_) async => true);
 
-      // Act
-      final result = await authRepository.currentSession();
+        // Act
+        final result = await authRepository.currentSession();
 
-      // Assert
-      expect(result, isA<NoSession>());
-    });
+        // Assert
+        expect(result, isA<NoSession>());
+      },
+    );
 
-    test('retorna NoSession cuando no hay sesión remota ni usuario en caché', () async {
-      // Arrange
-      when(() => mockGoTrueClient.currentSession).thenReturn(null);
-      when(() => mockLocalService.getCachedUserId()).thenAnswer((_) async => null);
+    test(
+      'retorna NoSession cuando no hay sesión remota ni usuario en caché',
+      () async {
+        // Arrange
+        when(() => mockGoTrueClient.currentSession).thenReturn(null);
+        when(
+          () => mockLocalService.getCachedUserId(),
+        ).thenAnswer((_) async => null);
 
-      // Act
-      final result = await authRepository.currentSession();
+        // Act
+        final result = await authRepository.currentSession();
 
-      // Assert
-      expect(result, isA<NoSession>());
-    });
+        // Assert
+        expect(result, isA<NoSession>());
+      },
+    );
   });
 
   group('authStateChanges', () {
-    test('emite ActiveSession y cachea el id de usuario cuando la sesión está presente', () async {
-      // Arrange
-      final mockSession = MockSession();
-      final mockUser = MockUser();
-      when(() => mockUser.id).thenReturn('user-123');
-      when(() => mockSession.user).thenReturn(mockUser);
-      
-      final authState = AuthState(AuthChangeEvent.signedIn, mockSession);
-      when(() => mockGoTrueClient.onAuthStateChange).thenAnswer((_) => Stream.value(authState));
-      when(() => mockLocalService.cacheUserId('user-123')).thenAnswer((_) async {});
+    test(
+      'emite ActiveSession y cachea el id de usuario cuando la sesión está presente',
+      () async {
+        // Arrange
+        final mockSession = MockSession();
+        final mockUser = MockUser();
+        when(() => mockUser.id).thenReturn('user-123');
+        when(() => mockSession.user).thenReturn(mockUser);
 
-      // Act
-      final stream = authRepository.authStateChanges;
+        final authState = AuthState(AuthChangeEvent.signedIn, mockSession);
+        when(
+          () => mockGoTrueClient.onAuthStateChange,
+        ).thenAnswer((_) => Stream.value(authState));
+        when(
+          () => mockLocalService.cacheUserId('user-123'),
+        ).thenAnswer((_) async {});
 
-      // Assert
-      await expectLater(
-        stream,
-        emitsInOrder([
-          isA<ActiveSession>().having((s) => s.userId, 'userId', 'user-123'),
-        ]),
-      );
-      verify(() => mockLocalService.cacheUserId('user-123')).called(1);
-    });
+        // Act
+        final stream = authRepository.authStateChanges;
+
+        // Assert
+        await expectLater(
+          stream,
+          emitsInOrder([
+            isA<ActiveSession>().having((s) => s.userId, 'userId', 'user-123'),
+          ]),
+        );
+        verify(() => mockLocalService.cacheUserId('user-123')).called(1);
+      },
+    );
 
     test('emite NoSession y limpia el caché en el evento signedOut', () async {
       // Arrange
       final authState = AuthState(AuthChangeEvent.signedOut, null);
-      when(() => mockGoTrueClient.onAuthStateChange).thenAnswer((_) => Stream.value(authState));
+      when(
+        () => mockGoTrueClient.onAuthStateChange,
+      ).thenAnswer((_) => Stream.value(authState));
       when(() => mockLocalService.clearCachedUserId()).thenAnswer((_) async {});
 
       // Act
       final stream = authRepository.authStateChanges;
 
       // Assert
-      await expectLater(
-        stream,
-        emitsInOrder([
-          isA<NoSession>(),
-        ]),
-      );
+      await expectLater(stream, emitsInOrder([isA<NoSession>()]));
       verify(() => mockLocalService.clearCachedUserId()).called(1);
     });
   });
@@ -147,14 +181,23 @@ void main() {
   group('Métodos de autenticación', () {
     test('login delega a remoteService.regularLogin', () async {
       // Arrange
-      when(() => mockRemoteService.regularLogin(email: 'test@test.com', password: 'password'))
-          .thenAnswer((_) async => AuthResponse(session: null, user: null));
+      when(
+        () => mockRemoteService.regularLogin(
+          email: 'test@test.com',
+          password: 'password',
+        ),
+      ).thenAnswer((_) async => AuthResponse(session: null, user: null));
 
       // Act
       await authRepository.login(email: 'test@test.com', password: 'password');
 
       // Assert
-      verify(() => mockRemoteService.regularLogin(email: 'test@test.com', password: 'password')).called(1);
+      verify(
+        () => mockRemoteService.regularLogin(
+          email: 'test@test.com',
+          password: 'password',
+        ),
+      ).called(1);
     });
 
     test('logout delega a remoteService y limpia el caché local', () async {

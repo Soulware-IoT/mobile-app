@@ -1,8 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tcompro/shared/data/services/base/remote/remote_service.dart';
+import 'package:cocina360/shared/data/services/base/remote/remote_service.dart';
 
 class AuthRemoteService extends RemoteService {
-  final String authCallbackUrl = "com.soulware.tcompro://auth-callback";
+  final String authCallbackUrl =
+      "https://cocina360.soulware.site/auth-callback?platform=mobile";
 
   AuthRemoteService(super.supabase);
 

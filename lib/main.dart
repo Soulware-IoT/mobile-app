@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:tcompro/shared/infrastructure/local/database.dart';
-import 'package:tcompro/shared/infrastructure/local/database_key_store.dart';
-import 'package:tcompro/shared/presentation/di/dependency_injector_widget.dart';
-import 'package:tcompro/shared/presentation/router/app_router.dart';
-import 'package:tcompro/shared/presentation/theme/theme.dart';
+import 'package:cocina360/shared/infrastructure/local/database.dart';
+import 'package:cocina360/shared/infrastructure/local/database_key_store.dart';
+import 'package:cocina360/shared/presentation/di/dependency_injector_widget.dart';
+import 'package:cocina360/shared/presentation/router/app_router.dart';
+import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 import 'shared/infrastructure/remote/supabase.dart';
 

@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:tcompro/shared/data/services/base/local/local_service.dart';
-import 'package:tcompro/shared/domain/model/profile.dart';
-import 'package:tcompro/shared/infrastructure/local/dao/profile_dao.dart';
-import 'package:tcompro/shared/infrastructure/local/database.dart';
+import 'package:cocina360/shared/data/services/base/local/local_service.dart';
+import 'package:cocina360/shared/domain/model/profile.dart';
+import 'package:cocina360/shared/infrastructure/local/dao/profile_dao.dart';
+import 'package:cocina360/shared/infrastructure/local/database.dart';
 
 /// On-device storage for the authenticated user's profile.
 ///

@@ -1,9 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tcompro/shared/data/services/auth_local_service.dart';
-import 'package:tcompro/shared/data/services/auth_remote_service.dart';
-import 'package:tcompro/shared/domain/model/auth_session.dart';
-import 'package:tcompro/shared/domain/repositories/auth_repository.dart';
-import 'package:tcompro/shared/infrastructure/network/network_checker.dart';
+import 'package:cocina360/shared/data/services/auth_local_service.dart';
+import 'package:cocina360/shared/data/services/auth_remote_service.dart';
+import 'package:cocina360/shared/domain/model/auth_session.dart';
+import 'package:cocina360/shared/domain/repositories/auth_repository.dart';
+import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteService remoteService;

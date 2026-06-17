@@ -1,5 +1,5 @@
-import 'package:tcompro/shared/data/services/base/remote/remote_service.dart';
-import 'package:tcompro/shared/data/services/dto/profile_dto.dart';
+import 'package:cocina360/shared/data/services/base/remote/remote_service.dart';
+import 'package:cocina360/shared/data/services/dto/profile_dto.dart';
 
 class ProfileService extends RemoteService {
   ProfileService(super.supabase);

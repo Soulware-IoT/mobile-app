@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcompro/shared/presentation/session/profile/profile_cubit.dart';
-import 'package:tcompro/shared/presentation/session/profile/profile_state.dart';
+import 'package:cocina360/shared/presentation/session/profile/profile_cubit.dart';
+import 'package:cocina360/shared/presentation/session/profile/profile_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,5 +1,5 @@
-import 'package:tcompro/shared/data/types/json.dart';
-import 'package:tcompro/shared/domain/model/profile.dart';
+import 'package:cocina360/shared/data/types/json.dart';
+import 'package:cocina360/shared/domain/model/profile.dart';
 
 class ProfileDto {
   final String id;

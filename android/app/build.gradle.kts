@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.soulware.tcompro"
+    namespace = "site.soulware.cocina360"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -14,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.soulware.tcompro"
+        applicationId = "site.soulware.cocina360"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

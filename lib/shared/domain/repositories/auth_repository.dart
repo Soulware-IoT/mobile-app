@@ -1,4 +1,4 @@
-import 'package:tcompro/shared/domain/model/auth_session.dart';
+import 'package:cocina360/shared/domain/model/auth_session.dart';
 
 abstract class AuthRepository {
   Stream<AuthSession> get authStateChanges;

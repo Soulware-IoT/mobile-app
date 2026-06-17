@@ -1,9 +1,9 @@
-import 'package:tcompro/shared/data/services/profile_local_service.dart';
-import 'package:tcompro/shared/data/services/profile_service.dart';
-import 'package:tcompro/shared/domain/exception/profile_not_found_exception.dart';
-import 'package:tcompro/shared/domain/model/profile.dart';
-import 'package:tcompro/shared/domain/repositories/profile_repository.dart';
-import 'package:tcompro/shared/infrastructure/network/network_checker.dart';
+import 'package:cocina360/shared/data/services/profile_local_service.dart';
+import 'package:cocina360/shared/data/services/profile_service.dart';
+import 'package:cocina360/shared/domain/exception/profile_not_found_exception.dart';
+import 'package:cocina360/shared/domain/model/profile.dart';
+import 'package:cocina360/shared/domain/repositories/profile_repository.dart';
+import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileService remoteService;

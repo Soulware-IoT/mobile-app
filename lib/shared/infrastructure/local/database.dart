@@ -4,9 +4,9 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:tcompro/shared/infrastructure/local/database_key_store.dart';
-import 'package:tcompro/shared/infrastructure/local/tables/profiles_table.dart';
-import 'package:tcompro/shared/infrastructure/local/dao/profile_dao.dart';
+import 'package:cocina360/shared/infrastructure/local/database_key_store.dart';
+import 'package:cocina360/shared/infrastructure/local/tables/profiles_table.dart';
+import 'package:cocina360/shared/infrastructure/local/dao/profile_dao.dart';
 
 part 'database.g.dart';
 
@@ -31,7 +31,7 @@ Future<AppDatabase> openAppDatabase(DatabaseKeyStore keyStore) async {
 LazyDatabase _openEncryptedConnection(String hexKey) {
   return LazyDatabase(() async {
     final dir = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dir.path, 'tcompro.db'));
+    final file = File(p.join(dir.path, 'cocina360.db'));
 
     return NativeDatabase(
       file,

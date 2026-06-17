@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcompro/shared/domain/repositories/profile_repository.dart';
-import 'package:tcompro/shared/presentation/session/profile/profile_state.dart';
+import 'package:cocina360/shared/domain/repositories/profile_repository.dart';
+import 'package:cocina360/shared/presentation/session/profile/profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository repository;

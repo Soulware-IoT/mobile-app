@@ -1,4 +1,4 @@
-import 'package:tcompro/shared/domain/model/profile.dart';
+import 'package:cocina360/shared/domain/model/profile.dart';
 
 sealed class ProfileState {
   const ProfileState();

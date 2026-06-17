@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_form_card.dart';
-import 'package:tcompro/features/auth/presentation/pages/login/widgets/login_register_link.dart';
-import 'package:tcompro/shared/presentation/router/app_router.dart';
-import 'package:tcompro/shared/presentation/session/auth/auth_cubit.dart';
-import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
-import 'package:tcompro/shared/presentation/widgets/auth_brand_header.dart';
-import 'package:tcompro/shared/presentation/widgets/auth_google_button.dart';
-import 'package:tcompro/shared/presentation/widgets/oauth_divider.dart';
+import 'package:cocina360/features/auth/presentation/pages/login/widgets/login_form_card.dart';
+import 'package:cocina360/features/auth/presentation/pages/login/widgets/login_register_link.dart';
+import 'package:cocina360/shared/presentation/router/app_router.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
+import 'package:cocina360/shared/presentation/widgets/auth_brand_header.dart';
+import 'package:cocina360/shared/presentation/widgets/auth_google_button.dart';
+import 'package:cocina360/shared/presentation/widgets/oauth_divider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

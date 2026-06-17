@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcompro/shared/domain/model/auth_session.dart';
-import 'package:tcompro/shared/domain/repositories/auth_repository.dart';
-import 'package:tcompro/shared/presentation/session/auth/auth_state.dart';
+import 'package:cocina360/shared/domain/model/auth_session.dart';
+import 'package:cocina360/shared/domain/repositories/auth_repository.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository repository;

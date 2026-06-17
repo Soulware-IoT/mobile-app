@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:tcompro/shared/infrastructure/local/database.dart';
-import 'package:tcompro/shared/infrastructure/local/tables/profiles_table.dart';
+import 'package:cocina360/shared/infrastructure/local/database.dart';
+import 'package:cocina360/shared/infrastructure/local/tables/profiles_table.dart';
 
 part 'profile_dao.g.dart';
 

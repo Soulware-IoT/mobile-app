@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcompro/shared/presentation/theme/theme.dart';
+import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class RegisterLoginLink extends StatelessWidget {
   final bool loading;

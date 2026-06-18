@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/profile/profile_cubit.dart';
 import 'package:cocina360/shared/presentation/session/profile/profile_state.dart';
 
@@ -9,6 +10,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cocina360'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
+            onPressed: () => context.read<AuthCubit>().logout(),
+          ),
+        ],
+      ),
       body: Center(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {

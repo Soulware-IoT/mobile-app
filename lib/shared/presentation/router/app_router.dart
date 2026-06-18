@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/auth/presentation/pages/login/login_page.dart';
 import 'package:cocina360/features/auth/presentation/pages/register/register_page.dart';
-import 'package:cocina360/features/home/presentation/home_page.dart';
+import 'package:cocina360/features/shell/presentation/app_shell.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 
@@ -32,7 +32,7 @@ GoRouter createRouter(BuildContext context) {
       return null;
     },
     routes: [
-      GoRoute(path: AppRoutes.home, builder: (_, _) => const HomePage()),
+      GoRoute(path: AppRoutes.home, builder: (_, _) => const AppShell()),
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginPage()),
       GoRoute(
         path: AppRoutes.register,

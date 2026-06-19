@@ -30,12 +30,15 @@ class OrganizationMemberDto {
   });
 
   factory OrganizationMemberDto.fromJson(JSON json) {
+    // The backend embeds the member's profile under `profile` (a ProfileSummary).
+    final profile = (json['profile'] as JSON?) ?? const {};
+
     return OrganizationMemberDto(
       id: json['id'] as String,
-      profileId: json['profileId'] as String,
-      fullName: (json['fullName'] as String?) ?? '',
-      email: (json['email'] as String?) ?? '',
-      avatarUrl: json['avatarUrl'] as String?,
+      profileId: (profile['profileId'] as String?) ?? '',
+      fullName: (profile['fullName'] as String?) ?? '',
+      email: (profile['email'] as String?) ?? '',
+      avatarUrl: profile['avatarUrl'] as String?,
       securityPermission: json['securityPermission'] as String?,
       iotPermission: json['iotPermission'] as String?,
       internalControlPermission: json['internalControlPermission'] as String?,

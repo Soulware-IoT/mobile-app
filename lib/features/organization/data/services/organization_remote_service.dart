@@ -9,22 +9,17 @@ class OrganizationRemoteService {
 
   OrganizationRemoteService(this.client);
 
-  /// `GET /api/v1/organizations?memberId={profileId}` — organizations the user
-  /// belongs to (or owns).
-  Future<List<OrganizationDto>> getMyOrganizations(String profileId) async {
-    final data = await client.getJson(
-      '/api/v1/organizations',
-      query: {'memberId': profileId},
-    );
-    final list = (data as List).cast<JSON>();
-    return list.map(OrganizationDto.fromJson).toList();
+  /// `GET /organizations/{organizationId}` — the organization's details.
+  Future<OrganizationDto> getOrganization(String organizationId) async {
+    final data = await client.getJson('/organizations/$organizationId');
+    return OrganizationDto.fromJson(data as JSON);
   }
 
-  /// `GET /api/v1/organizations/{organizationId}/members` — members enriched
-  /// with profile data and permission levels.
+  /// `GET /organizations/{organizationId}/members` — members enriched with
+  /// profile data and permission levels.
   Future<List<OrganizationMemberDto>> getMembers(String organizationId) async {
     final data = await client.getJson(
-      '/api/v1/organizations/$organizationId/members',
+      '/organizations/$organizationId/members',
     );
     final list = (data as List).cast<JSON>();
     return list.map(OrganizationMemberDto.fromJson).toList();

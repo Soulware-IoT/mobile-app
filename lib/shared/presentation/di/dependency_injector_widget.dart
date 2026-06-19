@@ -18,6 +18,7 @@ import 'package:cocina360/shared/infrastructure/local/dao/profile_dao.dart';
 import 'package:cocina360/shared/infrastructure/local/database.dart';
 import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 import 'package:cocina360/shared/infrastructure/remote/api_gateway_client.dart';
+import 'package:cocina360/shared/infrastructure/remote/session_claims.dart';
 import 'package:cocina360/shared/infrastructure/remote/supabase.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -55,6 +56,7 @@ class DependencyInjectorWidget extends StatelessWidget {
       supabase: supabase,
     );
     final organizationRemoteService = OrganizationRemoteService(apiGatewayClient);
+    final sessionClaims = SessionClaims(supabase);
 
     return MultiRepositoryProvider(
       providers: [
@@ -75,6 +77,7 @@ class DependencyInjectorWidget extends StatelessWidget {
         RepositoryProvider<OrganizationRepository>(
           create: (_) => OrganizationRepositoryImpl(
             organizationRemoteService,
+            sessionClaims,
             connectionChecker,
           ),
         ),

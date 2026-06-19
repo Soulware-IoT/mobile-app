@@ -47,7 +47,7 @@ class MainApp extends StatelessWidget {
       database: database,
       child: Builder(
         builder: (context) => MaterialApp.router(
-          title: "T'Compro",
+          title: "Cocina360",
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           debugShowCheckedModeBanner: true,

@@ -18,7 +18,7 @@ class AuthBrandHeader extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          "T'Compro",
+          "Cocina360",
           textAlign: TextAlign.center,
           style: theme.textTheme.headlineLarge?.copyWith(
             fontWeight: FontWeight.bold,

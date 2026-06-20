@@ -19,7 +19,20 @@ class OrganizationCubit extends Cubit<OrganizationState> {
       }
       emit(OrganizationLoaded(result.organization, result.members));
     } catch (e) {
-      emit(OrganizationError(e.toString()));
+      emit(OrganizationError(e));
+    }
+  }
+
+  /// Loads a specific organization (by id) as the active one — used when the
+  /// user switches organizations from the drawer.
+  Future<void> selectOrganization(String organizationId) async {
+    emit(const OrganizationLoading());
+    try {
+      final result =
+          await repository.getOrganizationWithMembers(organizationId);
+      emit(OrganizationLoaded(result.organization, result.members));
+    } catch (e) {
+      emit(OrganizationError(e));
     }
   }
 

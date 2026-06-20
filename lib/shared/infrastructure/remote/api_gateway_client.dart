@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,8 +37,16 @@ class ApiGatewayClient {
     final token = supabase.auth.currentSession?.accessToken;
     return {
       'Content-Type': 'application/json',
+      // The gateway forwards Accept-Language to the backend, which localizes
+      // its error messages from it. Derive it from the device locale (es/en).
+      'Accept-Language': _acceptLanguage(),
       if (token != null) 'Authorization': 'Bearer $token',
     };
+  }
+
+  String _acceptLanguage() {
+    final code = PlatformDispatcher.instance.locale.languageCode.toLowerCase();
+    return code == 'es' ? 'es' : 'en';
   }
 
   Uri _uri(String path, Map<String, dynamic>? query) {
@@ -101,10 +110,29 @@ class ApiGatewayClient {
 
   dynamic _decode(http.Response response) {
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw ApiGatewayException(response.statusCode, response.body);
+      throw ApiGatewayException(response.statusCode, _errorMessage(response.body));
     }
 
     if (response.body.isEmpty) return null;
     return jsonDecode(response.body);
+  }
+
+  /// Extracts the human-readable, server-localized `message` from an error body.
+  /// Covers the backend's `ErrorResponse` and NestJS's `{message, error}` shape;
+  /// falls back to the raw body when it isn't the expected JSON.
+  String _errorMessage(String body) {
+    if (body.isEmpty) return body;
+    try {
+      final decoded = jsonDecode(body);
+      if (decoded is Map && decoded['message'] != null) {
+        final message = decoded['message'];
+        // NestJS validation errors can return message as a list of strings.
+        if (message is List) return message.join(', ');
+        return message.toString();
+      }
+    } catch (_) {
+      // Not JSON — fall through to the raw body.
+    }
+    return body;
   }
 }

@@ -19,7 +19,7 @@ final class EditOrganizationSuccess extends EditOrganizationState {
 }
 
 final class EditOrganizationFailure extends EditOrganizationState {
-  final String message;
+  final Object error;
 
-  const EditOrganizationFailure(this.message);
+  const EditOrganizationFailure(this.error);
 }

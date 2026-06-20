@@ -13,7 +13,7 @@ class InvitationsCubit extends Cubit<InvitationsState> {
       final invitations = await repository.getInvitations(organizationId);
       emit(InvitationsLoaded(invitations));
     } catch (e) {
-      emit(InvitationsError(e.toString()));
+      emit(InvitationsError(e));
     }
   }
 }

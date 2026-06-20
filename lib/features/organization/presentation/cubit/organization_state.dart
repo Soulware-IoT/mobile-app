@@ -26,7 +26,9 @@ final class OrganizationEmpty extends OrganizationState {
 }
 
 final class OrganizationError extends OrganizationState {
-  final String message;
+  /// The raw error, rendered to a localized string by the page via
+  /// `localizedError`.
+  final Object error;
 
-  const OrganizationError(this.message);
+  const OrganizationError(this.error);
 }

@@ -15,7 +15,7 @@ final class InviteMemberSuccess extends InviteMemberState {
 }
 
 final class InviteMemberFailure extends InviteMemberState {
-  final String message;
+  final Object error;
 
-  const InviteMemberFailure(this.message);
+  const InviteMemberFailure(this.error);
 }

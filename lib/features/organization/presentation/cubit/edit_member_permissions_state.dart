@@ -19,7 +19,7 @@ final class EditMemberPermissionsSuccess extends EditMemberPermissionsState {
 }
 
 final class EditMemberPermissionsFailure extends EditMemberPermissionsState {
-  final String message;
+  final Object error;
 
-  const EditMemberPermissionsFailure(this.message);
+  const EditMemberPermissionsFailure(this.error);
 }

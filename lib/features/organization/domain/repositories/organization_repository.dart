@@ -17,6 +17,15 @@ abstract class OrganizationRepository {
   /// the user does not belong to any organization yet.
   Future<OrganizationWithMembers?> getPrimaryOrganization(String userId);
 
+  /// Returns a specific organization with its members (used when switching the
+  /// active organization from the drawer).
+  Future<OrganizationWithMembers> getOrganizationWithMembers(
+    String organizationId,
+  );
+
+  /// Returns the organizations the given profile (current user) belongs to.
+  Future<List<Organization>> getMyOrganizations(String profileId);
+
   /// Updates the organization's editable details and returns the new state.
   Future<Organization> updateOrganization({
     required String organizationId,

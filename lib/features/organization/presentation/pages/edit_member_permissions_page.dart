@@ -7,6 +7,7 @@ import 'package:cocina360/features/organization/presentation/cubit/edit_member_p
 import 'package:cocina360/features/organization/presentation/cubit/edit_member_permissions_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class EditMemberPermissionsPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
             context.pop(state.member);
           } else if (state is EditMemberPermissionsFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('No se pudo guardar: ${state.message}')),
+              SnackBar(content: Text(localizedError(context, state.error))),
             );
           }
         },

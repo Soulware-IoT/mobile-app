@@ -28,7 +28,7 @@ class EditOrganizationCubit extends Cubit<EditOrganizationState> {
       );
       emit(EditOrganizationSuccess(organization));
     } catch (e) {
-      emit(EditOrganizationFailure(e.toString()));
+      emit(EditOrganizationFailure(e));
     }
   }
 }

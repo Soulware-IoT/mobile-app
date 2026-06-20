@@ -4,6 +4,7 @@ import 'package:cocina360/features/organization/domain/repositories/organization
 import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invite_member_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invite_member_state.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 
 /// Opens the "invite member" dialog. On success it refreshes the pending
@@ -60,6 +61,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocConsumer<InviteMemberCubit, InviteMemberState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
@@ -67,7 +69,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
           widget.onInvited();
           Navigator.of(context).pop();
           messenger.showSnackBar(
-            const SnackBar(content: Text('Invitación enviada')),
+            SnackBar(content: Text(l10n.invitationSent)),
           );
         } else if (state is InviteMemberFailure) {
           messenger.showSnackBar(
@@ -78,7 +80,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
       builder: (context, state) {
         final sending = state is InviteMemberSending;
         return AlertDialog(
-          title: const Text('Invitar miembro'),
+          title: Text(l10n.inviteMemberTitle),
           content: Form(
             key: _formKey,
             child: TextFormField(
@@ -86,14 +88,16 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
               enabled: !sending,
               keyboardType: TextInputType.emailAddress,
               autofocus: true,
-              decoration: const InputDecoration(
-                labelText: 'Correo electrónico',
-                prefixIcon: Icon(Icons.email_outlined),
+              decoration: InputDecoration(
+                labelText: l10n.authEmailLabel,
+                prefixIcon: const Icon(Icons.email_outlined),
               ),
               onFieldSubmitted: (_) => sending ? null : _submit(),
               validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Ingresa un correo';
-                if (!v.contains('@')) return 'Correo inválido';
+                if (v == null || v.trim().isEmpty) {
+                  return l10n.inviteEmailRequired;
+                }
+                if (!v.contains('@')) return l10n.authEmailInvalid;
                 return null;
               },
             ),
@@ -101,7 +105,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
           actions: [
             TextButton(
               onPressed: sending ? null : () => Navigator.of(context).pop(),
-              child: const Text('Cancelar'),
+              child: Text(l10n.cancel),
             ),
             FilledButton(
               onPressed: sending ? null : _submit,
@@ -111,7 +115,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
                       width: 18,
                       child: CircularProgressIndicator(strokeWidth: 2.5),
                     )
-                  : const Text('Invitar'),
+                  : Text(l10n.invite),
             ),
           ],
         );

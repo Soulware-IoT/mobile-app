@@ -1,16 +1,5 @@
 /// Lifecycle status of a device, as reported by the backend (UPPERCASE in REST).
-enum DeviceStatus {
-  provisioned,
-  active,
-  inactive;
-
-  /// Spanish label for the status pill.
-  String get label => switch (this) {
-    DeviceStatus.provisioned => 'Aprovisionado',
-    DeviceStatus.active => 'Activo',
-    DeviceStatus.inactive => 'Inactivo',
-  };
-}
+enum DeviceStatus { provisioned, active, inactive }
 
 /// Parses the backend status (case-insensitive). Unknown values fall back to
 /// [DeviceStatus.inactive] so the UI degrades gracefully.

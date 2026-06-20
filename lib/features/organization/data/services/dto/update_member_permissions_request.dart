@@ -6,18 +6,18 @@ import 'package:cocina360/shared/data/types/json.dart';
 /// values are the uppercase `PermissionLevel` enum.
 class UpdateMemberPermissionsRequest {
   final MemberRole security;
-  final MemberRole iot;
+  final MemberRole organization;
   final MemberRole internalControl;
 
   const UpdateMemberPermissionsRequest({
     required this.security,
-    required this.iot,
+    required this.organization,
     required this.internalControl,
   });
 
   JSON toJson() => {
     'security': security.apiValue,
-    'iot': iot.apiValue,
+    'iot': organization.apiValue,
     'internalControl': internalControl.apiValue,
   };
 }

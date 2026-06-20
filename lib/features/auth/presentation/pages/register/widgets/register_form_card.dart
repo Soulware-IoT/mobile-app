@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class RegisterFormCard extends StatefulWidget {
@@ -31,6 +32,7 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -48,13 +50,13 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                 enabled: !widget.loading,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icon(Icons.email_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.authEmailLabel,
+                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 validator: (v) {
-                  if (v == null || v.trim().isEmpty) return 'Ingresa tu correo';
-                  if (!v.contains('@')) return 'Correo inválido';
+                  if (v == null || v.trim().isEmpty) return l10n.authEmailRequired;
+                  if (!v.contains('@')) return l10n.authEmailInvalid;
                   return null;
                 },
               ),
@@ -67,7 +69,7 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                 obscureText: !_passwordVisible,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: 'Contraseña',
+                  labelText: l10n.authPasswordLabel,
                   prefixIcon: const Icon(Icons.lock_outlined),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -80,8 +82,10 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                   ),
                 ),
                 validator: (v) {
-                  if (v == null || v.isEmpty) return 'Ingresa una contraseña';
-                  if (v.length < 6) return 'Mínimo 6 caracteres';
+                  if (v == null || v.isEmpty) {
+                    return l10n.authPasswordCreateRequired;
+                  }
+                  if (v.length < 6) return l10n.authPasswordMinLength;
                   return null;
                 },
               ),
@@ -96,7 +100,7 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                 onFieldSubmitted: (_) =>
                     widget.loading ? null : widget.onSubmit(),
                 decoration: InputDecoration(
-                  labelText: 'Confirmar contraseña',
+                  labelText: l10n.authConfirmPasswordLabel,
                   prefixIcon: const Icon(Icons.lock_outlined),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -109,9 +113,11 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                   ),
                 ),
                 validator: (v) {
-                  if (v == null || v.isEmpty) return 'Confirma tu contraseña';
+                  if (v == null || v.isEmpty) {
+                    return l10n.authConfirmPasswordRequired;
+                  }
                   if (v != widget.passwordController.text) {
-                    return 'Las contraseñas no coinciden';
+                    return l10n.authPasswordsDoNotMatch;
                   }
                   return null;
                 },
@@ -138,7 +144,7 @@ class _RegisterFormCardState extends State<RegisterFormCard> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text('Crear cuenta'),
+                    : Text(l10n.registerButton),
               ),
             ],
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cocina360/features/devices/domain/model/device_status.dart';
+import 'package:cocina360/features/devices/presentation/widgets/device_status_label.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Color-coded pill for a [DeviceStatus]: ACTIVE green, PROVISIONED amber,
 /// INACTIVE grey.
@@ -29,7 +31,7 @@ class DeviceStatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        status.label,
+        status.localizedLabel(AppLocalizations.of(context)!),
         style: TextStyle(
           color: fg,
           fontSize: 11,

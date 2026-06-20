@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 class OAuthDivider extends StatelessWidget {
   const OAuthDivider({super.key});
@@ -13,7 +14,7 @@ class OAuthDivider extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
-            'o continúa con',
+            AppLocalizations.of(context)!.oauthDividerOr,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

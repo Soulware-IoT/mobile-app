@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cocina360/features/devices/domain/model/iot_device.dart';
 import 'package:cocina360/features/devices/presentation/widgets/device_status_badge.dart';
 import 'package:cocina360/features/devices/presentation/widgets/threshold_format.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Inventory row for an IoT device: name, code, status pill and a compact
 /// thresholds line. Tapping opens the detail screen.
@@ -67,7 +68,11 @@ class DeviceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      ThresholdFormat.summary(device.thresholds),
+                      ThresholdFormat.summary(
+                        device.thresholds,
+                        emptyLabel:
+                            AppLocalizations.of(context)!.deviceThresholdsEmpty,
+                      ),
                       style: TextStyle(
                         color: theme.colorScheme.onSurfaceVariant,
                         fontSize: 12,

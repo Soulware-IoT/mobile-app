@@ -62,7 +62,7 @@ class _MyInvitationsPageState extends State<MyInvitationsPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Mis invitaciones')),
+      appBar: AppBar(title: Text(l10n.myInvitationsTitle)),
       body: BlocConsumer<MyInvitationsCubit, MyInvitationsState>(
         listener: (context, state) {
           if (state is MyInvitationsActionSuccess) {
@@ -114,15 +114,22 @@ class _List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (invitations.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(32),
+          padding: const EdgeInsets.all(32),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.mark_email_read_outlined, size: 64, color: Colors.grey),
-              SizedBox(height: 16),
-              Text('No tienes invitaciones.', textAlign: TextAlign.center),
+              const Icon(
+                Icons.mark_email_read_outlined,
+                size: 64,
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.noInvitations,
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -163,6 +170,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -172,7 +180,7 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.cloud_off, size: 56, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No se pudieron cargar tus invitaciones.',
+              l10n.myInvitationsLoadError,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -186,7 +194,7 @@ class _ErrorView extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Reintentar'),
+              label: Text(l10n.retry),
             ),
           ],
         ),

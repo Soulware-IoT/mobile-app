@@ -9,7 +9,7 @@ class OrganizationMember {
 
   /// Per-bounded-context permission levels.
   final MemberRole security;
-  final MemberRole iot;
+  final MemberRole organization;
   final MemberRole internalControl;
 
   /// Highest privilege across the three contexts, for the list badge.
@@ -22,7 +22,7 @@ class OrganizationMember {
     required this.email,
     this.avatarUrl,
     required this.security,
-    required this.iot,
+    required this.organization,
     required this.internalControl,
     required this.role,
   });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Placeholder for the Processes tab — wired to real data in a later pass.
 class ProcessesPlaceholder extends StatelessWidget {
@@ -6,15 +7,20 @@ class ProcessesPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Processes')),
-      body: const Center(
+      appBar: AppBar(title: Text(l10n.processesTitle)),
+      body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.account_tree_outlined, size: 56, color: Colors.grey),
-            SizedBox(height: 12),
-            Text('Procesos — próximamente'),
+            const Icon(
+              Icons.account_tree_outlined,
+              size: 56,
+              color: Colors.grey,
+            ),
+            const SizedBox(height: 12),
+            Text(l10n.processesComingSoon),
           ],
         ),
       ),

@@ -15,7 +15,7 @@ class OrganizationMemberDto {
   final String email;
   final String? avatarUrl;
   final String? securityPermission;
-  final String? iotPermission;
+  final String? organizationPermission;
   final String? internalControlPermission;
 
   const OrganizationMemberDto({
@@ -25,7 +25,7 @@ class OrganizationMemberDto {
     required this.email,
     this.avatarUrl,
     this.securityPermission,
-    this.iotPermission,
+    this.organizationPermission,
     this.internalControlPermission,
   });
 
@@ -40,14 +40,14 @@ class OrganizationMemberDto {
       email: (profile['email'] as String?) ?? '',
       avatarUrl: profile['avatarUrl'] as String?,
       securityPermission: json['securityPermission'] as String?,
-      iotPermission: json['iotPermission'] as String?,
+      organizationPermission: json['organizationsPermission'] as String?,
       internalControlPermission: json['internalControlPermission'] as String?,
     );
   }
 
   OrganizationMember toDomain() {
     final security = memberRoleFromString(securityPermission);
-    final iot = memberRoleFromString(iotPermission);
+    final organization = memberRoleFromString(organizationPermission);
     final internalControl = memberRoleFromString(internalControlPermission);
 
     return OrganizationMember(
@@ -57,9 +57,9 @@ class OrganizationMemberDto {
       email: email,
       avatarUrl: avatarUrl,
       security: security,
-      iot: iot,
+      organization: organization,
       internalControl: internalControl,
-      role: highestRole([security, iot, internalControl]),
+      role: highestRole([security, organization, internalControl]),
     );
   }
 }

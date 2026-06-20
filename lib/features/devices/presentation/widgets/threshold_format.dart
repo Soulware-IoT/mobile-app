@@ -5,9 +5,10 @@ class ThresholdFormat {
   const ThresholdFormat._();
 
   /// Compact one-line summary, e.g. "Temp 8°/12°C · Gas 100/200 ppm".
-  /// Empty parts are dropped; returns "Sin umbrales configurados" when none.
-  static String summary(Thresholds t) {
-    if (t.isEmpty) return 'Sin umbrales configurados';
+  /// Empty parts are dropped; returns [emptyLabel] (already localized by the
+  /// caller) when there are no thresholds.
+  static String summary(Thresholds t, {required String emptyLabel}) {
+    if (t.isEmpty) return emptyLabel;
 
     final parts = <String>[];
     final temp = _range(t.warnTemperatureC, t.critTemperatureC);

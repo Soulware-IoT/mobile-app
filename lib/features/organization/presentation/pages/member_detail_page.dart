@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/domain/model/member_role.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/presentation/widgets/member_role_badge.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
@@ -37,9 +38,10 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Member Details')),
+      appBar: AppBar(title: Text(l10n.memberDetailsTitle)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
         children: [
@@ -64,7 +66,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
           FilledButton.icon(
             onPressed: _editPermissions,
             icon: const Icon(Icons.edit_outlined, size: 18),
-            label: const Text('Edit Permissions'),
+            label: Text(l10n.editPermissions),
             style: FilledButton.styleFrom(
               backgroundColor: AppTheme.seedColor,
               foregroundColor: Colors.white,
@@ -78,7 +80,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
           OutlinedButton.icon(
             onPressed: () => context.pop(),
             icon: const Icon(Icons.apartment_outlined, size: 18),
-            label: const Text('Back to Organization'),
+            label: Text(l10n.backToOrganization),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
               shape: RoundedRectangleBorder(
@@ -88,7 +90,7 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
           ),
           const SizedBox(height: 32),
           Text(
-            'PERMISOS DE ACCESO',
+            l10n.accessPermissionsHeader,
             style: TextStyle(
               color: theme.colorScheme.onSurfaceVariant,
               fontSize: 12,
@@ -99,19 +101,19 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
           const SizedBox(height: 12),
           _PermissionCard(
             icon: Icons.shield_outlined,
-            label: 'Seguridad',
+            label: l10n.permissionSecurity,
             role: _member.security,
           ),
           const SizedBox(height: 12),
           _PermissionCard(
             icon: Icons.sensors,
-            label: 'IoT',
-            role: _member.iot,
+            label: l10n.permissionOrganization,
+            role: _member.organization,
           ),
           const SizedBox(height: 12),
           _PermissionCard(
             icon: Icons.checklist_outlined,
-            label: 'Control interno',
+            label: l10n.permissionInternalControl,
             role: _member.internalControl,
           ),
         ],

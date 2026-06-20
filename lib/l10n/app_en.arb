@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+
   "errorNoConnection": "No internet connection",
   "@errorNoConnection": {
     "description": "Shown when a request fails because the device is offline"
@@ -12,6 +13,20 @@
   "@errorGeneric": {
     "description": "Fallback message for unexpected errors"
   },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Generic retry button on error views"
+  },
+  "cancel": "CANCEL",
+  "@cancel": {
+    "description": "Generic cancel button"
+  },
+  "saveChanges": "SAVE CHANGES",
+  "@saveChanges": {
+    "description": "Save button on edit forms"
+  },
+
   "signOut": "Sign out",
   "@signOut": {
     "description": "Drawer action to log out"
@@ -35,5 +50,337 @@
   "invitationDeclined": "Invitation declined",
   "@invitationDeclined": {
     "description": "Snackbar shown after declining an invitation"
+  },
+
+  "authEmailLabel": "Email",
+  "@authEmailLabel": {
+    "description": "Email text field label"
+  },
+  "authEmailRequired": "Enter your email",
+  "@authEmailRequired": {
+    "description": "Validation error when the email field is empty"
+  },
+  "authEmailInvalid": "Invalid email",
+  "@authEmailInvalid": {
+    "description": "Validation error when the email is malformed"
+  },
+  "authPasswordLabel": "Password",
+  "@authPasswordLabel": {
+    "description": "Password text field label"
+  },
+  "authPasswordRequired": "Enter your password",
+  "@authPasswordRequired": {
+    "description": "Login validation error when the password field is empty"
+  },
+  "authPasswordCreateRequired": "Enter a password",
+  "@authPasswordCreateRequired": {
+    "description": "Register validation error when the password field is empty"
+  },
+  "authPasswordMinLength": "At least 6 characters",
+  "@authPasswordMinLength": {
+    "description": "Register validation error when the password is too short"
+  },
+  "authConfirmPasswordLabel": "Confirm password",
+  "@authConfirmPasswordLabel": {
+    "description": "Confirm-password text field label"
+  },
+  "authConfirmPasswordRequired": "Confirm your password",
+  "@authConfirmPasswordRequired": {
+    "description": "Validation error when the confirm-password field is empty"
+  },
+  "authPasswordsDoNotMatch": "Passwords do not match",
+  "@authPasswordsDoNotMatch": {
+    "description": "Validation error when password and confirmation differ"
+  },
+  "loginCaption": "Sign in to continue",
+  "@loginCaption": {
+    "description": "Caption under the brand header on the login screen"
+  },
+  "loginButton": "Sign in",
+  "@loginButton": {
+    "description": "Submit button on the login form"
+  },
+  "registerCaption": "Create your account",
+  "@registerCaption": {
+    "description": "Caption under the brand header on the register screen"
+  },
+  "registerButton": "Create account",
+  "@registerButton": {
+    "description": "Submit button on the register form"
+  },
+  "noAccountQuestion": "Don't have an account? ",
+  "@noAccountQuestion": {
+    "description": "Prompt before the sign-up link on the login screen"
+  },
+  "registerLink": "Sign up",
+  "@registerLink": {
+    "description": "Link to the register screen"
+  },
+  "haveAccountQuestion": "Already have an account? ",
+  "@haveAccountQuestion": {
+    "description": "Prompt before the sign-in link on the register screen"
+  },
+  "loginLink": "Sign in",
+  "@loginLink": {
+    "description": "Link to the login screen"
+  },
+  "oauthDividerOr": "or continue with",
+  "@oauthDividerOr": {
+    "description": "Divider label between the form and the OAuth buttons"
+  },
+
+  "devicesTitle": "Devices",
+  "@devicesTitle": {
+    "description": "App bar title on the Devices tab"
+  },
+  "devicesInventoryTitle": "Device inventory",
+  "@devicesInventoryTitle": {
+    "description": "Section header for the device list"
+  },
+  "devicesEmpty": "No devices.",
+  "@devicesEmpty": {
+    "description": "Empty state when the organization has no devices"
+  },
+  "devicesLoadError": "Could not load devices.",
+  "@devicesLoadError": {
+    "description": "Title on the devices error view"
+  },
+  "devicesSelectOrganization": "Select an organization to see its devices.",
+  "@devicesSelectOrganization": {
+    "description": "Shown when no organization is selected"
+  },
+  "devicesSummaryDevices": "Devices",
+  "@devicesSummaryDevices": {
+    "description": "Summary tile label for the total device count"
+  },
+  "devicesSummaryActive": "Active",
+  "@devicesSummaryActive": {
+    "description": "Summary tile label for the active device count"
+  },
+  "devicesSummaryEdge": "Edge gateway",
+  "@devicesSummaryEdge": {
+    "description": "Summary tile label for the edge gateway status"
+  },
+  "devicesSummaryNoGateway": "No gateway",
+  "@devicesSummaryNoGateway": {
+    "description": "Summary value when there is no edge gateway"
+  },
+  "deviceThresholdsTitle": "Thresholds",
+  "@deviceThresholdsTitle": {
+    "description": "Section title for the device thresholds card"
+  },
+  "deviceThresholdsEmpty": "No thresholds configured",
+  "@deviceThresholdsEmpty": {
+    "description": "Shown when a device has no thresholds set"
+  },
+  "deviceTempWarn": "Temp. warning",
+  "@deviceTempWarn": {
+    "description": "Row label for the temperature warning threshold"
+  },
+  "deviceTempCrit": "Temp. critical",
+  "@deviceTempCrit": {
+    "description": "Row label for the temperature critical threshold"
+  },
+  "deviceGasWarn": "Gas warning",
+  "@deviceGasWarn": {
+    "description": "Row label for the gas warning threshold"
+  },
+  "deviceGasCrit": "Gas critical",
+  "@deviceGasCrit": {
+    "description": "Row label for the gas critical threshold"
+  },
+  "deviceMetadataTitle": "Information",
+  "@deviceMetadataTitle": {
+    "description": "Section title for the device metadata card"
+  },
+  "deviceStatusFieldLabel": "Status",
+  "@deviceStatusFieldLabel": {
+    "description": "Row label for the device status"
+  },
+  "deviceCreatedLabel": "Created",
+  "@deviceCreatedLabel": {
+    "description": "Row label for the device creation date"
+  },
+  "deviceUpdatedLabel": "Updated",
+  "@deviceUpdatedLabel": {
+    "description": "Row label for the device last-updated date"
+  },
+  "deviceStatusProvisioned": "Provisioned",
+  "@deviceStatusProvisioned": {
+    "description": "Device status pill: provisioned"
+  },
+  "deviceStatusActive": "Active",
+  "@deviceStatusActive": {
+    "description": "Device status pill: active"
+  },
+  "deviceStatusInactive": "Inactive",
+  "@deviceStatusInactive": {
+    "description": "Device status pill: inactive"
+  },
+
+  "editOrganizationTooltip": "Edit organization",
+  "@editOrganizationTooltip": {
+    "description": "Tooltip on the edit-organization action"
+  },
+  "myInvitationsTooltip": "My invitations",
+  "@myInvitationsTooltip": {
+    "description": "Tooltip on the invitations action"
+  },
+  "membersManagementTitle": "Members management",
+  "@membersManagementTitle": {
+    "description": "Section title for the members list"
+  },
+  "addMember": "Add member",
+  "@addMember": {
+    "description": "Button to invite a new member"
+  },
+  "noMembers": "No members in this organization yet.",
+  "@noMembers": {
+    "description": "Empty state for the members list"
+  },
+  "pendingInvitations": "Pending invitations",
+  "@pendingInvitations": {
+    "description": "Section title for pending invitations"
+  },
+  "organizationLoadError": "Could not load the organization.",
+  "@organizationLoadError": {
+    "description": "Title on the organization error view"
+  },
+  "myInvitationsTitle": "My invitations",
+  "@myInvitationsTitle": {
+    "description": "App bar title on the invitations screen"
+  },
+  "noInvitations": "You have no invitations.",
+  "@noInvitations": {
+    "description": "Empty state for the invitations list"
+  },
+  "myInvitationsLoadError": "Could not load your invitations.",
+  "@myInvitationsLoadError": {
+    "description": "Title on the invitations error view"
+  },
+  "memberDetailsTitle": "Member details",
+  "@memberDetailsTitle": {
+    "description": "App bar title on the member detail screen"
+  },
+  "editPermissions": "Edit permissions",
+  "@editPermissions": {
+    "description": "Button / title to edit a member's permissions"
+  },
+  "backToOrganization": "Back to organization",
+  "@backToOrganization": {
+    "description": "Button to return to the organization screen"
+  },
+  "accessPermissionsHeader": "ACCESS PERMISSIONS",
+  "@accessPermissionsHeader": {
+    "description": "Uppercase section header above the permission cards"
+  },
+  "permissionSecurity": "Security",
+  "@permissionSecurity": {
+    "description": "Permission domain: security"
+  },
+  "permissionOrganization": "Organizations",
+  "@permissionOrganization": {
+    "description": "Permission domain: organizations"
+  },
+  "permissionInternalControl": "Internal control",
+  "@permissionInternalControl": {
+    "description": "Permission domain: internal control"
+  },
+  "permissionsUpdated": "Permissions updated",
+  "@permissionsUpdated": {
+    "description": "Snackbar after saving member permissions"
+  },
+  "organizationNotDetermined": "Could not determine the organization",
+  "@organizationNotDetermined": {
+    "description": "Snackbar when the active organization is unknown"
+  },
+  "editOrganizationTitle": "Edit organization",
+  "@editOrganizationTitle": {
+    "description": "App bar title on the edit-organization screen"
+  },
+  "organizationUpdated": "Organization updated",
+  "@organizationUpdated": {
+    "description": "Snackbar after saving the organization"
+  },
+  "uploadNewImage": "Upload new image",
+  "@uploadNewImage": {
+    "description": "Disabled placeholder button for image upload"
+  },
+  "organizationNameLabel": "Organization name",
+  "@organizationNameLabel": {
+    "description": "Label for the organization name field"
+  },
+  "organizationNameRequired": "Enter the organization name",
+  "@organizationNameRequired": {
+    "description": "Validation error when the organization name is empty"
+  },
+  "physicalLocationLabel": "Physical location / Address",
+  "@physicalLocationLabel": {
+    "description": "Label for the organization address field"
+  },
+  "directionsNotesLabel": "Directions & access notes",
+  "@directionsNotesLabel": {
+    "description": "Label for the access notes field"
+  },
+  "inviteMemberTitle": "Invite member",
+  "@inviteMemberTitle": {
+    "description": "Title of the invite-member dialog"
+  },
+  "invitationSent": "Invitation sent",
+  "@invitationSent": {
+    "description": "Snackbar after sending an invitation"
+  },
+  "inviteEmailRequired": "Enter an email",
+  "@inviteEmailRequired": {
+    "description": "Validation error in the invite dialog when the email is empty"
+  },
+  "invite": "Invite",
+  "@invite": {
+    "description": "Submit button in the invite-member dialog"
+  },
+  "decline": "Decline",
+  "@decline": {
+    "description": "Decline an invitation"
+  },
+  "accept": "Accept",
+  "@accept": {
+    "description": "Accept an invitation"
+  },
+  "invitationToOrganization": "Organization invitation",
+  "@invitationToOrganization": {
+    "description": "Title of an invitation card"
+  },
+  "addressHeader": "ADDRESS",
+  "@addressHeader": {
+    "description": "Uppercase label for the address row"
+  },
+  "noAddressRegistered": "No address on file",
+  "@noAddressRegistered": {
+    "description": "Shown when an organization has no address"
+  },
+  "referencePointHeader": "REFERENCE POINT",
+  "@referencePointHeader": {
+    "description": "Uppercase label for the reference-point row"
+  },
+  "invitationStatusPending": "Pending",
+  "@invitationStatusPending": {
+    "description": "Invitation status pill: pending"
+  },
+  "invitationStatusAccepted": "Accepted",
+  "@invitationStatusAccepted": {
+    "description": "Invitation status pill: accepted"
+  },
+  "invitationStatusDeclined": "Declined",
+  "@invitationStatusDeclined": {
+    "description": "Invitation status pill: declined"
+  },
+
+  "processesTitle": "Processes",
+  "@processesTitle": {
+    "description": "App bar title on the Processes tab"
+  },
+  "processesComingSoon": "Processes — coming soon",
+  "@processesComingSoon": {
+    "description": "Placeholder message on the Processes tab"
   }
 }

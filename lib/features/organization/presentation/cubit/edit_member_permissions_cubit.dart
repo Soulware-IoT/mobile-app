@@ -13,7 +13,7 @@ class EditMemberPermissionsCubit extends Cubit<EditMemberPermissionsState> {
     required String organizationId,
     required String memberId,
     required MemberRole security,
-    required MemberRole iot,
+    required MemberRole organization,
     required MemberRole internalControl,
   }) async {
     emit(const EditMemberPermissionsSaving());
@@ -22,7 +22,7 @@ class EditMemberPermissionsCubit extends Cubit<EditMemberPermissionsState> {
         organizationId: organizationId,
         memberId: memberId,
         security: security,
-        iot: iot,
+        organization: organization,
         internalControl: internalControl,
       );
       emit(EditMemberPermissionsSuccess(member));

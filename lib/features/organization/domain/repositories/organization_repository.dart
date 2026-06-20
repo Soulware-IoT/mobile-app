@@ -41,7 +41,7 @@ abstract class OrganizationRepository {
     required String organizationId,
     required String memberId,
     required MemberRole security,
-    required MemberRole iot,
+    required MemberRole organization,
     required MemberRole internalControl,
   });
 

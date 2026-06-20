@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class RegisterLoginLink extends StatelessWidget {
@@ -14,12 +15,13 @@ class RegisterLoginLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '¿Ya tienes cuenta? ',
+          l10n.haveAccountQuestion,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -33,7 +35,7 @@ class RegisterLoginLink extends StatelessWidget {
             foregroundColor: AppTheme.seedColor,
           ),
           child: Text(
-            'Inicia sesión',
+            l10n.loginLink,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: AppTheme.seedColor,
               fontWeight: FontWeight.w600,

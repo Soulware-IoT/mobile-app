@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cocina360/features/organization/domain/model/invitation.dart';
+import 'package:cocina360/features/organization/presentation/widgets/invitation_status_label.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Row card for a pending invitation: invited email + a status pill.
 class InvitationCard extends StatelessWidget {
@@ -43,7 +45,7 @@ class InvitationCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                invitation.status.label,
+                invitation.status.localizedLabel(AppLocalizations.of(context)!),
                 style: const TextStyle(
                   color: Color(0xFF7A5B00),
                   fontSize: 11,

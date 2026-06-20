@@ -40,7 +40,7 @@ class OrganizationMemberDto {
       email: (profile['email'] as String?) ?? '',
       avatarUrl: profile['avatarUrl'] as String?,
       securityPermission: json['securityPermission'] as String?,
-      organizationPermission: json['iotPermission'] as String?,
+      organizationPermission: json['organizationsPermission'] as String?,
       internalControlPermission: json['internalControlPermission'] as String?,
     );
   }

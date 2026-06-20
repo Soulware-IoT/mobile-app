@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
+import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/invitations_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
+import 'package:cocina360/features/organization/presentation/widgets/invitation_card.dart';
+import 'package:cocina360/features/organization/presentation/widgets/invite_member_dialog.dart';
 import 'package:cocina360/features/organization/presentation/widgets/member_card.dart';
 import 'package:cocina360/features/organization/presentation/widgets/organization_header_card.dart';
 import 'package:cocina360/features/organization/presentation/widgets/organization_location_card.dart';
@@ -62,7 +66,14 @@ class _OrganizationPageState extends State<OrganizationPage> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: BlocBuilder<OrganizationCubit, OrganizationState>(
+      body: BlocListener<OrganizationCubit, OrganizationState>(
+        listenWhen: (prev, curr) => curr is OrganizationLoaded,
+        listener: (context, state) {
+          if (state is OrganizationLoaded) {
+            context.read<InvitationsCubit>().load(state.organization.id);
+          }
+        },
+        child: BlocBuilder<OrganizationCubit, OrganizationState>(
         builder: (context, state) {
           return switch (state) {
             OrganizationInitial() ||
@@ -78,6 +89,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
               _OrganizationContent(organization: organization, members: members),
           };
         },
+        ),
       ),
     );
   }
@@ -108,9 +120,11 @@ class _OrganizationContent extends StatelessWidget {
                 ),
               ),
             ),
-            // Inviting members is deferred to a later pass.
             FilledButton.icon(
-              onPressed: null,
+              onPressed: () => showInviteMemberDialog(
+                context,
+                organizationId: organization.id,
+              ),
               icon: const Icon(Icons.add, size: 18),
               label: const Text('Add Member'),
             ),
@@ -123,8 +137,54 @@ class _OrganizationContent extends StatelessWidget {
             child: Text('Aún no hay miembros en esta organización.'),
           )
         else
-          ...members.map((m) => MemberCard(member: m)),
+          ...members.map(
+            (m) => MemberCard(
+              member: m,
+              onTap: () =>
+                  context.push(AppRoutes.memberDetail, extra: m),
+            ),
+          ),
+        const SizedBox(height: 28),
+        const _PendingInvitations(),
       ],
+    );
+  }
+}
+
+/// Pending invitations section, backed by [InvitationsCubit] (loaded when the
+/// organization loads).
+class _PendingInvitations extends StatelessWidget {
+  const _PendingInvitations();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<InvitationsCubit, InvitationsState>(
+      builder: (context, state) {
+        final pending = switch (state) {
+          InvitationsLoaded(:final pending) => pending,
+          _ => const [],
+        };
+
+        // Hide the section entirely while there's nothing pending to show
+        // (initial/loading/empty/error all collapse to no section).
+        if (state is! InvitationsLoaded || pending.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Invitaciones pendientes',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ...pending.map((i) => InvitationCard(invitation: i)),
+          ],
+        );
+      },
     );
   }
 }

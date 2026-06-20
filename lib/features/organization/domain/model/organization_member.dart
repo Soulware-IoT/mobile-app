@@ -6,6 +6,13 @@ class OrganizationMember {
   final String fullName;
   final String email;
   final String? avatarUrl;
+
+  /// Per-bounded-context permission levels.
+  final MemberRole security;
+  final MemberRole iot;
+  final MemberRole internalControl;
+
+  /// Highest privilege across the three contexts, for the list badge.
   final MemberRole role;
 
   const OrganizationMember({
@@ -14,6 +21,9 @@ class OrganizationMember {
     required this.fullName,
     required this.email,
     this.avatarUrl,
+    required this.security,
+    required this.iot,
+    required this.internalControl,
     required this.role,
   });
 

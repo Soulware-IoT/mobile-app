@@ -46,11 +46,9 @@ class OrganizationMemberDto {
   }
 
   OrganizationMember toDomain() {
-    final role = highestRole([
-      memberRoleFromString(securityPermission),
-      memberRoleFromString(iotPermission),
-      memberRoleFromString(internalControlPermission),
-    ]);
+    final security = memberRoleFromString(securityPermission);
+    final iot = memberRoleFromString(iotPermission);
+    final internalControl = memberRoleFromString(internalControlPermission);
 
     return OrganizationMember(
       id: id,
@@ -58,7 +56,10 @@ class OrganizationMemberDto {
       fullName: fullName,
       email: email,
       avatarUrl: avatarUrl,
-      role: role,
+      security: security,
+      iot: iot,
+      internalControl: internalControl,
+      role: highestRole([security, iot, internalControl]),
     );
   }
 }

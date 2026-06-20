@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:cocina360/features/organization/data/repositories/organization_repository_impl.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
+import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/shared/data/repositories/auth_repository_impl.dart';
 import 'package:cocina360/shared/data/repositories/profile_repository_impl.dart';
@@ -94,6 +95,10 @@ class DependencyInjectorWidget extends StatelessWidget {
           BlocProvider<OrganizationCubit>(
             create: (context) =>
                 OrganizationCubit(context.read<OrganizationRepository>()),
+          ),
+          BlocProvider<InvitationsCubit>(
+            create: (context) =>
+                InvitationsCubit(context.read<OrganizationRepository>()),
           ),
         ],
         child: BlocListener<AuthCubit, AuthState>(

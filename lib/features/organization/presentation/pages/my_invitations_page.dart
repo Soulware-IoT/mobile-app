@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cocina360/features/organization/domain/model/invitation.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_invitations_state.dart';
+import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/widgets/my_invitation_card.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
+import 'package:cocina360/shared/infrastructure/remote/supabase.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -35,13 +38,45 @@ class _MyInvitationsPageState extends State<MyInvitationsPage> {
     }
   }
 
+  /// After accepting, the new membership only shows up once the Supabase JWT is
+  /// refreshed (its `organizations` claim is what the gateway guards read).
+  /// Refresh the session, then reload the drawer's organizations list.
+  Future<void> _onInvitationAccepted() async {
+    final myOrganizations = context.read<MyOrganizationsCubit>();
+    final userId = _userId;
+    if (userId == null) return;
+
+    try {
+      await supabase.auth.refreshSession();
+    } catch (_) {
+      // Even if the refresh fails, still reload — the list endpoint reads the
+      // live membership, so the org appears; opening it may require a later
+      // token refresh.
+    }
+    if (!mounted) return;
+    myOrganizations.load(userId);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Mis invitaciones')),
       body: BlocConsumer<MyInvitationsCubit, MyInvitationsState>(
         listener: (context, state) {
-          if (state is MyInvitationsActionError) {
+          if (state is MyInvitationsActionSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.accepted
+                      ? l10n.invitationAccepted
+                      : l10n.invitationDeclined,
+                ),
+              ),
+            );
+            if (state.accepted) _onInvitationAccepted();
+          } else if (state is MyInvitationsActionError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(localizedError(context, state.error))),
             );
@@ -59,6 +94,8 @@ class _MyInvitationsPageState extends State<MyInvitationsPage> {
             ),
             MyInvitationsLoaded(:final invitations, :final processingId) =>
               _List(invitations: invitations, processingId: processingId),
+            MyInvitationsActionSuccess(:final invitations) =>
+              _List(invitations: invitations, processingId: null),
             MyInvitationsActionError(:final invitations) =>
               _List(invitations: invitations, processingId: null),
           };

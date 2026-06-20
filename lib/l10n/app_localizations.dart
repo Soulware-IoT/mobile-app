@@ -139,6 +139,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You don\'t belong to any organization yet.'**
   String get emptyOrganizations;
+
+  /// Snackbar shown after accepting an invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation accepted'**
+  String get invitationAccepted;
+
+  /// Snackbar shown after declining an invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation declined'**
+  String get invitationDeclined;
 }
 
 class _AppLocalizationsDelegate

@@ -6,5 +6,7 @@
   "signOut": "Cerrar sesión",
   "myOrganizationsTitle": "Mis organizaciones",
   "noOrganizationsDrawer": "No perteneces a ninguna organización",
-  "emptyOrganizations": "Todavía no perteneces a ninguna organización."
+  "emptyOrganizations": "Todavía no perteneces a ninguna organización.",
+  "invitationAccepted": "Invitación aceptada",
+  "invitationDeclined": "Invitación rechazada"
 }

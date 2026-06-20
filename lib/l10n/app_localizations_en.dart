@@ -28,4 +28,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyOrganizations => 'You don\'t belong to any organization yet.';
+
+  @override
+  String get invitationAccepted => 'Invitation accepted';
+
+  @override
+  String get invitationDeclined => 'Invitation declined';
 }

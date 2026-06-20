@@ -29,6 +29,17 @@ final class MyInvitationsError extends MyInvitationsState {
   const MyInvitationsError(this.error);
 }
 
+/// Accept/decline succeeded. One-shot signal so the page can show a snackbar
+/// and, when [accepted], refresh the session + memberships (a new organization
+/// only appears once the JWT `organizations` claim is refreshed). Followed
+/// immediately by a [MyInvitationsLoaded] with the refreshed list.
+final class MyInvitationsActionSuccess extends MyInvitationsState {
+  final List<Invitation> invitations;
+  final bool accepted;
+
+  const MyInvitationsActionSuccess(this.invitations, {required this.accepted});
+}
+
 /// Accept/decline failure: keeps the current list so the page can show a
 /// snackbar without losing the rendered list.
 final class MyInvitationsActionError extends MyInvitationsState {

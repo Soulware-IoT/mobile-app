@@ -30,4 +30,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get emptyOrganizations =>
       'Todavía no perteneces a ninguna organización.';
+
+  @override
+  String get invitationAccepted => 'Invitación aceptada';
+
+  @override
+  String get invitationDeclined => 'Invitación rechazada';
 }

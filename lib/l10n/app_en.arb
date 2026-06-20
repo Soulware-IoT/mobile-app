@@ -27,5 +27,13 @@
   "emptyOrganizations": "You don't belong to any organization yet.",
   "@emptyOrganizations": {
     "description": "Organization screen empty state when the user has no memberships"
+  },
+  "invitationAccepted": "Invitation accepted",
+  "@invitationAccepted": {
+    "description": "Snackbar shown after accepting an invitation"
+  },
+  "invitationDeclined": "Invitation declined",
+  "@invitationDeclined": {
+    "description": "Snackbar shown after declining an invitation"
   }
 }

@@ -42,6 +42,7 @@ class MyInvitationsCubit extends Cubit<MyInvitationsState> {
         await repository.declineInvitation(invitationId);
       }
       final fresh = await repository.getMyInvitations(profileId);
+      emit(MyInvitationsActionSuccess(fresh, accepted: accept));
       emit(MyInvitationsLoaded(fresh));
     } catch (e) {
       emit(MyInvitationsActionError(currentList, e));

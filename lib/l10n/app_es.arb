@@ -1,0 +1,12 @@
+{
+  "@@locale": "es",
+  "errorNoConnection": "Sin conexión a internet",
+  "errorGatewayNotConfigured": "La URL del API gateway no está configurada",
+  "errorGeneric": "Algo salió mal. Inténtalo de nuevo.",
+  "signOut": "Cerrar sesión",
+  "myOrganizationsTitle": "Mis organizaciones",
+  "noOrganizationsDrawer": "No perteneces a ninguna organización",
+  "emptyOrganizations": "Todavía no perteneces a ninguna organización.",
+  "invitationAccepted": "Invitación aceptada",
+  "invitationDeclined": "Invitación rechazada"
+}

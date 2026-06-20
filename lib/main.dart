@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:cocina360/shared/infrastructure/local/database.dart';
@@ -47,10 +48,12 @@ class MainApp extends StatelessWidget {
       database: database,
       child: Builder(
         builder: (context) => MaterialApp.router(
-          title: "T'Compro",
+          title: "Cocina360",
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           debugShowCheckedModeBanner: true,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: createRouter(context),
         ),
       ),

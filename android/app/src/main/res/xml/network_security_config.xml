@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Local development only. Permits cleartext HTTP to the api-gw running on the
+  host machine while keeping HTTPS-only everywhere else. 10.0.2.2 is the Android
+  emulator's alias for the host loopback; localhost covers a device over adb
+  reverse. Production traffic (Supabase, deployed gateway) stays HTTPS.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        <domain includeSubdomains="false">localhost</domain>
+    </domain-config>
+</network-security-config>

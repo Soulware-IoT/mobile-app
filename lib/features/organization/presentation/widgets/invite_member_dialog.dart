@@ -4,6 +4,7 @@ import 'package:cocina360/features/organization/domain/repositories/organization
 import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invite_member_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invite_member_state.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 
 /// Opens the "invite member" dialog. On success it refreshes the pending
 /// invitations list (via the page's [InvitationsCubit]) and shows a snackbar.
@@ -70,7 +71,7 @@ class _InviteMemberDialogState extends State<_InviteMemberDialog> {
           );
         } else if (state is InviteMemberFailure) {
           messenger.showSnackBar(
-            SnackBar(content: Text('No se pudo invitar: ${state.message}')),
+            SnackBar(content: Text(localizedError(context, state.error))),
           );
         }
       },

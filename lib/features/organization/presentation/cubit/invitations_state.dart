@@ -23,7 +23,7 @@ final class InvitationsLoaded extends InvitationsState {
 }
 
 final class InvitationsError extends InvitationsState {
-  final String message;
+  final Object error;
 
-  const InvitationsError(this.message);
+  const InvitationsError(this.error);
 }

@@ -5,6 +5,7 @@ import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class EditOrganizationPage extends StatefulWidget {
@@ -69,7 +70,7 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
             context.pop();
           } else if (state is EditOrganizationFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('No se pudo guardar: ${state.message}')),
+              SnackBar(content: Text(localizedError(context, state.error))),
             );
           }
         },

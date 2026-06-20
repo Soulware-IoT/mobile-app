@@ -5,6 +5,7 @@ import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/invitations_state.dart';
+import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
 import 'package:cocina360/features/organization/presentation/widgets/invitation_card.dart';
@@ -13,6 +14,8 @@ import 'package:cocina360/features/organization/presentation/widgets/member_card
 import 'package:cocina360/features/organization/presentation/widgets/organization_header_card.dart';
 import 'package:cocina360/features/organization/presentation/widgets/organization_location_card.dart';
 import 'package:cocina360/features/shell/presentation/widgets/app_drawer.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -39,6 +42,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
     };
     if (userId != null) {
       context.read<OrganizationCubit>().load(userId);
+      context.read<MyOrganizationsCubit>().load(userId);
     }
   }
 
@@ -84,8 +88,8 @@ class _OrganizationPageState extends State<OrganizationPage> {
               child: CircularProgressIndicator(),
             ),
             OrganizationEmpty() => const _EmptyView(),
-            OrganizationError(:final message) => _ErrorView(
-              message: message,
+            OrganizationError(:final error) => _ErrorView(
+              message: localizedError(context, error),
               onRetry: _load,
             ),
             OrganizationLoaded(:final organization, :final members) =>
@@ -197,16 +201,16 @@ class _EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.business_outlined, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
+            const Icon(Icons.business_outlined, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
             Text(
-              'Todavía no perteneces a ninguna organización.',
+              AppLocalizations.of(context)!.emptyOrganizations,
               textAlign: TextAlign.center,
             ),
           ],

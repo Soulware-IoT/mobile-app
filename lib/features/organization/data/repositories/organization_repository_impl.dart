@@ -7,6 +7,7 @@ import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
+import 'package:cocina360/shared/infrastructure/network/no_connection_exception.dart';
 import 'package:cocina360/shared/infrastructure/remote/session_claims.dart';
 
 class OrganizationRepositoryImpl implements OrganizationRepository {
@@ -24,7 +25,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   Future<OrganizationWithMembers?> getPrimaryOrganization(String userId) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     // The backend has no "list my organizations" endpoint — memberships come
@@ -33,7 +34,17 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     final memberships = sessionClaims.organizations();
     if (memberships.isEmpty) return null;
 
-    final organizationId = memberships.first.organizationId;
+    return getOrganizationWithMembers(memberships.first.organizationId);
+  }
+
+  @override
+  Future<OrganizationWithMembers> getOrganizationWithMembers(
+    String organizationId,
+  ) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw const NoConnectionException();
+    }
 
     final organization =
         (await remoteService.getOrganization(organizationId)).toDomain();
@@ -42,6 +53,17 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     final members = memberDtos.map((dto) => dto.toDomain()).toList();
 
     return OrganizationWithMembers(organization, members);
+  }
+
+  @override
+  Future<List<Organization>> getMyOrganizations(String profileId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw const NoConnectionException();
+    }
+
+    final dtos = await remoteService.getMyOrganizations(profileId);
+    return dtos.map((dto) => dto.toDomain()).toList();
   }
 
   @override
@@ -55,7 +77,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   }) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     final updated = await remoteService.updateOrganization(
@@ -82,7 +104,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   }) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     final updated = await remoteService.updateMemberPermissions(
@@ -105,7 +127,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   }) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     await remoteService.inviteMember(organizationId, email);
@@ -115,7 +137,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   Future<List<Invitation>> getInvitations(String organizationId) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     final dtos = await remoteService.getInvitations(organizationId);
@@ -126,7 +148,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   Future<List<Invitation>> getMyInvitations(String profileId) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     final dtos = await remoteService.getMyInvitations(profileId);
@@ -137,7 +159,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   Future<void> acceptInvitation(String invitationId) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     await remoteService.acceptInvitation(invitationId);
@@ -147,7 +169,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   Future<void> declineInvitation(String invitationId) async {
     final online = await connectionChecker.isConnected;
     if (!online) {
-      throw Exception('Sin conexión a internet');
+      throw const NoConnectionException();
     }
 
     await remoteService.declineInvitation(invitationId);

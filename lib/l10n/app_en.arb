@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "errorNoConnection": "No internet connection",
+  "@errorNoConnection": {
+    "description": "Shown when a request fails because the device is offline"
+  },
+  "errorGatewayNotConfigured": "API gateway URL is not configured",
+  "@errorGatewayNotConfigured": {
+    "description": "Shown when API_GATEWAY_URL is empty"
+  },
+  "errorGeneric": "Something went wrong. Please try again.",
+  "@errorGeneric": {
+    "description": "Fallback message for unexpected errors"
+  },
+  "signOut": "Sign out",
+  "@signOut": {
+    "description": "Drawer action to log out"
+  },
+  "myOrganizationsTitle": "My organizations",
+  "@myOrganizationsTitle": {
+    "description": "Drawer section header listing the user's organizations"
+  },
+  "noOrganizationsDrawer": "You don't belong to any organization",
+  "@noOrganizationsDrawer": {
+    "description": "Drawer empty state for the organizations list"
+  },
+  "emptyOrganizations": "You don't belong to any organization yet.",
+  "@emptyOrganizations": {
+    "description": "Organization screen empty state when the user has no memberships"
+  }
+}

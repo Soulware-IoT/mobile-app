@@ -24,16 +24,16 @@ final class MyInvitationsLoaded extends MyInvitationsState {
 
 /// Initial-load failure (full-screen error with retry).
 final class MyInvitationsError extends MyInvitationsState {
-  final String message;
+  final Object error;
 
-  const MyInvitationsError(this.message);
+  const MyInvitationsError(this.error);
 }
 
 /// Accept/decline failure: keeps the current list so the page can show a
 /// snackbar without losing the rendered list.
 final class MyInvitationsActionError extends MyInvitationsState {
   final List<Invitation> invitations;
-  final String message;
+  final Object error;
 
-  const MyInvitationsActionError(this.invitations, this.message);
+  const MyInvitationsActionError(this.invitations, this.error);
 }

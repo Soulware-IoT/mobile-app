@@ -19,7 +19,7 @@ class InviteMemberCubit extends Cubit<InviteMemberState> {
       );
       emit(const InviteMemberSuccess());
     } catch (e) {
-      emit(InviteMemberFailure(e.toString()));
+      emit(InviteMemberFailure(e));
     }
   }
 }

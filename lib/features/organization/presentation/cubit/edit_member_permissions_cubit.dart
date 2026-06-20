@@ -27,7 +27,7 @@ class EditMemberPermissionsCubit extends Cubit<EditMemberPermissionsState> {
       );
       emit(EditMemberPermissionsSuccess(member));
     } catch (e) {
-      emit(EditMemberPermissionsFailure(e.toString()));
+      emit(EditMemberPermissionsFailure(e));
     }
   }
 }

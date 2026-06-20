@@ -4,6 +4,7 @@ import 'package:cocina360/features/organization/domain/model/invitation.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_invitations_state.dart';
 import 'package:cocina360/features/organization/presentation/widgets/my_invitation_card.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 
@@ -42,7 +43,7 @@ class _MyInvitationsPageState extends State<MyInvitationsPage> {
         listener: (context, state) {
           if (state is MyInvitationsActionError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('No se pudo completar: ${state.message}')),
+              SnackBar(content: Text(localizedError(context, state.error))),
             );
           }
         },
@@ -52,8 +53,8 @@ class _MyInvitationsPageState extends State<MyInvitationsPage> {
             MyInvitationsLoading() => const Center(
               child: CircularProgressIndicator(),
             ),
-            MyInvitationsError(:final message) => _ErrorView(
-              message: message,
+            MyInvitationsError(:final error) => _ErrorView(
+              message: localizedError(context, error),
               onRetry: _load,
             ),
             MyInvitationsLoaded(:final invitations, :final processingId) =>

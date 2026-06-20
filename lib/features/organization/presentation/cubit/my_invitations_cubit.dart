@@ -14,7 +14,7 @@ class MyInvitationsCubit extends Cubit<MyInvitationsState> {
       final invitations = await repository.getMyInvitations(profileId);
       emit(MyInvitationsLoaded(invitations));
     } catch (e) {
-      emit(MyInvitationsError(e.toString()));
+      emit(MyInvitationsError(e));
     }
   }
 
@@ -44,7 +44,7 @@ class MyInvitationsCubit extends Cubit<MyInvitationsState> {
       final fresh = await repository.getMyInvitations(profileId);
       emit(MyInvitationsLoaded(fresh));
     } catch (e) {
-      emit(MyInvitationsActionError(currentList, e.toString()));
+      emit(MyInvitationsActionError(currentList, e));
     }
   }
 }

@@ -18,6 +18,17 @@ class OrganizationRemoteService {
     return OrganizationDto.fromJson(data as JSON);
   }
 
+  /// `GET /organizations?profileId={profileId}` — organizations the given
+  /// profile (the current user) belongs to.
+  Future<List<OrganizationDto>> getMyOrganizations(String profileId) async {
+    final data = await client.getJson(
+      '/organizations',
+      query: {'profileId': profileId},
+    );
+    final list = (data as List).cast<JSON>();
+    return list.map(OrganizationDto.fromJson).toList();
+  }
+
   /// `GET /organizations/{organizationId}/members` — members enriched with
   /// profile data and permission levels.
   Future<List<OrganizationMemberDto>> getMembers(String organizationId) async {

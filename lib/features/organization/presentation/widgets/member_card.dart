@@ -4,8 +4,9 @@ import 'package:cocina360/features/organization/presentation/widgets/member_role
 
 class MemberCard extends StatelessWidget {
   final OrganizationMember member;
+  final VoidCallback? onTap;
 
-  const MemberCard({super.key, required this.member});
+  const MemberCard({super.key, required this.member, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,16 @@ class MemberCard extends StatelessWidget {
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 12),
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(color: theme.dividerColor.withValues(alpha: 0.4)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        child: Row(
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          child: Row(
           children: [
             _Avatar(member: member),
             const SizedBox(width: 14),
@@ -65,7 +69,8 @@ class MemberCard extends StatelessWidget {
                 ),
               ],
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

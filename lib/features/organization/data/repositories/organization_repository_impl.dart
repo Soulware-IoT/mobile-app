@@ -1,6 +1,10 @@
+import 'package:cocina360/features/organization/data/services/dto/update_member_permissions_request.dart';
 import 'package:cocina360/features/organization/data/services/dto/update_organization_request.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
+import 'package:cocina360/features/organization/domain/model/invitation.dart';
+import 'package:cocina360/features/organization/domain/model/member_role.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
+import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 import 'package:cocina360/shared/infrastructure/remote/session_claims.dart';
@@ -66,5 +70,86 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     );
 
     return updated.toDomain();
+  }
+
+  @override
+  Future<OrganizationMember> updateMemberPermissions({
+    required String organizationId,
+    required String memberId,
+    required MemberRole security,
+    required MemberRole iot,
+    required MemberRole internalControl,
+  }) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    final updated = await remoteService.updateMemberPermissions(
+      organizationId,
+      memberId,
+      UpdateMemberPermissionsRequest(
+        security: security,
+        iot: iot,
+        internalControl: internalControl,
+      ),
+    );
+
+    return updated.toDomain();
+  }
+
+  @override
+  Future<void> inviteMember({
+    required String organizationId,
+    required String email,
+  }) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    await remoteService.inviteMember(organizationId, email);
+  }
+
+  @override
+  Future<List<Invitation>> getInvitations(String organizationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    final dtos = await remoteService.getInvitations(organizationId);
+    return dtos.map((dto) => dto.toDomain()).toList();
+  }
+
+  @override
+  Future<List<Invitation>> getMyInvitations(String profileId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    final dtos = await remoteService.getMyInvitations(profileId);
+    return dtos.map((dto) => dto.toDomain()).toList();
+  }
+
+  @override
+  Future<void> acceptInvitation(String invitationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    await remoteService.acceptInvitation(invitationId);
+  }
+
+  @override
+  Future<void> declineInvitation(String invitationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    await remoteService.declineInvitation(invitationId);
   }
 }

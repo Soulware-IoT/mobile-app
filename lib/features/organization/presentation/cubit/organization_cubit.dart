@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
+import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
 
@@ -28,6 +29,17 @@ class OrganizationCubit extends Cubit<OrganizationState> {
     final current = state;
     if (current is OrganizationLoaded) {
       emit(OrganizationLoaded(organization, current.members));
+    }
+  }
+
+  /// Replaces a member (by id) in the loaded list after its permissions change.
+  void applyUpdatedMember(OrganizationMember member) {
+    final current = state;
+    if (current is OrganizationLoaded) {
+      final members = [
+        for (final m in current.members) m.id == member.id ? member : m,
+      ];
+      emit(OrganizationLoaded(current.organization, members));
     }
   }
 }

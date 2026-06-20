@@ -1,3 +1,5 @@
+import 'package:cocina360/features/organization/domain/model/invitation.dart';
+import 'package:cocina360/features/organization/domain/model/member_role.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 
@@ -24,4 +26,31 @@ abstract class OrganizationRepository {
     String? addressLineTwo,
     String? addressReference,
   });
+
+  /// Updates a member's per-context permissions and returns the new member.
+  Future<OrganizationMember> updateMemberPermissions({
+    required String organizationId,
+    required String memberId,
+    required MemberRole security,
+    required MemberRole iot,
+    required MemberRole internalControl,
+  });
+
+  /// Invites a member to the organization by email.
+  Future<void> inviteMember({
+    required String organizationId,
+    required String email,
+  });
+
+  /// Returns the organization's invitations.
+  Future<List<Invitation>> getInvitations(String organizationId);
+
+  /// Returns the invitations addressed to the given profile (current user).
+  Future<List<Invitation>> getMyInvitations(String profileId);
+
+  /// Accepts an invitation (the current user becomes a member).
+  Future<void> acceptInvitation(String invitationId);
+
+  /// Declines an invitation.
+  Future<void> declineInvitation(String invitationId);
 }

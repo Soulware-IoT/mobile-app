@@ -11,6 +11,10 @@ extension MemberRoleX on MemberRole {
     MemberRole.none => 'NONE',
   };
 
+  /// Wire value expected by the backend (`PermissionLevel` enum is uppercase in
+  /// the REST contract: ADMIN / LIEUTENANT / ASSIGNEE / NONE).
+  String get apiValue => name.toUpperCase();
+
   /// Higher number = more privilege. Used to pick the badge role.
   int get rank => switch (this) {
     MemberRole.admin => 3,

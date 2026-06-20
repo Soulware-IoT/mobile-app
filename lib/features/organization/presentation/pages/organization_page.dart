@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:cocina360/features/organization/presentation/widgets/member_card
 import 'package:cocina360/features/organization/presentation/widgets/organization_header_card.dart';
 import 'package:cocina360/features/organization/presentation/widgets/organization_location_card.dart';
 import 'package:cocina360/features/shell/presentation/widgets/app_drawer.dart';
+import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 
@@ -42,6 +44,19 @@ class _OrganizationPageState extends State<OrganizationPage> {
       appBar: AppBar(
         title: const Text('Cocina360'),
         actions: [
+          BlocBuilder<OrganizationCubit, OrganizationState>(
+            builder: (context, state) {
+              if (state is! OrganizationLoaded) return const SizedBox.shrink();
+              return IconButton(
+                icon: const Icon(Icons.edit_outlined),
+                tooltip: 'Editar organización',
+                onPressed: () => context.push(
+                  AppRoutes.editOrganization,
+                  extra: state.organization,
+                ),
+              );
+            },
+          ),
           // Notifications are not implemented yet.
           IconButton(icon: const Icon(Icons.notifications_none), onPressed: null),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/auth/presentation/pages/login/widgets/login_form_card.dart';
 import 'package:cocina360/features/auth/presentation/pages/login/widgets/login_register_link.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -68,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 24),
-                  const AuthBrandHeader(
-                    authCaption: "Inicia sesión para continuar",
+                  AuthBrandHeader(
+                    authCaption: AppLocalizations.of(context)!.loginCaption,
                   ),
                   const SizedBox(height: 48),
                   LoginFormCard(

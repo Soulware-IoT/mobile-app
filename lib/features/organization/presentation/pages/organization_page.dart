@@ -48,6 +48,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cocina360'),
@@ -57,7 +58,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
               if (state is! OrganizationLoaded) return const SizedBox.shrink();
               return IconButton(
                 icon: const Icon(Icons.edit_outlined),
-                tooltip: 'Editar organización',
+                tooltip: l10n.editOrganizationTooltip,
                 onPressed: () => context.push(
                   AppRoutes.editOrganization,
                   extra: state.organization,
@@ -67,7 +68,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
           ),
           IconButton(
             icon: const Icon(Icons.notifications_none),
-            tooltip: 'Mis invitaciones',
+            tooltip: l10n.myInvitationsTooltip,
             onPressed: () => context.push(AppRoutes.myInvitations),
           ),
         ],
@@ -121,7 +122,7 @@ class _OrganizationContent extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Members Management',
+                AppLocalizations.of(context)!.membersManagementTitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
@@ -133,15 +134,15 @@ class _OrganizationContent extends StatelessWidget {
                 organizationId: organization.id,
               ),
               icon: const Icon(Icons.add, size: 18),
-              label: const Text('Add Member'),
+              label: Text(AppLocalizations.of(context)!.addMember),
             ),
           ],
         ),
         const SizedBox(height: 16),
         if (members.isEmpty)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 24),
-            child: Text('Aún no hay miembros en esta organización.'),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: Text(AppLocalizations.of(context)!.noMembers),
           )
         else
           ...members.map(
@@ -182,7 +183,7 @@ class _PendingInvitations extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Invitaciones pendientes',
+              AppLocalizations.of(context)!.pendingInvitations,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
@@ -228,6 +229,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -237,7 +239,7 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.cloud_off, size: 56, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No se pudo cargar la organización.',
+              l10n.organizationLoadError,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -251,7 +253,7 @@ class _ErrorView extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Reintentar'),
+              label: Text(l10n.retry),
             ),
           ],
         ),

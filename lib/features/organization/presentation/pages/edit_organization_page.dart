@@ -5,6 +5,7 @@ import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
@@ -56,8 +57,9 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Organization')),
+      appBar: AppBar(title: Text(l10n.editOrganizationTitle)),
       body: BlocConsumer<EditOrganizationCubit, EditOrganizationState>(
         listener: (context, state) {
           if (state is EditOrganizationSuccess) {
@@ -65,7 +67,7 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
               state.organization,
             );
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Organización actualizada')),
+              SnackBar(content: Text(l10n.organizationUpdated)),
             );
             context.pop();
           } else if (state is EditOrganizationFailure) {
@@ -102,7 +104,7 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text('CANCEL'),
+                        child: Text(l10n.cancel),
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -126,7 +128,7 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text('SAVE CHANGES'),
+                            : Text(l10n.saveChanges),
                       ),
                     ),
                   ],
@@ -171,7 +173,7 @@ class _ImageCard extends StatelessWidget {
           FilledButton.tonalIcon(
             onPressed: null,
             icon: const Icon(Icons.upload_outlined, size: 18),
-            label: const Text('Upload New Image'),
+            label: Text(AppLocalizations.of(context)!.uploadNewImage),
           ),
         ],
       ),
@@ -206,6 +208,7 @@ class _DetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       color: theme.colorScheme.surfaceContainerLow,
@@ -221,13 +224,13 @@ class _DetailsCard extends StatelessWidget {
                 controller: nameController,
                 enabled: enabled,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Organization Name',
-                  prefixIcon: Icon(Icons.apartment_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.organizationNameLabel,
+                  prefixIcon: const Icon(Icons.apartment_outlined),
                 ),
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'Ingresa el nombre de la organización';
+                    return l10n.organizationNameRequired;
                   }
                   return null;
                 },
@@ -237,9 +240,9 @@ class _DetailsCard extends StatelessWidget {
                 controller: addressController,
                 enabled: enabled,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Physical Location / Address',
-                  prefixIcon: Icon(Icons.location_on_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.physicalLocationLabel,
+                  prefixIcon: const Icon(Icons.location_on_outlined),
                 ),
               ),
               const SizedBox(height: 16),
@@ -249,10 +252,10 @@ class _DetailsCard extends StatelessWidget {
                 minLines: 3,
                 maxLines: 5,
                 keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  labelText: 'Directions & Access Notes',
+                decoration: InputDecoration(
+                  labelText: l10n.directionsNotesLabel,
                   alignLabelWithHint: true,
-                  prefixIcon: Icon(Icons.navigation_outlined),
+                  prefixIcon: const Icon(Icons.navigation_outlined),
                 ),
               ),
             ],

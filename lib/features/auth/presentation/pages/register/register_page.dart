@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/auth/presentation/pages/register/widgets/register_form_card.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/features/auth/presentation/pages/register/widgets/register_login_link.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 import 'package:cocina360/shared/presentation/widgets/auth_brand_header.dart';
@@ -70,7 +71,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 24),
-                  const AuthBrandHeader(authCaption: 'Crea tu cuenta'),
+                  AuthBrandHeader(
+                    authCaption: AppLocalizations.of(context)!.registerCaption,
+                  ),
                   const SizedBox(height: 48),
                   RegisterFormCard(
                     formKey: _formKey,

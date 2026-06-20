@@ -4,6 +4,8 @@ import 'package:cocina360/features/devices/domain/model/iot_device.dart';
 import 'package:cocina360/features/devices/presentation/cubit/device_detail_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/device_detail_state.dart';
 import 'package:cocina360/features/devices/presentation/widgets/device_status_badge.dart';
+import 'package:cocina360/features/devices/presentation/widgets/device_status_label.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 
 /// Read-only detail of an IoT device. Shows the device passed via `extra`
@@ -123,19 +125,20 @@ class _ThresholdsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = device.thresholds;
+    final l10n = AppLocalizations.of(context)!;
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _sectionTitle(context, 'Umbrales'),
+          _sectionTitle(context, l10n.deviceThresholdsTitle),
           const SizedBox(height: 12),
           if (t.isEmpty)
-            const Text('Sin umbrales configurados')
+            Text(l10n.deviceThresholdsEmpty)
           else ...[
-            _Row(label: 'Temp. aviso', value: _temp(t.warnTemperatureC)),
-            _Row(label: 'Temp. crítica', value: _temp(t.critTemperatureC)),
-            _Row(label: 'Gas aviso', value: _gas(t.warnGasPpm)),
-            _Row(label: 'Gas crítico', value: _gas(t.critGasPpm)),
+            _Row(label: l10n.deviceTempWarn, value: _temp(t.warnTemperatureC)),
+            _Row(label: l10n.deviceTempCrit, value: _temp(t.critTemperatureC)),
+            _Row(label: l10n.deviceGasWarn, value: _gas(t.warnGasPpm)),
+            _Row(label: l10n.deviceGasCrit, value: _gas(t.critGasPpm)),
           ],
         ],
       ),
@@ -153,15 +156,19 @@ class _MetadataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _sectionTitle(context, 'Información'),
+          _sectionTitle(context, l10n.deviceMetadataTitle),
           const SizedBox(height: 12),
-          _Row(label: 'Estado', value: device.status.label),
-          _Row(label: 'Creado', value: _date(device.createdAt)),
-          _Row(label: 'Actualizado', value: _date(device.updatedAt)),
+          _Row(
+            label: l10n.deviceStatusFieldLabel,
+            value: device.status.localizedLabel(l10n),
+          ),
+          _Row(label: l10n.deviceCreatedLabel, value: _date(device.createdAt)),
+          _Row(label: l10n.deviceUpdatedLabel, value: _date(device.updatedAt)),
         ],
       ),
     );
@@ -249,7 +256,7 @@ class _ErrorView extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Reintentar'),
+              label: Text(AppLocalizations.of(context)!.retry),
             ),
           ],
         ),

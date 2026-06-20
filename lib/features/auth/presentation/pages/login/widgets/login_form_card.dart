@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class LoginFormCard extends StatefulWidget {
@@ -28,6 +29,7 @@ class _LoginFormCardState extends State<LoginFormCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -45,13 +47,13 @@ class _LoginFormCardState extends State<LoginFormCard> {
                 enabled: !widget.loading,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icon(Icons.email_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.authEmailLabel,
+                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 validator: (v) {
-                  if (v == null || v.trim().isEmpty) return 'Ingresa tu correo';
-                  if (!v.contains('@')) return 'Correo inválido';
+                  if (v == null || v.trim().isEmpty) return l10n.authEmailRequired;
+                  if (!v.contains('@')) return l10n.authEmailInvalid;
                   return null;
                 },
               ),
@@ -66,7 +68,7 @@ class _LoginFormCardState extends State<LoginFormCard> {
                 onFieldSubmitted: (_) =>
                     widget.loading ? null : widget.onSubmit(),
                 decoration: InputDecoration(
-                  labelText: 'Contraseña',
+                  labelText: l10n.authPasswordLabel,
                   prefixIcon: const Icon(Icons.lock_outlined),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -79,7 +81,7 @@ class _LoginFormCardState extends State<LoginFormCard> {
                   ),
                 ),
                 validator: (v) {
-                  if (v == null || v.isEmpty) return 'Ingresa tu contraseña';
+                  if (v == null || v.isEmpty) return l10n.authPasswordRequired;
                   return null;
                 },
               ),
@@ -105,7 +107,7 @@ class _LoginFormCardState extends State<LoginFormCard> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text('Iniciar sesión'),
+                    : Text(l10n.loginButton),
               ),
             ],
           ),

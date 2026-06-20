@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cocina360/features/organization/domain/model/invitation.dart';
+import 'package:cocina360/features/organization/presentation/widgets/invitation_status_label.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 /// A card for one of the current user's invitations. Pending ones expose
@@ -42,10 +44,13 @@ class MyInvitationCard extends StatelessWidget {
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Invitación a una organización',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                    AppLocalizations.of(context)!.invitationToOrganization,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
                 _StatusBadge(status: invitation.status),
@@ -67,7 +72,7 @@ class MyInvitationCard extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: processing ? null : onDecline,
-                      child: const Text('Declinar'),
+                      child: Text(AppLocalizations.of(context)!.decline),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -87,7 +92,7 @@ class MyInvitationCard extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             )
-                          : const Text('Aceptar'),
+                          : Text(AppLocalizations.of(context)!.accept),
                     ),
                   ),
                 ],
@@ -126,7 +131,7 @@ class _StatusBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        status.label,
+        status.localizedLabel(AppLocalizations.of(context)!),
         style: TextStyle(
           color: colors.fg,
           fontSize: 11,

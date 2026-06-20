@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Address + reference-point card.
 ///
@@ -14,6 +15,7 @@ class OrganizationLocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final address = organization.addressLine;
     final reference = organization.addressReference;
 
@@ -30,8 +32,8 @@ class OrganizationLocationCard extends StatelessWidget {
           children: [
             _Row(
               icon: Icons.location_on_outlined,
-              label: 'DIRECCIÓN',
-              value: address.isNotEmpty ? address : 'Sin dirección registrada',
+              label: l10n.addressHeader,
+              value: address.isNotEmpty ? address : l10n.noAddressRegistered,
             ),
             if (reference != null && reference.trim().isNotEmpty) ...[
               const SizedBox(height: 16),
@@ -39,7 +41,7 @@ class OrganizationLocationCard extends StatelessWidget {
               const SizedBox(height: 16),
               _Row(
                 icon: Icons.navigation_outlined,
-                label: 'PUNTO DE REFERENCIA',
+                label: l10n.referencePointHeader,
                 value: reference,
               ),
             ],

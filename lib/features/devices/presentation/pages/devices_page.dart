@@ -7,6 +7,7 @@ import 'package:cocina360/features/devices/presentation/widgets/device_card.dart
 import 'package:cocina360/features/devices/presentation/widgets/devices_summary.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
 
@@ -42,8 +43,9 @@ class _DevicesPageState extends State<DevicesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Devices')),
+      appBar: AppBar(title: Text(l10n.devicesTitle)),
       body: BlocListener<OrganizationCubit, OrganizationState>(
         listenWhen: (prev, curr) => curr is OrganizationLoaded,
         listener: (context, state) {
@@ -55,9 +57,9 @@ class _DevicesPageState extends State<DevicesPage> {
           builder: (context, orgState) {
             return switch (orgState) {
               OrganizationLoaded() => _DevicesBody(onRetry: _reload),
-              OrganizationEmpty() => const _Centered(
+              OrganizationEmpty() => _Centered(
                 icon: Icons.apartment_outlined,
-                message: 'Selecciona una organización para ver sus dispositivos.',
+                message: l10n.devicesSelectOrganization,
               ),
               OrganizationError(:final error) => _Centered(
                 icon: Icons.cloud_off,
@@ -99,16 +101,18 @@ class _DevicesBody extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Inventario de dispositivos',
+                AppLocalizations.of(context)!.devicesInventoryTitle,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 12),
               if (devices.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
-                  child: Center(child: Text('No hay dispositivos.')),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Center(
+                    child: Text(AppLocalizations.of(context)!.devicesEmpty),
+                  ),
                 )
               else
                 ...devices.map(
@@ -158,6 +162,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -167,7 +172,7 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.cloud_off, size: 56, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No se pudieron cargar los dispositivos.',
+              l10n.devicesLoadError,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -181,7 +186,7 @@ class _ErrorView extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Reintentar'),
+              label: Text(l10n.retry),
             ),
           ],
         ),

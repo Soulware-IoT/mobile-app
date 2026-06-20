@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cocina360/features/devices/domain/model/edge_device.dart';
+import 'package:cocina360/features/devices/presentation/widgets/device_status_label.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Top summary of the Devices screen built from data that actually exists:
 /// total devices, active count, and the edge gateway status.
@@ -17,11 +19,12 @@ class DevicesSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(
           child: _SummaryCard(
-            label: 'Dispositivos',
+            label: l10n.devicesSummaryDevices,
             value: '$total',
             icon: Icons.sensors,
           ),
@@ -29,7 +32,7 @@ class DevicesSummary extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _SummaryCard(
-            label: 'Activos',
+            label: l10n.devicesSummaryActive,
             value: '$active',
             icon: Icons.check_circle_outline,
           ),
@@ -37,8 +40,9 @@ class DevicesSummary extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _SummaryCard(
-            label: 'Edge gateway',
-            value: edge?.status.label ?? 'Sin gateway',
+            label: l10n.devicesSummaryEdge,
+            value: edge?.status.localizedLabel(l10n) ??
+                l10n.devicesSummaryNoGateway,
             icon: Icons.router_outlined,
           ),
         ),

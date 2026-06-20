@@ -7,6 +7,7 @@ import 'package:cocina360/features/organization/presentation/cubit/edit_member_p
 import 'package:cocina360/features/organization/presentation/cubit/edit_member_permissions_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
@@ -37,7 +38,11 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
     final orgState = context.read<OrganizationCubit>().state;
     if (orgState is! OrganizationLoaded) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo determinar la organización')),
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)!.organizationNotDetermined,
+          ),
+        ),
       );
       return;
     }
@@ -53,14 +58,15 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Permissions')),
+      appBar: AppBar(title: Text(l10n.editPermissions)),
       body: BlocConsumer<EditMemberPermissionsCubit, EditMemberPermissionsState>(
         listener: (context, state) {
           if (state is EditMemberPermissionsSuccess) {
             context.read<OrganizationCubit>().applyUpdatedMember(state.member);
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Permisos actualizados')),
+              SnackBar(content: Text(l10n.permissionsUpdated)),
             );
             context.pop(state.member);
           } else if (state is EditMemberPermissionsFailure) {
@@ -85,21 +91,21 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
                 ),
                 const SizedBox(height: 24),
                 _RoleField(
-                  label: 'Seguridad',
+                  label: l10n.permissionSecurity,
                   value: _security,
                   enabled: !saving,
                   onChanged: (v) => setState(() => _security = v),
                 ),
                 const SizedBox(height: 16),
                 _RoleField(
-                  label: 'Organizaciones',
+                  label: l10n.permissionOrganization,
                   value: _organization,
                   enabled: !saving,
                   onChanged: (v) => setState(() => _organization = v),
                 ),
                 const SizedBox(height: 16),
                 _RoleField(
-                  label: 'Control interno',
+                  label: l10n.permissionInternalControl,
                   value: _internalControl,
                   enabled: !saving,
                   onChanged: (v) => setState(() => _internalControl = v),
@@ -124,7 +130,7 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
                             color: Colors.white,
                           ),
                         )
-                      : const Text('SAVE CHANGES'),
+                      : Text(l10n.saveChanges),
                 ),
               ],
             ),

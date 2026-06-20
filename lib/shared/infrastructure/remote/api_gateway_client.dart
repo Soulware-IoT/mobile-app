@@ -57,7 +57,23 @@ class ApiGatewayClient {
     }
 
     final response = await _http.get(_uri(path, query), headers: _headers());
+    return _decode(response);
+  }
 
+  Future<dynamic> patchJson(String path, {Object? body}) async {
+    if (baseUrl.isEmpty) {
+      throw const ApiGatewayException(0, 'API_GATEWAY_URL no está configurada');
+    }
+
+    final response = await _http.patch(
+      _uri(path, null),
+      headers: _headers(),
+      body: body == null ? null : jsonEncode(body),
+    );
+    return _decode(response);
+  }
+
+  dynamic _decode(http.Response response) {
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw ApiGatewayException(response.statusCode, response.body);
     }

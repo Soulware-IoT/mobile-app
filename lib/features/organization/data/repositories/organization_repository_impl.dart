@@ -1,4 +1,6 @@
+import 'package:cocina360/features/organization/data/services/dto/update_organization_request.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
+import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 import 'package:cocina360/shared/infrastructure/remote/session_claims.dart';
@@ -36,5 +38,33 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     final members = memberDtos.map((dto) => dto.toDomain()).toList();
 
     return OrganizationWithMembers(organization, members);
+  }
+
+  @override
+  Future<Organization> updateOrganization({
+    required String organizationId,
+    required String name,
+    String? imageUrl,
+    String? addressLineOne,
+    String? addressLineTwo,
+    String? addressReference,
+  }) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    final updated = await remoteService.updateOrganization(
+      organizationId,
+      UpdateOrganizationRequest(
+        name: name,
+        imageUrl: imageUrl,
+        addressLineOne: addressLineOne,
+        addressLineTwo: addressLineTwo,
+        addressReference: addressReference,
+      ),
+    );
+
+    return updated.toDomain();
   }
 }

@@ -14,4 +14,14 @@ abstract class OrganizationRepository {
   /// Returns the user's primary organization with its members, or `null` when
   /// the user does not belong to any organization yet.
   Future<OrganizationWithMembers?> getPrimaryOrganization(String userId);
+
+  /// Updates the organization's editable details and returns the new state.
+  Future<Organization> updateOrganization({
+    required String organizationId,
+    required String name,
+    String? imageUrl,
+    String? addressLineOne,
+    String? addressLineTwo,
+    String? addressReference,
+  });
 }

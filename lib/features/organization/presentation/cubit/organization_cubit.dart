@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
 
@@ -18,6 +19,15 @@ class OrganizationCubit extends Cubit<OrganizationState> {
       emit(OrganizationLoaded(result.organization, result.members));
     } catch (e) {
       emit(OrganizationError(e.toString()));
+    }
+  }
+
+  /// Swaps the organization in the current loaded state after an edit, keeping
+  /// the already-loaded members (avoids a refetch).
+  void applyUpdatedOrganization(Organization organization) {
+    final current = state;
+    if (current is OrganizationLoaded) {
+      emit(OrganizationLoaded(organization, current.members));
     }
   }
 }

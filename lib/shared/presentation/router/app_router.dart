@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/auth/presentation/pages/login/login_page.dart';
 import 'package:cocina360/features/auth/presentation/pages/register/register_page.dart';
+import 'package:cocina360/features/devices/domain/model/iot_device.dart';
+import 'package:cocina360/features/devices/domain/repositories/device_repository.dart';
+import 'package:cocina360/features/devices/presentation/cubit/device_detail_cubit.dart';
+import 'package:cocina360/features/devices/presentation/pages/device_detail_page.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
@@ -79,6 +83,13 @@ GoRouter createRouter(BuildContext context) {
           create: (ctx) =>
               MyInvitationsCubit(ctx.read<OrganizationRepository>()),
           child: const MyInvitationsPage(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.deviceDetail,
+        builder: (context, state) => BlocProvider(
+          create: (ctx) => DeviceDetailCubit(ctx.read<DeviceRepository>()),
+          child: DeviceDetailPage(device: state.extra as IotDevice),
         ),
       ),
     ],

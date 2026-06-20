@@ -22,14 +22,14 @@ class EditMemberPermissionsPage extends StatefulWidget {
 
 class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
   late MemberRole _security;
-  late MemberRole _iot;
+  late MemberRole _organization;
   late MemberRole _internalControl;
 
   @override
   void initState() {
     super.initState();
     _security = widget.member.security;
-    _iot = widget.member.iot;
+    _organization = widget.member.organization;
     _internalControl = widget.member.internalControl;
   }
 
@@ -46,7 +46,7 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
       organizationId: orgState.organization.id,
       memberId: widget.member.id,
       security: _security,
-      iot: _iot,
+      organization: _organization,
       internalControl: _internalControl,
     );
   }
@@ -92,10 +92,10 @@ class _EditMemberPermissionsPageState extends State<EditMemberPermissionsPage> {
                 ),
                 const SizedBox(height: 16),
                 _RoleField(
-                  label: 'IoT',
-                  value: _iot,
+                  label: 'Organizaciones',
+                  value: _organization,
                   enabled: !saving,
-                  onChanged: (v) => setState(() => _iot = v),
+                  onChanged: (v) => setState(() => _organization = v),
                 ),
                 const SizedBox(height: 16),
                 _RoleField(

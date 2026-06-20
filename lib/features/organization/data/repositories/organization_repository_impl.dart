@@ -99,7 +99,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     required String organizationId,
     required String memberId,
     required MemberRole security,
-    required MemberRole iot,
+    required MemberRole organization,
     required MemberRole internalControl,
   }) async {
     final online = await connectionChecker.isConnected;
@@ -112,7 +112,7 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
       memberId,
       UpdateMemberPermissionsRequest(
         security: security,
-        iot: iot,
+        organization: organization,
         internalControl: internalControl,
       ),
     );

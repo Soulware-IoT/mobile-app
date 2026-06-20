@@ -105,8 +105,8 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
           const SizedBox(height: 12),
           _PermissionCard(
             icon: Icons.sensors,
-            label: 'IoT',
-            role: _member.iot,
+            label: 'Organizaciones',
+            role: _member.organization,
           ),
           const SizedBox(height: 12),
           _PermissionCard(

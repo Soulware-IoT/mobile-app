@@ -61,8 +61,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
               );
             },
           ),
-          // Notifications are not implemented yet.
-          IconButton(icon: const Icon(Icons.notifications_none), onPressed: null),
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            tooltip: 'Mis invitaciones',
+            onPressed: () => context.push(AppRoutes.myInvitations),
+          ),
         ],
       ),
       drawer: const AppDrawer(),

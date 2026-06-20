@@ -44,4 +44,13 @@ abstract class OrganizationRepository {
 
   /// Returns the organization's invitations.
   Future<List<Invitation>> getInvitations(String organizationId);
+
+  /// Returns the invitations addressed to the given profile (current user).
+  Future<List<Invitation>> getMyInvitations(String profileId);
+
+  /// Accepts an invitation (the current user becomes a member).
+  Future<void> acceptInvitation(String invitationId);
+
+  /// Declines an invitation.
+  Future<void> declineInvitation(String invitationId);
 }

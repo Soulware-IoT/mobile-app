@@ -8,9 +8,11 @@ import 'package:cocina360/features/organization/domain/model/organization_member
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_member_permissions_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/my_invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/pages/edit_member_permissions_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/edit_organization_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/member_detail_page.dart';
+import 'package:cocina360/features/organization/presentation/pages/my_invitations_page.dart';
 import 'package:cocina360/features/shell/presentation/app_shell.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -69,6 +71,14 @@ GoRouter createRouter(BuildContext context) {
           child: EditMemberPermissionsPage(
             member: state.extra as OrganizationMember,
           ),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.myInvitations,
+        builder: (context, state) => BlocProvider(
+          create: (ctx) =>
+              MyInvitationsCubit(ctx.read<OrganizationRepository>()),
+          child: const MyInvitationsPage(),
         ),
       ),
     ],

@@ -121,4 +121,35 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     final dtos = await remoteService.getInvitations(organizationId);
     return dtos.map((dto) => dto.toDomain()).toList();
   }
+
+  @override
+  Future<List<Invitation>> getMyInvitations(String profileId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    final dtos = await remoteService.getMyInvitations(profileId);
+    return dtos.map((dto) => dto.toDomain()).toList();
+  }
+
+  @override
+  Future<void> acceptInvitation(String invitationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    await remoteService.acceptInvitation(invitationId);
+  }
+
+  @override
+  Future<void> declineInvitation(String invitationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw Exception('Sin conexión a internet');
+    }
+
+    await remoteService.declineInvitation(invitationId);
+  }
 }

@@ -73,4 +73,22 @@ class OrganizationRemoteService {
     final list = (data as List).cast<JSON>();
     return list.map(InvitationDto.fromJson).toList();
   }
+
+  /// `GET /profiles/{profileId}/invitations` — invitations addressed to the
+  /// given profile (the current user).
+  Future<List<InvitationDto>> getMyInvitations(String profileId) async {
+    final data = await client.getJson('/profiles/$profileId/invitations');
+    final list = (data as List).cast<JSON>();
+    return list.map(InvitationDto.fromJson).toList();
+  }
+
+  /// `POST /invitations/{id}/accept` — accept an invitation (response ignored).
+  Future<void> acceptInvitation(String invitationId) async {
+    await client.postJson('/invitations/$invitationId/accept');
+  }
+
+  /// `POST /invitations/{id}/decline` — decline an invitation (response ignored).
+  Future<void> declineInvitation(String invitationId) async {
+    await client.postJson('/invitations/$invitationId/decline');
+  }
 }

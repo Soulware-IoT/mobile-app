@@ -7,4 +7,5 @@ abstract final class AppRoutes {
   static const editOrganization = '/organizations/edit';
   static const memberDetail = '/organizations/members/detail';
   static const editMemberPermissions = '/organizations/members/permissions';
+  static const myInvitations = '/invitations';
 }

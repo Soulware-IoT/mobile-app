@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/features/devices/presentation/pages/devices_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/organization_page.dart';
-import 'package:cocina360/features/shell/presentation/pages/devices_placeholder.dart';
 import 'package:cocina360/features/shell/presentation/pages/processes_placeholder.dart';
 
 /// Authenticated home: a bottom-nav shell over the Organization, Processes and
@@ -18,7 +18,7 @@ class _AppShellState extends State<AppShell> {
   static const _pages = [
     OrganizationPage(),
     ProcessesPlaceholder(),
-    DevicesPlaceholder(),
+    DevicesPage(),
   ];
 
   @override

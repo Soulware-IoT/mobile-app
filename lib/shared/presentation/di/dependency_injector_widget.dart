@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:cocina360/features/devices/data/repositories/device_repository_impl.dart';
+import 'package:cocina360/features/devices/data/services/device_remote_service.dart';
+import 'package:cocina360/features/devices/domain/repositories/device_repository.dart';
+import 'package:cocina360/features/devices/presentation/cubit/devices_cubit.dart';
 import 'package:cocina360/features/organization/data/repositories/organization_repository_impl.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
@@ -58,6 +62,7 @@ class DependencyInjectorWidget extends StatelessWidget {
       supabase: supabase,
     );
     final organizationRemoteService = OrganizationRemoteService(apiGatewayClient);
+    final deviceRemoteService = DeviceRemoteService(apiGatewayClient);
     final sessionClaims = SessionClaims(supabase);
 
     return MultiRepositoryProvider(
@@ -83,6 +88,10 @@ class DependencyInjectorWidget extends StatelessWidget {
             connectionChecker,
           ),
         ),
+        RepositoryProvider<DeviceRepository>(
+          create: (_) =>
+              DeviceRepositoryImpl(deviceRemoteService, connectionChecker),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -104,6 +113,9 @@ class DependencyInjectorWidget extends StatelessWidget {
           BlocProvider<MyOrganizationsCubit>(
             create: (context) =>
                 MyOrganizationsCubit(context.read<OrganizationRepository>()),
+          ),
+          BlocProvider<DevicesCubit>(
+            create: (context) => DevicesCubit(context.read<DeviceRepository>()),
           ),
         ],
         child: BlocListener<AuthCubit, AuthState>(

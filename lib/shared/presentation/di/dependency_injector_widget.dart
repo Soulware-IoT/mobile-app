@@ -12,6 +12,10 @@ import 'package:cocina360/features/organization/domain/repositories/organization
 import 'package:cocina360/features/organization/presentation/cubit/invitations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/features/processes/data/repositories/internal_control_repository_impl.dart';
+import 'package:cocina360/features/processes/data/services/internal_control_remote_service.dart';
+import 'package:cocina360/features/processes/domain/repositories/internal_control_repository.dart';
+import 'package:cocina360/features/processes/presentation/cubit/processes_cubit.dart';
 import 'package:cocina360/shared/data/repositories/auth_repository_impl.dart';
 import 'package:cocina360/shared/data/repositories/profile_repository_impl.dart';
 import 'package:cocina360/shared/data/services/auth_local_service.dart';
@@ -63,6 +67,8 @@ class DependencyInjectorWidget extends StatelessWidget {
     );
     final organizationRemoteService = OrganizationRemoteService(apiGatewayClient);
     final deviceRemoteService = DeviceRemoteService(apiGatewayClient);
+    final internalControlRemoteService =
+        InternalControlRemoteService(apiGatewayClient);
     final sessionClaims = SessionClaims(supabase);
 
     return MultiRepositoryProvider(
@@ -92,6 +98,12 @@ class DependencyInjectorWidget extends StatelessWidget {
           create: (_) =>
               DeviceRepositoryImpl(deviceRemoteService, connectionChecker),
         ),
+        RepositoryProvider<InternalControlRepository>(
+          create: (_) => InternalControlRepositoryImpl(
+            internalControlRemoteService,
+            connectionChecker,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -116,6 +128,10 @@ class DependencyInjectorWidget extends StatelessWidget {
           ),
           BlocProvider<DevicesCubit>(
             create: (context) => DevicesCubit(context.read<DeviceRepository>()),
+          ),
+          BlocProvider<ProcessesCubit>(
+            create: (context) =>
+                ProcessesCubit(context.read<InternalControlRepository>()),
           ),
         ],
         child: BlocListener<AuthCubit, AuthState>(

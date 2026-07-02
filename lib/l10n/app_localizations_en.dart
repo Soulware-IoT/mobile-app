@@ -290,5 +290,171 @@ class AppLocalizationsEn extends AppLocalizations {
   String get processesTitle => 'Processes';
 
   @override
-  String get processesComingSoon => 'Processes — coming soon';
+  String get confirm => 'CONFIRM';
+
+  @override
+  String get create => 'CREATE';
+
+  @override
+  String get deviceRenameTooltip => 'Rename device';
+
+  @override
+  String get deviceRenameTitle => 'Rename device';
+
+  @override
+  String get deviceNameLabel => 'Device name';
+
+  @override
+  String get deviceNameRequired => 'Enter a device name';
+
+  @override
+  String get deviceControlsTitle => 'Operational controls';
+
+  @override
+  String get deviceControlsProvisioned =>
+      'This device hasn\'t been claimed yet, so it can\'t be operated.';
+
+  @override
+  String get deviceActivate => 'ACTIVATE DEVICE';
+
+  @override
+  String get deviceDeactivate => 'STOP DEVICE';
+
+  @override
+  String get deviceActivateConfirmTitle => 'Activate device?';
+
+  @override
+  String get deviceActivateConfirmBody =>
+      'The device will come back into service and the edge gateway will trust it again.';
+
+  @override
+  String get deviceDeactivateConfirmTitle => 'Stop device?';
+
+  @override
+  String get deviceDeactivateConfirmBody =>
+      'The device will be disabled and the edge gateway will stop trusting it.';
+
+  @override
+  String get deviceThresholdsEditTooltip => 'Edit thresholds';
+
+  @override
+  String get deviceThresholdCritAboveWarn => 'Critical must be above warning';
+
+  @override
+  String get processesHeaderLabel => 'INTERNAL CONTROL';
+
+  @override
+  String get processesSectionProcesses => 'Control processes';
+
+  @override
+  String get processesSectionFormats => 'Document formats';
+
+  @override
+  String get processesRecentLogs => 'RECENT LOGS';
+
+  @override
+  String get processesEmpty => 'No control processes yet.';
+
+  @override
+  String get processesCreateFirst =>
+      'Create the first process to start tracking internal controls.';
+
+  @override
+  String get processesNewProcess => 'New process';
+
+  @override
+  String get processesProcessNameLabel => 'Process name';
+
+  @override
+  String get processesNameRequired => 'Enter a name';
+
+  @override
+  String get processesNewFormat => 'New format';
+
+  @override
+  String get processesFormatNameLabel => 'Format name';
+
+  @override
+  String get processesSampleFields => 'Start with sample fields';
+
+  @override
+  String get processesNoFormats => 'This process has no formats yet.';
+
+  @override
+  String get processesNoRegistries => 'No records filed yet.';
+
+  @override
+  String get processesRegistryCreated => 'Record saved';
+
+  @override
+  String get processesFormatNotActive =>
+      'The format must be active to file new records.';
+
+  @override
+  String get formatStatusDraft => 'Draft';
+
+  @override
+  String get formatStatusActive => 'Active';
+
+  @override
+  String get formatStatusSuspended => 'Suspended';
+
+  @override
+  String get formatStatusCeased => 'Ceased';
+
+  @override
+  String get formatActionActivate => 'Activate';
+
+  @override
+  String get formatActionSuspend => 'Suspend';
+
+  @override
+  String get formatActionResume => 'Resume';
+
+  @override
+  String get formatActionCease => 'Cease';
+
+  @override
+  String get newRegistryTitle => 'New record';
+
+  @override
+  String get registrySubmit => 'SAVE RECORD';
+
+  @override
+  String get fieldDateHint => 'Select a date';
+
+  @override
+  String get validationRequired => 'Required';
+
+  @override
+  String get validationNumberRequired => 'Enter a valid number';
+
+  @override
+  String get validationNumberInteger => 'Must be a whole number';
+
+  @override
+  String validationNumberMin(String min) {
+    return 'Must be at least $min';
+  }
+
+  @override
+  String validationNumberMax(String max) {
+    return 'Must be at most $max';
+  }
+
+  @override
+  String validationTextMinLength(String min) {
+    return 'At least $min characters';
+  }
+
+  @override
+  String validationTextMaxLength(String max) {
+    return 'At most $max characters';
+  }
+
+  @override
+  String get validationPattern => 'Invalid format';
+
+  @override
+  String get validationSelectRequired => 'Select an option';
 }

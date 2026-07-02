@@ -293,5 +293,172 @@ class AppLocalizationsEs extends AppLocalizations {
   String get processesTitle => 'Procesos';
 
   @override
-  String get processesComingSoon => 'Procesos — próximamente';
+  String get confirm => 'CONFIRMAR';
+
+  @override
+  String get create => 'CREAR';
+
+  @override
+  String get deviceRenameTooltip => 'Renombrar dispositivo';
+
+  @override
+  String get deviceRenameTitle => 'Renombrar dispositivo';
+
+  @override
+  String get deviceNameLabel => 'Nombre del dispositivo';
+
+  @override
+  String get deviceNameRequired => 'Ingresa un nombre';
+
+  @override
+  String get deviceControlsTitle => 'Controles operativos';
+
+  @override
+  String get deviceControlsProvisioned =>
+      'Este dispositivo aún no ha sido reclamado, no puede operarse.';
+
+  @override
+  String get deviceActivate => 'ACTIVAR DISPOSITIVO';
+
+  @override
+  String get deviceDeactivate => 'DETENER DISPOSITIVO';
+
+  @override
+  String get deviceActivateConfirmTitle => '¿Activar dispositivo?';
+
+  @override
+  String get deviceActivateConfirmBody =>
+      'El dispositivo volverá a estar en servicio y el edge volverá a confiar en él.';
+
+  @override
+  String get deviceDeactivateConfirmTitle => '¿Detener dispositivo?';
+
+  @override
+  String get deviceDeactivateConfirmBody =>
+      'El dispositivo quedará deshabilitado y el edge dejará de confiar en él.';
+
+  @override
+  String get deviceThresholdsEditTooltip => 'Editar umbrales';
+
+  @override
+  String get deviceThresholdCritAboveWarn =>
+      'El crítico debe ser mayor que la advertencia';
+
+  @override
+  String get processesHeaderLabel => 'CONTROL INTERNO';
+
+  @override
+  String get processesSectionProcesses => 'Procesos de control';
+
+  @override
+  String get processesSectionFormats => 'Formatos de documento';
+
+  @override
+  String get processesRecentLogs => 'REGISTROS RECIENTES';
+
+  @override
+  String get processesEmpty => 'Aún no hay procesos de control.';
+
+  @override
+  String get processesCreateFirst =>
+      'Crea el primer proceso para empezar a llevar el control interno.';
+
+  @override
+  String get processesNewProcess => 'Nuevo proceso';
+
+  @override
+  String get processesProcessNameLabel => 'Nombre del proceso';
+
+  @override
+  String get processesNameRequired => 'Ingresa un nombre';
+
+  @override
+  String get processesNewFormat => 'Nuevo formato';
+
+  @override
+  String get processesFormatNameLabel => 'Nombre del formato';
+
+  @override
+  String get processesSampleFields => 'Empezar con campos de ejemplo';
+
+  @override
+  String get processesNoFormats => 'Este proceso aún no tiene formatos.';
+
+  @override
+  String get processesNoRegistries => 'Aún no hay registros.';
+
+  @override
+  String get processesRegistryCreated => 'Registro guardado';
+
+  @override
+  String get processesFormatNotActive =>
+      'El formato debe estar activo para llenar registros.';
+
+  @override
+  String get formatStatusDraft => 'Borrador';
+
+  @override
+  String get formatStatusActive => 'Activo';
+
+  @override
+  String get formatStatusSuspended => 'Suspendido';
+
+  @override
+  String get formatStatusCeased => 'Cesado';
+
+  @override
+  String get formatActionActivate => 'Activar';
+
+  @override
+  String get formatActionSuspend => 'Suspender';
+
+  @override
+  String get formatActionResume => 'Reanudar';
+
+  @override
+  String get formatActionCease => 'Cesar';
+
+  @override
+  String get newRegistryTitle => 'Nuevo registro';
+
+  @override
+  String get registrySubmit => 'GUARDAR REGISTRO';
+
+  @override
+  String get fieldDateHint => 'Selecciona una fecha';
+
+  @override
+  String get validationRequired => 'Obligatorio';
+
+  @override
+  String get validationNumberRequired => 'Ingresa un número válido';
+
+  @override
+  String get validationNumberInteger => 'Debe ser un número entero';
+
+  @override
+  String validationNumberMin(String min) {
+    return 'Debe ser al menos $min';
+  }
+
+  @override
+  String validationNumberMax(String max) {
+    return 'Debe ser como máximo $max';
+  }
+
+  @override
+  String validationTextMinLength(String min) {
+    return 'Mínimo $min caracteres';
+  }
+
+  @override
+  String validationTextMaxLength(String max) {
+    return 'Máximo $max caracteres';
+  }
+
+  @override
+  String get validationPattern => 'Formato inválido';
+
+  @override
+  String get validationSelectRequired => 'Selecciona una opción';
 }

@@ -3,30 +3,71 @@ import 'package:cocina360/features/devices/data/services/dto/iot_device_dto.dart
 import 'package:cocina360/shared/data/types/json.dart';
 import 'package:cocina360/shared/infrastructure/remote/api_gateway_client.dart';
 
-/// Reads device data from the backend through the api-gw (read-only endpoints).
+/// The org's device list plus its subscription quota, as served by the api-gw.
+class DeviceListDto {
+  final List<IotDeviceDto> devices;
+  final int? quotaUsed;
+  final int? quotaLimit;
+
+  const DeviceListDto({
+    required this.devices,
+    this.quotaUsed,
+    this.quotaLimit,
+  });
+}
+
+/// Talks to the backend's Security context through the api-gw.
 class DeviceRemoteService {
   final ApiGatewayClient client;
 
   DeviceRemoteService(this.client);
 
-  /// `GET /organizations/{organizationId}/iot-devices` — the org's IoT devices.
-  Future<List<IotDeviceDto>> getDevices(String organizationId) async {
+  /// `GET /organizations/{organizationId}/iot-devices` — the org's IoT devices
+  /// wrapped with the subscription quota: `{devices: [...], quota: {used, limit}}`.
+  /// A bare list (older deployments) is still accepted.
+  Future<DeviceListDto> getDevices(String organizationId) async {
     final data = await client.getJson(
       '/organizations/$organizationId/iot-devices',
     );
-    final list = (data as List).cast<JSON>();
-    return list.map(IotDeviceDto.fromJson).toList();
+
+    if (data is List) {
+      return DeviceListDto(
+        devices: data.cast<JSON>().map(IotDeviceDto.fromJson).toList(),
+      );
+    }
+
+    final json = data as JSON;
+    final list = (json['devices'] as List? ?? const []).cast<JSON>();
+    final quota = json['quota'] as JSON?;
+    return DeviceListDto(
+      devices: list.map(IotDeviceDto.fromJson).toList(),
+      quotaUsed: (quota?['used'] as num?)?.toInt(),
+      quotaLimit: (quota?['limit'] as num?)?.toInt(),
+    );
   }
 
-  /// `GET /iot-devices/{id}` — a single device. The gateway guard needs the
-  /// organization in the query since it is not in the path.
-  Future<IotDeviceDto> getDevice(
-    String organizationId,
-    String deviceId,
-  ) async {
-    final data = await client.getJson(
+  /// `GET /iot-devices/{id}` — a single device. Authorization is resolved by
+  /// the backend from the device's owning organization.
+  Future<IotDeviceDto> getDevice(String deviceId) async {
+    final data = await client.getJson('/iot-devices/$deviceId');
+    return IotDeviceDto.fromJson(data as JSON);
+  }
+
+  /// `PATCH /iot-devices/{id}` — partial update of a claimed device. Only the
+  /// provided fields travel in the body; omitted ones stay unchanged.
+  Future<IotDeviceDto> updateDevice(
+    String deviceId, {
+    String? name,
+    JSON? thresholds,
+    String? status,
+  }) async {
+    final data = await client.patchJson(
       '/iot-devices/$deviceId',
-      query: {'organizationId': organizationId},
+      body: {
+        'name': ?name,
+        'thresholds': ?thresholds,
+        'status': ?status,
+      },
     );
     return IotDeviceDto.fromJson(data as JSON);
   }

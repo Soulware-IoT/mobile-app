@@ -9,4 +9,5 @@ abstract final class AppRoutes {
   static const editMemberPermissions = '/organizations/members/permissions';
   static const myInvitations = '/invitations';
   static const deviceDetail = '/devices/detail';
+  static const newRegistry = '/processes/registries/new';
 }

@@ -1,3 +1,4 @@
+import 'package:cocina360/features/devices/domain/model/device_quota.dart';
 import 'package:cocina360/features/devices/domain/model/device_status.dart';
 import 'package:cocina360/features/devices/domain/model/edge_device.dart';
 import 'package:cocina360/features/devices/domain/model/iot_device.dart';
@@ -20,7 +21,10 @@ final class DevicesLoaded extends DevicesState {
   /// The org's edge gateway, or null when it has none.
   final EdgeDevice? edge;
 
-  const DevicesLoaded(this.devices, this.edge);
+  /// Subscription device quota, or null when the backend didn't report one.
+  final DeviceQuota? quota;
+
+  const DevicesLoaded(this.devices, this.edge, {this.quota});
 
   int get activeCount =>
       devices.where((d) => d.status == DeviceStatus.active).length;

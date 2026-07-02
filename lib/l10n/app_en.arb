@@ -379,8 +379,238 @@
   "@processesTitle": {
     "description": "App bar title on the Processes tab"
   },
-  "processesComingSoon": "Processes — coming soon",
-  "@processesComingSoon": {
-    "description": "Placeholder message on the Processes tab"
+
+  "confirm": "CONFIRM",
+  "@confirm": {
+    "description": "Generic confirm button on dialogs"
+  },
+  "create": "CREATE",
+  "@create": {
+    "description": "Generic create button on dialogs"
+  },
+
+  "deviceRenameTooltip": "Rename device",
+  "@deviceRenameTooltip": {
+    "description": "Tooltip of the pencil icon on the device header"
+  },
+  "deviceRenameTitle": "Rename device",
+  "@deviceRenameTitle": {
+    "description": "Title of the rename-device dialog"
+  },
+  "deviceNameLabel": "Device name",
+  "@deviceNameLabel": {
+    "description": "Label of the device name field"
+  },
+  "deviceNameRequired": "Enter a device name",
+  "@deviceNameRequired": {
+    "description": "Validation error when the device name is empty"
+  },
+  "deviceControlsTitle": "Operational controls",
+  "@deviceControlsTitle": {
+    "description": "Section title of the device controls card"
+  },
+  "deviceControlsProvisioned": "This device hasn't been claimed yet, so it can't be operated.",
+  "@deviceControlsProvisioned": {
+    "description": "Shown instead of controls while the device is PROVISIONED"
+  },
+  "deviceActivate": "ACTIVATE DEVICE",
+  "@deviceActivate": {
+    "description": "Button that re-activates an inactive device"
+  },
+  "deviceDeactivate": "STOP DEVICE",
+  "@deviceDeactivate": {
+    "description": "Button that deactivates an active device"
+  },
+  "deviceActivateConfirmTitle": "Activate device?",
+  "@deviceActivateConfirmTitle": {
+    "description": "Confirm dialog title before activating"
+  },
+  "deviceActivateConfirmBody": "The device will come back into service and the edge gateway will trust it again.",
+  "@deviceActivateConfirmBody": {
+    "description": "Confirm dialog body before activating"
+  },
+  "deviceDeactivateConfirmTitle": "Stop device?",
+  "@deviceDeactivateConfirmTitle": {
+    "description": "Confirm dialog title before deactivating"
+  },
+  "deviceDeactivateConfirmBody": "The device will be disabled and the edge gateway will stop trusting it.",
+  "@deviceDeactivateConfirmBody": {
+    "description": "Confirm dialog body before deactivating"
+  },
+  "deviceThresholdsEditTooltip": "Edit thresholds",
+  "@deviceThresholdsEditTooltip": {
+    "description": "Tooltip of the edit icon on the thresholds card"
+  },
+  "deviceThresholdCritAboveWarn": "Critical must be above warning",
+  "@deviceThresholdCritAboveWarn": {
+    "description": "Validation error when crit <= warn"
+  },
+
+  "processesHeaderLabel": "INTERNAL CONTROL",
+  "@processesHeaderLabel": {
+    "description": "Uppercase section label at the top of the Processes tab"
+  },
+  "processesSectionProcesses": "Control processes",
+  "@processesSectionProcesses": {
+    "description": "Label of the process selector"
+  },
+  "processesSectionFormats": "Document formats",
+  "@processesSectionFormats": {
+    "description": "Label of the format selector"
+  },
+  "processesRecentLogs": "RECENT LOGS",
+  "@processesRecentLogs": {
+    "description": "Uppercase header of the registries list"
+  },
+  "processesEmpty": "No control processes yet.",
+  "@processesEmpty": {
+    "description": "Empty state when the org has no processes"
+  },
+  "processesCreateFirst": "Create the first process to start tracking internal controls.",
+  "@processesCreateFirst": {
+    "description": "Hint under the empty state"
+  },
+  "processesNewProcess": "New process",
+  "@processesNewProcess": {
+    "description": "Action to create a control process"
+  },
+  "processesProcessNameLabel": "Process name",
+  "@processesProcessNameLabel": {
+    "description": "Label of the process name field"
+  },
+  "processesNameRequired": "Enter a name",
+  "@processesNameRequired": {
+    "description": "Validation error when a name field is empty"
+  },
+  "processesNewFormat": "New format",
+  "@processesNewFormat": {
+    "description": "Action to create a format"
+  },
+  "processesFormatNameLabel": "Format name",
+  "@processesFormatNameLabel": {
+    "description": "Label of the format name field"
+  },
+  "processesSampleFields": "Start with sample fields",
+  "@processesSampleFields": {
+    "description": "Checkbox to seed a new format with example fields"
+  },
+  "processesNoFormats": "This process has no formats yet.",
+  "@processesNoFormats": {
+    "description": "Empty state when a process has no formats"
+  },
+  "processesNoRegistries": "No records filed yet.",
+  "@processesNoRegistries": {
+    "description": "Empty state when a format has no registries"
+  },
+  "processesRegistryCreated": "Record saved",
+  "@processesRegistryCreated": {
+    "description": "Snackbar after filing a registry"
+  },
+  "processesFormatNotActive": "The format must be active to file new records.",
+  "@processesFormatNotActive": {
+    "description": "Shown when trying to file into a non-active format"
+  },
+
+  "formatStatusDraft": "Draft",
+  "@formatStatusDraft": {
+    "description": "Format status pill: draft"
+  },
+  "formatStatusActive": "Active",
+  "@formatStatusActive": {
+    "description": "Format status pill: active"
+  },
+  "formatStatusSuspended": "Suspended",
+  "@formatStatusSuspended": {
+    "description": "Format status pill: suspended"
+  },
+  "formatStatusCeased": "Ceased",
+  "@formatStatusCeased": {
+    "description": "Format status pill: ceased"
+  },
+  "formatActionActivate": "Activate",
+  "@formatActionActivate": {
+    "description": "Format lifecycle action: activate"
+  },
+  "formatActionSuspend": "Suspend",
+  "@formatActionSuspend": {
+    "description": "Format lifecycle action: suspend"
+  },
+  "formatActionResume": "Resume",
+  "@formatActionResume": {
+    "description": "Format lifecycle action: resume"
+  },
+  "formatActionCease": "Cease",
+  "@formatActionCease": {
+    "description": "Format lifecycle action: cease (permanent)"
+  },
+
+  "newRegistryTitle": "New record",
+  "@newRegistryTitle": {
+    "description": "App bar title of the fill-format screen"
+  },
+  "registrySubmit": "SAVE RECORD",
+  "@registrySubmit": {
+    "description": "Submit button of the fill-format screen"
+  },
+  "fieldDateHint": "Select a date",
+  "@fieldDateHint": {
+    "description": "Hint of a DATE field before a date is picked"
+  },
+
+  "validationRequired": "Required",
+  "@validationRequired": {
+    "description": "Generic required-field validation error"
+  },
+  "validationNumberRequired": "Enter a valid number",
+  "@validationNumberRequired": {
+    "description": "Validation error for non-numeric input"
+  },
+  "validationNumberInteger": "Must be a whole number",
+  "@validationNumberInteger": {
+    "description": "Validation error when a decimal is given to an integer field"
+  },
+  "validationNumberMin": "Must be at least {min}",
+  "@validationNumberMin": {
+    "description": "Validation error below the minimum",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "validationNumberMax": "Must be at most {max}",
+  "@validationNumberMax": {
+    "description": "Validation error above the maximum",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "validationTextMinLength": "At least {min} characters",
+  "@validationTextMinLength": {
+    "description": "Validation error below the minimum length",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "validationTextMaxLength": "At most {max} characters",
+  "@validationTextMaxLength": {
+    "description": "Validation error above the maximum length",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "validationPattern": "Invalid format",
+  "@validationPattern": {
+    "description": "Validation error when input doesn't match the pattern"
+  },
+  "validationSelectRequired": "Select an option",
+  "@validationSelectRequired": {
+    "description": "Validation error when no option is selected"
   }
 }

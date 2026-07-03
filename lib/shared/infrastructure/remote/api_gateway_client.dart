@@ -108,6 +108,15 @@ class ApiGatewayClient {
     return _decode(response);
   }
 
+  Future<dynamic> deleteJson(String path) async {
+    if (baseUrl.isEmpty) {
+      throw const ApiGatewayException(0, 'API_GATEWAY_URL no está configurada');
+    }
+
+    final response = await _http.delete(_uri(path, null), headers: _headers());
+    return _decode(response);
+  }
+
   dynamic _decode(http.Response response) {
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw ApiGatewayException(response.statusCode, _errorMessage(response.body));

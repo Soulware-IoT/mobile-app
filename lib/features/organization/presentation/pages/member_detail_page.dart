@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/domain/model/member_role.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
+import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/organization_state.dart';
+import 'package:cocina360/features/organization/presentation/cubit/remove_member_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/remove_member_state.dart';
 import 'package:cocina360/features/organization/presentation/widgets/member_role_badge.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
+import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class MemberDetailPage extends StatefulWidget {
@@ -35,88 +43,181 @@ class _MemberDetailPageState extends State<MemberDetailPage> {
     }
   }
 
+  Future<void> _removeMember() async {
+    final l10n = AppLocalizations.of(context)!;
+    final orgState = context.read<OrganizationCubit>().state;
+    if (orgState is! OrganizationLoaded) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.removeMemberConfirmTitle),
+        content: Text(l10n.removeMemberConfirmBody(_member.fullName)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+            ),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.remove),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      await context.read<RemoveMemberCubit>().remove(
+        organizationId: orgState.organization.id,
+        memberId: _member.id,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
+    // Neither the org owner nor the current user themself can be removed
+    // through this screen — the backend has no protection against either,
+    // so it's enforced here to avoid leaving the organization ownerless or
+    // letting a member lock themselves out by accident.
+    final orgState = context.watch<OrganizationCubit>().state;
+    final isOwner =
+        orgState is OrganizationLoaded &&
+        orgState.organization.ownedBy == _member.profileId;
+    final authState = context.watch<AuthCubit>().state;
+    final isSelf = switch (authState) {
+      Authenticated(:final userId) => userId == _member.profileId,
+      OfflineAuthenticated(:final userId) => userId == _member.profileId,
+      _ => false,
+    };
+    final canRemove = !isOwner && !isSelf;
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.memberDetailsTitle)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
-        children: [
-          Center(child: _Avatar(member: _member)),
-          const SizedBox(height: 16),
-          Text(
-            _member.fullName,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            _member.email,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 28),
-          FilledButton.icon(
-            onPressed: _editPermissions,
-            icon: const Icon(Icons.edit_outlined, size: 18),
-            label: Text(l10n.editPermissions),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppTheme.seedColor,
-              foregroundColor: Colors.white,
-              minimumSize: const Size.fromHeight(52),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      body: BlocListener<RemoveMemberCubit, RemoveMemberState>(
+        listener: (context, state) {
+          if (state is RemoveMemberSuccess) {
+            context.read<OrganizationCubit>().applyRemovedMember(_member.id);
+            context.pop();
+          } else if (state is RemoveMemberFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(localizedError(context, state.error))),
+            );
+          }
+        },
+        child: BlocBuilder<RemoveMemberCubit, RemoveMemberState>(
+          builder: (context, removeState) {
+            final removing = removeState is RemoveMemberRemoving;
+            return AbsorbPointer(
+              absorbing: removing,
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
+                children: [
+                  Center(child: _Avatar(member: _member)),
+                  const SizedBox(height: 16),
+                  Text(
+                    _member.fullName,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _member.email,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+                  FilledButton.icon(
+                    onPressed: _editPermissions,
+                    icon: const Icon(Icons.edit_outlined, size: 18),
+                    label: Text(l10n.editPermissions),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppTheme.seedColor,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(52),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  OutlinedButton.icon(
+                    onPressed: () => context.pop(),
+                    icon: const Icon(Icons.apartment_outlined, size: 18),
+                    label: Text(l10n.backToOrganization),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  if (canRemove) ...[
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: _removeMember,
+                      icon: removing
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.person_remove_outlined, size: 18),
+                      label: Text(l10n.removeMember),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: theme.colorScheme.error,
+                        side: BorderSide(color: theme.colorScheme.error),
+                        minimumSize: const Size.fromHeight(52),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 32),
+                  Text(
+                    l10n.accessPermissionsHeader,
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  _PermissionCard(
+                    icon: Icons.shield_outlined,
+                    label: l10n.permissionSecurity,
+                    role: _member.security,
+                  ),
+                  const SizedBox(height: 12),
+                  _PermissionCard(
+                    icon: Icons.sensors,
+                    label: l10n.permissionOrganization,
+                    role: _member.organization,
+                  ),
+                  const SizedBox(height: 12),
+                  _PermissionCard(
+                    icon: Icons.checklist_outlined,
+                    label: l10n.permissionInternalControl,
+                    role: _member.internalControl,
+                  ),
+                ],
               ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: () => context.pop(),
-            icon: const Icon(Icons.apartment_outlined, size: 18),
-            label: Text(l10n.backToOrganization),
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size.fromHeight(52),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-          const SizedBox(height: 32),
-          Text(
-            l10n.accessPermissionsHeader,
-            style: TextStyle(
-              color: theme.colorScheme.onSurfaceVariant,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 12),
-          _PermissionCard(
-            icon: Icons.shield_outlined,
-            label: l10n.permissionSecurity,
-            role: _member.security,
-          ),
-          const SizedBox(height: 12),
-          _PermissionCard(
-            icon: Icons.sensors,
-            label: l10n.permissionOrganization,
-            role: _member.organization,
-          ),
-          const SizedBox(height: 12),
-          _PermissionCard(
-            icon: Icons.checklist_outlined,
-            label: l10n.permissionInternalControl,
-            role: _member.internalControl,
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -221,6 +221,7 @@ class _EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -229,9 +230,12 @@ class _EmptyView extends StatelessWidget {
           children: [
             const Icon(Icons.business_outlined, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
-            Text(
-              AppLocalizations.of(context)!.emptyOrganizations,
-              textAlign: TextAlign.center,
+            Text(l10n.emptyOrganizations, textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+            FilledButton.icon(
+              onPressed: () => context.push(AppRoutes.createOrganization),
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(l10n.createOrganizationTitle),
             ),
           ],
         ),

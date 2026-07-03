@@ -24,6 +24,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'CANCEL';
 
   @override
+  String get delete => 'DELETE';
+
+  @override
+  String get remove => 'REMOVE';
+
+  @override
   String get saveChanges => 'SAVE CHANGES';
 
   @override
@@ -225,6 +231,37 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get organizationNotDetermined =>
       'Could not determine the organization';
+
+  @override
+  String get createOrganizationTitle => 'Create organization';
+
+  @override
+  String get organizationCreated => 'Organization created';
+
+  @override
+  String get deleteOrganizationTitle => 'Delete organization';
+
+  @override
+  String get deleteOrganizationConfirmTitle => 'Delete organization?';
+
+  @override
+  String deleteOrganizationConfirmBody(String name) {
+    return 'This permanently deletes \"$name\" and everything in it. This cannot be undone.';
+  }
+
+  @override
+  String get organizationDeleted => 'Organization deleted';
+
+  @override
+  String get removeMember => 'Remove member';
+
+  @override
+  String get removeMemberConfirmTitle => 'Remove member?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return '$name will lose access to this organization.';
+  }
 
   @override
   String get editOrganizationTitle => 'Edit organization';

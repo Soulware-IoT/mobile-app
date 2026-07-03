@@ -25,6 +25,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'CANCELAR';
 
   @override
+  String get delete => 'ELIMINAR';
+
+  @override
+  String get remove => 'QUITAR';
+
+  @override
   String get saveChanges => 'GUARDAR CAMBIOS';
 
   @override
@@ -228,6 +234,37 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get organizationNotDetermined =>
       'No se pudo determinar la organización';
+
+  @override
+  String get createOrganizationTitle => 'Crear organización';
+
+  @override
+  String get organizationCreated => 'Organización creada';
+
+  @override
+  String get deleteOrganizationTitle => 'Eliminar organización';
+
+  @override
+  String get deleteOrganizationConfirmTitle => '¿Eliminar organización?';
+
+  @override
+  String deleteOrganizationConfirmBody(String name) {
+    return 'Esto elimina permanentemente \"$name\" y todo su contenido. No se puede deshacer.';
+  }
+
+  @override
+  String get organizationDeleted => 'Organización eliminada';
+
+  @override
+  String get removeMember => 'Quitar miembro';
+
+  @override
+  String get removeMemberConfirmTitle => '¿Quitar miembro?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return '$name perderá el acceso a esta organización.';
+  }
 
   @override
   String get editOrganizationTitle => 'Editar organización';

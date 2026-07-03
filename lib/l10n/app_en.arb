@@ -22,6 +22,14 @@
   "@cancel": {
     "description": "Generic cancel button"
   },
+  "delete": "DELETE",
+  "@delete": {
+    "description": "Generic destructive delete button on confirm dialogs"
+  },
+  "remove": "REMOVE",
+  "@remove": {
+    "description": "Generic destructive remove button on confirm dialogs"
+  },
   "saveChanges": "SAVE CHANGES",
   "@saveChanges": {
     "description": "Save button on edit forms"
@@ -293,6 +301,52 @@
   "organizationNotDetermined": "Could not determine the organization",
   "@organizationNotDetermined": {
     "description": "Snackbar when the active organization is unknown"
+  },
+  "createOrganizationTitle": "Create organization",
+  "@createOrganizationTitle": {
+    "description": "App bar title on the create-organization screen, and the button that opens it"
+  },
+  "organizationCreated": "Organization created",
+  "@organizationCreated": {
+    "description": "Snackbar after creating an organization"
+  },
+  "deleteOrganizationTitle": "Delete organization",
+  "@deleteOrganizationTitle": {
+    "description": "Danger-zone button on the edit-organization screen, owner only"
+  },
+  "deleteOrganizationConfirmTitle": "Delete organization?",
+  "@deleteOrganizationConfirmTitle": {
+    "description": "Confirm dialog title before deleting an organization"
+  },
+  "deleteOrganizationConfirmBody": "This permanently deletes \"{name}\" and everything in it. This cannot be undone.",
+  "@deleteOrganizationConfirmBody": {
+    "description": "Confirm dialog body before deleting an organization",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "organizationDeleted": "Organization deleted",
+  "@organizationDeleted": {
+    "description": "Snackbar after deleting an organization"
+  },
+  "removeMember": "Remove member",
+  "@removeMember": {
+    "description": "Danger-zone button on the member-detail screen"
+  },
+  "removeMemberConfirmTitle": "Remove member?",
+  "@removeMemberConfirmTitle": {
+    "description": "Confirm dialog title before removing a member"
+  },
+  "removeMemberConfirmBody": "{name} will lose access to this organization.",
+  "@removeMemberConfirmBody": {
+    "description": "Confirm dialog body before removing a member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "editOrganizationTitle": "Edit organization",
   "@editOrganizationTitle": {

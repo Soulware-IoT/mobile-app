@@ -10,9 +10,13 @@ import 'package:cocina360/features/devices/presentation/pages/device_detail_page
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
+import 'package:cocina360/features/organization/presentation/cubit/create_organization_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/delete_organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_member_permissions_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_invitations_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/remove_member_cubit.dart';
+import 'package:cocina360/features/organization/presentation/pages/create_organization_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/edit_member_permissions_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/edit_organization_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/member_detail_page.dart';
@@ -57,10 +61,26 @@ GoRouter createRouter(BuildContext context) {
         builder: (_, _) => const RegisterPage(),
       ),
       GoRoute(
-        path: AppRoutes.editOrganization,
+        path: AppRoutes.createOrganization,
         builder: (context, state) => BlocProvider(
           create: (ctx) =>
-              EditOrganizationCubit(ctx.read<OrganizationRepository>()),
+              CreateOrganizationCubit(ctx.read<OrganizationRepository>()),
+          child: const CreateOrganizationPage(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.editOrganization,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (ctx) =>
+                  EditOrganizationCubit(ctx.read<OrganizationRepository>()),
+            ),
+            BlocProvider(
+              create: (ctx) =>
+                  DeleteOrganizationCubit(ctx.read<OrganizationRepository>()),
+            ),
+          ],
           child: EditOrganizationPage(
             organization: state.extra as Organization,
           ),
@@ -68,8 +88,11 @@ GoRouter createRouter(BuildContext context) {
       ),
       GoRoute(
         path: AppRoutes.memberDetail,
-        builder: (context, state) =>
-            MemberDetailPage(member: state.extra as OrganizationMember),
+        builder: (context, state) => BlocProvider(
+          create: (ctx) =>
+              RemoveMemberCubit(ctx.read<OrganizationRepository>()),
+          child: MemberDetailPage(member: state.extra as OrganizationMember),
+        ),
       ),
       GoRoute(
         path: AppRoutes.editMemberPermissions,

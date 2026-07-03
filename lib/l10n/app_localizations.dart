@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'CANCEL'**
   String get cancel;
 
+  /// Generic destructive delete button on confirm dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE'**
+  String get delete;
+
+  /// Generic destructive remove button on confirm dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'REMOVE'**
+  String get remove;
+
   /// Save button on edit forms
   ///
   /// In en, this message translates to:
@@ -529,6 +541,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not determine the organization'**
   String get organizationNotDetermined;
+
+  /// App bar title on the create-organization screen, and the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Create organization'**
+  String get createOrganizationTitle;
+
+  /// Snackbar after creating an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization created'**
+  String get organizationCreated;
+
+  /// Danger-zone button on the edit-organization screen, owner only
+  ///
+  /// In en, this message translates to:
+  /// **'Delete organization'**
+  String get deleteOrganizationTitle;
+
+  /// Confirm dialog title before deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Delete organization?'**
+  String get deleteOrganizationConfirmTitle;
+
+  /// Confirm dialog body before deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes \"{name}\" and everything in it. This cannot be undone.'**
+  String deleteOrganizationConfirmBody(String name);
+
+  /// Snackbar after deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization deleted'**
+  String get organizationDeleted;
+
+  /// Danger-zone button on the member-detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member'**
+  String get removeMember;
+
+  /// Confirm dialog title before removing a member
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member?'**
+  String get removeMemberConfirmTitle;
+
+  /// Confirm dialog body before removing a member
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will lose access to this organization.'**
+  String removeMemberConfirmBody(String name);
 
   /// App bar title on the edit-organization screen
   ///

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
+import 'package:cocina360/shared/presentation/router/app_router.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/profile/profile_cubit.dart';
 import 'package:cocina360/shared/presentation/session/profile/profile_state.dart';
@@ -54,12 +56,26 @@ class _OrganizationsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-          child: Text(
-            l10n.myOrganizationsTitle,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
+          padding: const EdgeInsets.fromLTRB(20, 16, 12, 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  l10n.myOrganizationsTitle,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline),
+                tooltip: l10n.createOrganizationTitle,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push(AppRoutes.createOrganization);
+                },
+              ),
+            ],
           ),
         ),
         Expanded(

@@ -18,13 +18,10 @@ class OrganizationRemoteService {
     return OrganizationDto.fromJson(data as JSON);
   }
 
-  /// `GET /organizations?profileId={profileId}` — organizations the given
-  /// profile (the current user) belongs to.
-  Future<List<OrganizationDto>> getMyOrganizations(String profileId) async {
-    final data = await client.getJson(
-      '/organizations',
-      query: {'profileId': profileId},
-    );
+  /// `GET /organizations` — organizations the current user belongs to. The
+  /// backend resolves the requester from the JWT; no query params are needed.
+  Future<List<OrganizationDto>> getMyOrganizations() async {
+    final data = await client.getJson('/organizations');
     final list = (data as List).cast<JSON>();
     return list.map(OrganizationDto.fromJson).toList();
   }
@@ -85,10 +82,10 @@ class OrganizationRemoteService {
     return list.map(InvitationDto.fromJson).toList();
   }
 
-  /// `GET /profiles/{profileId}/invitations` — invitations addressed to the
-  /// given profile (the current user).
-  Future<List<InvitationDto>> getMyInvitations(String profileId) async {
-    final data = await client.getJson('/profiles/$profileId/invitations');
+  /// `GET /invitations` — invitations addressed to the current user. The
+  /// backend resolves the invited email from the JWT identity.
+  Future<List<InvitationDto>> getMyInvitations() async {
+    final data = await client.getJson('/invitations');
     final list = (data as List).cast<JSON>();
     return list.map(InvitationDto.fromJson).toList();
   }

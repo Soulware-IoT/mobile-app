@@ -5,9 +5,9 @@ import 'package:cocina360/shared/data/types/json.dart';
 /// Maps an enriched member item from
 /// `GET /organizations/{id}/members` (served through the api-gw).
 ///
-/// Beyond the existing `OrganizationMemberResponse` fields, this expects the
-/// backend to embed the member's profile (`fullName`, `email`, `avatarUrl`) so
-/// the list can render without an N+1 profile fetch — see docs/backend-contract.md.
+/// Wire shape (`OrganizationMemberResponse`): permission levels are nested
+/// under `permissions: {security, organizations, internalControl}`, and the
+/// profile's id is `profile.id` (a `ProfileSummary`), not `profile.profileId`.
 class OrganizationMemberDto {
   final String id;
   final String profileId;
@@ -30,18 +30,20 @@ class OrganizationMemberDto {
   });
 
   factory OrganizationMemberDto.fromJson(JSON json) {
-    // The backend embeds the member's profile under `profile` (a ProfileSummary).
+    // The backend embeds the member's profile under `profile` (a ProfileSummary)
+    // and its permission levels under `permissions`.
     final profile = (json['profile'] as JSON?) ?? const {};
+    final permissions = (json['permissions'] as JSON?) ?? const {};
 
     return OrganizationMemberDto(
       id: json['id'] as String,
-      profileId: (profile['profileId'] as String?) ?? '',
+      profileId: (profile['id'] as String?) ?? '',
       fullName: (profile['fullName'] as String?) ?? '',
       email: (profile['email'] as String?) ?? '',
       avatarUrl: profile['avatarUrl'] as String?,
-      securityPermission: json['securityPermission'] as String?,
-      organizationPermission: json['organizationsPermission'] as String?,
-      internalControlPermission: json['internalControlPermission'] as String?,
+      securityPermission: permissions['security'] as String?,
+      organizationPermission: permissions['organizations'] as String?,
+      internalControlPermission: permissions['internalControl'] as String?,
     );
   }
 

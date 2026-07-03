@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:cocina360/features/devices/domain/model/device_quota.dart';
 import 'package:cocina360/features/devices/domain/model/edge_device.dart';
 import 'package:cocina360/features/devices/presentation/widgets/device_status_label.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Top summary of the Devices screen built from data that actually exists:
-/// total devices, active count, and the edge gateway status.
+/// device count against the subscription quota (`used/limit`), active count,
+/// and the edge gateway status.
 class DevicesSummary extends StatelessWidget {
   final int total;
   final int active;
   final EdgeDevice? edge;
+  final DeviceQuota? quota;
 
   const DevicesSummary({
     super.key,
     required this.total,
     required this.active,
     required this.edge,
+    this.quota,
   });
 
   @override
@@ -25,7 +29,7 @@ class DevicesSummary extends StatelessWidget {
         Expanded(
           child: _SummaryCard(
             label: l10n.devicesSummaryDevices,
-            value: '$total',
+            value: quota == null ? '$total' : '${quota!.used}/${quota!.limit}',
             icon: Icons.sensors,
           ),
         ),

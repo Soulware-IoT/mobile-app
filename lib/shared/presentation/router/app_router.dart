@@ -17,6 +17,10 @@ import 'package:cocina360/features/organization/presentation/pages/edit_member_p
 import 'package:cocina360/features/organization/presentation/pages/edit_organization_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/member_detail_page.dart';
 import 'package:cocina360/features/organization/presentation/pages/my_invitations_page.dart';
+import 'package:cocina360/features/processes/domain/model/control_format.dart';
+import 'package:cocina360/features/processes/domain/repositories/internal_control_repository.dart';
+import 'package:cocina360/features/processes/presentation/cubit/new_registry_cubit.dart';
+import 'package:cocina360/features/processes/presentation/pages/new_registry_page.dart';
 import 'package:cocina360/features/shell/presentation/app_shell.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -90,6 +94,14 @@ GoRouter createRouter(BuildContext context) {
         builder: (context, state) => BlocProvider(
           create: (ctx) => DeviceDetailCubit(ctx.read<DeviceRepository>()),
           child: DeviceDetailPage(device: state.extra as IotDevice),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.newRegistry,
+        builder: (context, state) => BlocProvider(
+          create: (ctx) =>
+              NewRegistryCubit(ctx.read<InternalControlRepository>()),
+          child: NewRegistryPage(format: state.extra as ControlFormat),
         ),
       ),
     ],

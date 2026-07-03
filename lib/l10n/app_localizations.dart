@@ -614,6 +614,12 @@ abstract class AppLocalizations {
   /// **'Organization invitation'**
   String get invitationToOrganization;
 
+  /// Shows who sent the invitation, on the my-invitations card
+  ///
+  /// In en, this message translates to:
+  /// **'Invited by {name}'**
+  String invitedByLabel(String name);
+
   /// Uppercase label for the address row
   ///
   /// In en, this message translates to:
@@ -656,11 +662,317 @@ abstract class AppLocalizations {
   /// **'Processes'**
   String get processesTitle;
 
-  /// Placeholder message on the Processes tab
+  /// Generic confirm button on dialogs
   ///
   /// In en, this message translates to:
-  /// **'Processes — coming soon'**
-  String get processesComingSoon;
+  /// **'CONFIRM'**
+  String get confirm;
+
+  /// Generic create button on dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE'**
+  String get create;
+
+  /// Tooltip of the pencil icon on the device header
+  ///
+  /// In en, this message translates to:
+  /// **'Rename device'**
+  String get deviceRenameTooltip;
+
+  /// Title of the rename-device dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Rename device'**
+  String get deviceRenameTitle;
+
+  /// Label of the device name field
+  ///
+  /// In en, this message translates to:
+  /// **'Device name'**
+  String get deviceNameLabel;
+
+  /// Validation error when the device name is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a device name'**
+  String get deviceNameRequired;
+
+  /// Section title of the device controls card
+  ///
+  /// In en, this message translates to:
+  /// **'Operational controls'**
+  String get deviceControlsTitle;
+
+  /// Shown instead of controls while the device is PROVISIONED
+  ///
+  /// In en, this message translates to:
+  /// **'This device hasn\'t been claimed yet, so it can\'t be operated.'**
+  String get deviceControlsProvisioned;
+
+  /// Button that re-activates an inactive device
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVATE DEVICE'**
+  String get deviceActivate;
+
+  /// Button that deactivates an active device
+  ///
+  /// In en, this message translates to:
+  /// **'STOP DEVICE'**
+  String get deviceDeactivate;
+
+  /// Confirm dialog title before activating
+  ///
+  /// In en, this message translates to:
+  /// **'Activate device?'**
+  String get deviceActivateConfirmTitle;
+
+  /// Confirm dialog body before activating
+  ///
+  /// In en, this message translates to:
+  /// **'The device will come back into service and the edge gateway will trust it again.'**
+  String get deviceActivateConfirmBody;
+
+  /// Confirm dialog title before deactivating
+  ///
+  /// In en, this message translates to:
+  /// **'Stop device?'**
+  String get deviceDeactivateConfirmTitle;
+
+  /// Confirm dialog body before deactivating
+  ///
+  /// In en, this message translates to:
+  /// **'The device will be disabled and the edge gateway will stop trusting it.'**
+  String get deviceDeactivateConfirmBody;
+
+  /// Tooltip of the edit icon on the thresholds card
+  ///
+  /// In en, this message translates to:
+  /// **'Edit thresholds'**
+  String get deviceThresholdsEditTooltip;
+
+  /// Validation error when crit <= warn
+  ///
+  /// In en, this message translates to:
+  /// **'Critical must be above warning'**
+  String get deviceThresholdCritAboveWarn;
+
+  /// Uppercase section label at the top of the Processes tab
+  ///
+  /// In en, this message translates to:
+  /// **'INTERNAL CONTROL'**
+  String get processesHeaderLabel;
+
+  /// Label of the process selector
+  ///
+  /// In en, this message translates to:
+  /// **'Control processes'**
+  String get processesSectionProcesses;
+
+  /// Label of the format selector
+  ///
+  /// In en, this message translates to:
+  /// **'Document formats'**
+  String get processesSectionFormats;
+
+  /// Uppercase header of the registries list
+  ///
+  /// In en, this message translates to:
+  /// **'RECENT LOGS'**
+  String get processesRecentLogs;
+
+  /// Empty state when the org has no processes
+  ///
+  /// In en, this message translates to:
+  /// **'No control processes yet.'**
+  String get processesEmpty;
+
+  /// Hint under the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Create the first process to start tracking internal controls.'**
+  String get processesCreateFirst;
+
+  /// Action to create a control process
+  ///
+  /// In en, this message translates to:
+  /// **'New process'**
+  String get processesNewProcess;
+
+  /// Label of the process name field
+  ///
+  /// In en, this message translates to:
+  /// **'Process name'**
+  String get processesProcessNameLabel;
+
+  /// Validation error when a name field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get processesNameRequired;
+
+  /// Action to create a format
+  ///
+  /// In en, this message translates to:
+  /// **'New format'**
+  String get processesNewFormat;
+
+  /// Label of the format name field
+  ///
+  /// In en, this message translates to:
+  /// **'Format name'**
+  String get processesFormatNameLabel;
+
+  /// Checkbox to seed a new format with example fields
+  ///
+  /// In en, this message translates to:
+  /// **'Start with sample fields'**
+  String get processesSampleFields;
+
+  /// Empty state when a process has no formats
+  ///
+  /// In en, this message translates to:
+  /// **'This process has no formats yet.'**
+  String get processesNoFormats;
+
+  /// Empty state when a format has no registries
+  ///
+  /// In en, this message translates to:
+  /// **'No records filed yet.'**
+  String get processesNoRegistries;
+
+  /// Snackbar after filing a registry
+  ///
+  /// In en, this message translates to:
+  /// **'Record saved'**
+  String get processesRegistryCreated;
+
+  /// Shown when trying to file into a non-active format
+  ///
+  /// In en, this message translates to:
+  /// **'The format must be active to file new records.'**
+  String get processesFormatNotActive;
+
+  /// Format status pill: draft
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get formatStatusDraft;
+
+  /// Format status pill: active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get formatStatusActive;
+
+  /// Format status pill: suspended
+  ///
+  /// In en, this message translates to:
+  /// **'Suspended'**
+  String get formatStatusSuspended;
+
+  /// Format status pill: ceased
+  ///
+  /// In en, this message translates to:
+  /// **'Ceased'**
+  String get formatStatusCeased;
+
+  /// Format lifecycle action: activate
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get formatActionActivate;
+
+  /// Format lifecycle action: suspend
+  ///
+  /// In en, this message translates to:
+  /// **'Suspend'**
+  String get formatActionSuspend;
+
+  /// Format lifecycle action: resume
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get formatActionResume;
+
+  /// Format lifecycle action: cease (permanent)
+  ///
+  /// In en, this message translates to:
+  /// **'Cease'**
+  String get formatActionCease;
+
+  /// App bar title of the fill-format screen
+  ///
+  /// In en, this message translates to:
+  /// **'New record'**
+  String get newRegistryTitle;
+
+  /// Submit button of the fill-format screen
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE RECORD'**
+  String get registrySubmit;
+
+  /// Hint of a DATE field before a date is picked
+  ///
+  /// In en, this message translates to:
+  /// **'Select a date'**
+  String get fieldDateHint;
+
+  /// Generic required-field validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get validationRequired;
+
+  /// Validation error for non-numeric input
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get validationNumberRequired;
+
+  /// Validation error when a decimal is given to an integer field
+  ///
+  /// In en, this message translates to:
+  /// **'Must be a whole number'**
+  String get validationNumberInteger;
+
+  /// Validation error below the minimum
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least {min}'**
+  String validationNumberMin(String min);
+
+  /// Validation error above the maximum
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at most {max}'**
+  String validationNumberMax(String max);
+
+  /// Validation error below the minimum length
+  ///
+  /// In en, this message translates to:
+  /// **'At least {min} characters'**
+  String validationTextMinLength(String min);
+
+  /// Validation error above the maximum length
+  ///
+  /// In en, this message translates to:
+  /// **'At most {max} characters'**
+  String validationTextMaxLength(String max);
+
+  /// Validation error when input doesn't match the pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid format'**
+  String get validationPattern;
+
+  /// Validation error when no option is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select an option'**
+  String get validationSelectRequired;
 }
 
 class _AppLocalizationsDelegate

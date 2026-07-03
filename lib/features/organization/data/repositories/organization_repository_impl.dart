@@ -62,7 +62,9 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
       throw const NoConnectionException();
     }
 
-    final dtos = await remoteService.getMyOrganizations(profileId);
+    // Identity travels in the JWT; the profileId parameter is kept for the
+    // domain interface but not sent over the wire.
+    final dtos = await remoteService.getMyOrganizations();
     return dtos.map((dto) => dto.toDomain()).toList();
   }
 
@@ -151,7 +153,9 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
       throw const NoConnectionException();
     }
 
-    final dtos = await remoteService.getMyInvitations(profileId);
+    // Identity travels in the JWT; the profileId parameter is kept for the
+    // domain interface but not sent over the wire.
+    final dtos = await remoteService.getMyInvitations();
     return dtos.map((dto) => dto.toDomain()).toList();
   }
 

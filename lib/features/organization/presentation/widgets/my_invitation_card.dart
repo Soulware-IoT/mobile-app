@@ -56,6 +56,24 @@ class MyInvitationCard extends StatelessWidget {
                 _StatusBadge(status: invitation.status),
               ],
             ),
+            if (invitation.invitedByFullName != null ||
+                invitation.invitedByEmail != null) ...[
+              const SizedBox(height: 10),
+              Text(
+                AppLocalizations.of(context)!.invitedByLabel(
+                  invitation.invitedByFullName ?? invitation.invitedByEmail!,
+                ),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              if (invitation.invitedByFullName != null &&
+                  invitation.invitedByEmail != null)
+                Text(
+                  invitation.invitedByEmail!,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
             if (invitation.invitedAt != null) ...[
               const SizedBox(height: 6),
               Text(

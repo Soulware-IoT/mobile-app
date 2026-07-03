@@ -12,14 +12,28 @@ InvitationStatus invitationStatusFromString(String? value) =>
 
 class Invitation {
   final String id;
+  final String organizationId;
+
+  /// The invited person's email (backend `InvitationResponse.email`).
   final String invitedEmail;
+
+  /// The admin who sent the invitation (backend `InvitationResponse.invitedBy`,
+  /// a `ProfileSummary`). Null only if the backend omitted it.
+  final String? invitedByFullName;
+  final String? invitedByEmail;
+
   final InvitationStatus status;
   final DateTime? invitedAt;
+  final DateTime? respondedAt;
 
   const Invitation({
     required this.id,
+    required this.organizationId,
     required this.invitedEmail,
+    this.invitedByFullName,
+    this.invitedByEmail,
     required this.status,
     this.invitedAt,
+    this.respondedAt,
   });
 }

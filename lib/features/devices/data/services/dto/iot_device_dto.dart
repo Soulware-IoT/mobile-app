@@ -6,11 +6,15 @@ import 'package:cocina360/shared/data/types/json.dart';
 /// Maps the backend `IoTDeviceResponse` (served through the api-gw) into the
 /// [IotDevice] domain model. Live readings are not part of this payload — only
 /// the device's identity, status and configured thresholds.
+///
+/// Wire shape (backend `develop`): `id`, `organizationId`, `code`, `name`,
+/// `status`, `thresholds: {temperature: {warn, crit}, gas: {warn, crit}}`,
+/// audit fields. `organizationId`/`name` are null while still PROVISIONED.
 class IotDeviceDto {
   final String deviceId;
-  final String organizationId;
+  final String? organizationId;
   final String code;
-  final String name;
+  final String? name;
   final String? status;
   final JSON? thresholds;
   final String? createdAt;
@@ -29,10 +33,12 @@ class IotDeviceDto {
 
   factory IotDeviceDto.fromJson(JSON json) {
     return IotDeviceDto(
-      deviceId: json['deviceId'] as String,
-      organizationId: json['organizationId'] as String,
+      // `id` is the current contract; `deviceId` kept as a fallback for older
+      // backend deployments.
+      deviceId: (json['id'] ?? json['deviceId']) as String,
+      organizationId: json['organizationId'] as String?,
       code: json['code'] as String,
-      name: json['name'] as String,
+      name: json['name'] as String?,
       status: json['status'] as String?,
       thresholds: json['thresholds'] as JSON?,
       createdAt: json['createdAt'] as String?,
@@ -43,9 +49,9 @@ class IotDeviceDto {
   IotDevice toDomain() {
     return IotDevice(
       deviceId: deviceId,
-      organizationId: organizationId,
+      organizationId: organizationId ?? '',
       code: code,
-      name: name,
+      name: name ?? code,
       status: deviceStatusFromString(status),
       thresholds: _thresholds(),
       createdAt: DateTime.tryParse(createdAt ?? ''),
@@ -53,9 +59,23 @@ class IotDeviceDto {
     );
   }
 
+  /// Thresholds arrive nested (`temperature.warn/crit`, `gas.warn/crit`); the
+  /// legacy flat shape (`warnTemperatureC`, ...) is still read as a fallback.
   Thresholds _thresholds() {
     final t = thresholds;
     if (t == null) return const Thresholds();
+
+    final temperature = t['temperature'];
+    final gas = t['gas'];
+    if (temperature is Map || gas is Map) {
+      return Thresholds(
+        warnTemperatureC: _asInt(temperature, 'warn'),
+        critTemperatureC: _asInt(temperature, 'crit'),
+        warnGasPpm: _asDouble(gas, 'warn'),
+        critGasPpm: _asDouble(gas, 'crit'),
+      );
+    }
+
     return Thresholds(
       warnTemperatureC: (t['warnTemperatureC'] as num?)?.toInt(),
       critTemperatureC: (t['critTemperatureC'] as num?)?.toInt(),
@@ -63,4 +83,10 @@ class IotDeviceDto {
       critGasPpm: (t['critGasPpm'] as num?)?.toDouble(),
     );
   }
+
+  static int? _asInt(Object? map, String key) =>
+      map is Map ? (map[key] as num?)?.toInt() : null;
+
+  static double? _asDouble(Object? map, String key) =>
+      map is Map ? (map[key] as num?)?.toDouble() : null;
 }

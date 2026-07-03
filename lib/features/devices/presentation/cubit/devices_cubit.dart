@@ -11,7 +11,7 @@ class DevicesCubit extends Cubit<DevicesState> {
   Future<void> load(String organizationId) async {
     emit(const DevicesLoading());
     try {
-      final devices = await repository.getDevices(organizationId);
+      final inventory = await repository.getDevices(organizationId);
       // The edge gateway is supplementary: a failure there must not blank the
       // whole screen, so it degrades to null.
       EdgeDevice? edge;
@@ -20,7 +20,7 @@ class DevicesCubit extends Cubit<DevicesState> {
       } catch (_) {
         edge = null;
       }
-      emit(DevicesLoaded(devices, edge));
+      emit(DevicesLoaded(inventory.devices, edge, quota: inventory.quota));
     } catch (e) {
       emit(DevicesError(e));
     }

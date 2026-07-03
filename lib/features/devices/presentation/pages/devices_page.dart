@@ -91,13 +91,14 @@ class _DevicesBody extends StatelessWidget {
             message: localizedError(context, error),
             onRetry: onRetry,
           ),
-          DevicesLoaded(:final devices, :final edge) => ListView(
+          DevicesLoaded(:final devices, :final edge, :final quota) => ListView(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
             children: [
               DevicesSummary(
                 total: devices.length,
                 active: state.activeCount,
                 edge: edge,
+                quota: quota,
               ),
               const SizedBox(height: 24),
               Text(

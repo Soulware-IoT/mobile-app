@@ -614,6 +614,12 @@ abstract class AppLocalizations {
   /// **'Organization invitation'**
   String get invitationToOrganization;
 
+  /// Shows who sent the invitation, on the my-invitations card
+  ///
+  /// In en, this message translates to:
+  /// **'Invited by {name}'**
+  String invitedByLabel(String name);
+
   /// Uppercase label for the address row
   ///
   /// In en, this message translates to:

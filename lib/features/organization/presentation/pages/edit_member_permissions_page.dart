@@ -156,12 +156,22 @@ class _RoleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ADMIN is reserved for the organization owner and can never be granted
+    // through this screen (the backend rejects it); it's excluded here so the
+    // UI never offers a value it will always reject. If a member's current
+    // role is somehow ADMIN (e.g. the owner), it's kept as the sole exception
+    // so the dropdown still has a matching item to display.
+    final selectableRoles = [
+      for (final role in MemberRole.values)
+        if (role != MemberRole.admin || role == value) role,
+    ];
+
     return DropdownButtonFormField<MemberRole>(
       initialValue: value,
       decoration: InputDecoration(labelText: label),
       onChanged: enabled ? (v) => v == null ? null : onChanged(v) : null,
       items: [
-        for (final role in MemberRole.values)
+        for (final role in selectableRoles)
           DropdownMenuItem(value: role, child: Text(role.label)),
       ],
     );

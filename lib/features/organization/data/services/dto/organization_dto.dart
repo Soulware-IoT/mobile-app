@@ -4,6 +4,9 @@ import 'package:cocina360/shared/data/types/json.dart';
 /// Maps the backend `OrganizationResponse` (served through the api-gw) into the
 /// [Organization] domain model. Only the fields the mobile screen needs are
 /// kept; GPS latitude/longitude are intentionally ignored (reference-point-only).
+///
+/// The address travels nested: `address: {lineOne, lineTwo, reference}`, not
+/// as flat root-level fields.
 class OrganizationDto {
   final String id;
   final String name;
@@ -24,13 +27,15 @@ class OrganizationDto {
   });
 
   factory OrganizationDto.fromJson(JSON json) {
+    final address = json['address'] as JSON?;
+
     return OrganizationDto(
       id: json['id'] as String,
       name: json['name'] as String,
       imageUrl: json['imageUrl'] as String?,
-      addressLineOne: json['addressLineOne'] as String?,
-      addressLineTwo: json['addressLineTwo'] as String?,
-      addressReference: json['addressReference'] as String?,
+      addressLineOne: address?['lineOne'] as String?,
+      addressLineTwo: address?['lineTwo'] as String?,
+      addressReference: address?['reference'] as String?,
       ownedBy: json['ownedBy'] as String?,
     );
   }

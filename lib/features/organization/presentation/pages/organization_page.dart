@@ -31,6 +31,12 @@ class _OrganizationPageState extends State<OrganizationPage> {
   @override
   void initState() {
     super.initState();
+    // On cold start with a restored session, `AuthCubit` is still resolving
+    // (`AuthInitial`) by the time this page mounts — the router doesn't wait
+    // for that resolution before showing the home shell. This one-shot check
+    // covers the common case (auth already resolved, e.g. right after a
+    // fresh login); the `BlocListener` below covers the race, retrying once
+    // `AuthCubit` actually settles on Authenticated.
     WidgetsBinding.instance.addPostFrameCallback((_) => _load());
   }
 
@@ -74,13 +80,26 @@ class _OrganizationPageState extends State<OrganizationPage> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: BlocListener<OrganizationCubit, OrganizationState>(
-        listenWhen: (prev, curr) => curr is OrganizationLoaded,
-        listener: (context, state) {
-          if (state is OrganizationLoaded) {
-            context.read<InvitationsCubit>().load(state.organization.id);
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthCubit, AuthState>(
+            // Covers the cold-start race: if this page mounted while
+            // AuthCubit was still `AuthInitial` (session restore in flight),
+            // the initState load above was a no-op. Retry once auth settles
+            // into an authenticated state.
+            listenWhen: (prev, curr) =>
+                curr is Authenticated || curr is OfflineAuthenticated,
+            listener: (context, state) => _load(),
+          ),
+          BlocListener<OrganizationCubit, OrganizationState>(
+            listenWhen: (prev, curr) => curr is OrganizationLoaded,
+            listener: (context, state) {
+              if (state is OrganizationLoaded) {
+                context.read<InvitationsCubit>().load(state.organization.id);
+              }
+            },
+          ),
+        ],
         child: BlocBuilder<OrganizationCubit, OrganizationState>(
         builder: (context, state) {
           return switch (state) {

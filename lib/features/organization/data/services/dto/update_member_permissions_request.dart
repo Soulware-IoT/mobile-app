@@ -17,7 +17,7 @@ class UpdateMemberPermissionsRequest {
 
   JSON toJson() => {
     'security': security.apiValue,
-    'iot': organization.apiValue,
+    'organizations': organization.apiValue,
     'internalControl': internalControl.apiValue,
   };
 }

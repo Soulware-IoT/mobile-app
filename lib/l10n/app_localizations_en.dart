@@ -269,6 +269,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invitationToOrganization => 'Organization invitation';
 
   @override
+  String invitedByLabel(String name) {
+    return 'Invited by $name';
+  }
+
+  @override
   String get addressHeader => 'ADDRESS';
 
   @override

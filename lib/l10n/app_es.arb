@@ -92,6 +92,7 @@
   "decline": "Declinar",
   "accept": "Aceptar",
   "invitationToOrganization": "Invitación a una organización",
+  "invitedByLabel": "Invitado por {name}",
   "addressHeader": "DIRECCIÓN",
   "noAddressRegistered": "Sin dirección registrada",
   "referencePointHeader": "PUNTO DE REFERENCIA",

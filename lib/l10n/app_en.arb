@@ -350,6 +350,15 @@
   "@invitationToOrganization": {
     "description": "Title of an invitation card"
   },
+  "invitedByLabel": "Invited by {name}",
+  "@invitedByLabel": {
+    "description": "Shows who sent the invitation, on the my-invitations card",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "addressHeader": "ADDRESS",
   "@addressHeader": {
     "description": "Uppercase label for the address row"

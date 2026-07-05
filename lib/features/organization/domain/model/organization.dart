@@ -1,3 +1,17 @@
+/// The organization's owner, embedded on `OrganizationResponse.owner`
+/// (a `ProfileSummary`) so callers don't need a separate profile fetch.
+class OrganizationOwner {
+  final String fullName;
+  final String email;
+  final String? avatarUrl;
+
+  const OrganizationOwner({
+    required this.fullName,
+    required this.email,
+    this.avatarUrl,
+  });
+}
+
 class Organization {
   final String id;
   final String name;
@@ -6,6 +20,7 @@ class Organization {
   final String? addressLineTwo;
   final String? addressReference;
   final String? ownedBy;
+  final OrganizationOwner? owner;
 
   const Organization({
     required this.id,
@@ -15,6 +30,7 @@ class Organization {
     this.addressLineTwo,
     this.addressReference,
     this.ownedBy,
+    this.owner,
   });
 
   /// Single-line address built from the two address lines, for the header card.

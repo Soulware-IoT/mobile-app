@@ -16,6 +16,9 @@ import 'package:cocina360/features/processes/data/repositories/internal_control_
 import 'package:cocina360/features/processes/data/services/internal_control_remote_service.dart';
 import 'package:cocina360/features/processes/domain/repositories/internal_control_repository.dart';
 import 'package:cocina360/features/processes/presentation/cubit/processes_cubit.dart';
+import 'package:cocina360/features/subscription/data/repositories/subscription_repository_impl.dart';
+import 'package:cocina360/features/subscription/data/services/subscription_remote_service.dart';
+import 'package:cocina360/features/subscription/domain/repositories/subscription_repository.dart';
 import 'package:cocina360/shared/data/repositories/auth_repository_impl.dart';
 import 'package:cocina360/shared/data/repositories/profile_repository_impl.dart';
 import 'package:cocina360/shared/data/services/auth_local_service.dart';
@@ -69,6 +72,7 @@ class DependencyInjectorWidget extends StatelessWidget {
     final deviceRemoteService = DeviceRemoteService(apiGatewayClient);
     final internalControlRemoteService =
         InternalControlRemoteService(apiGatewayClient);
+    final subscriptionRemoteService = SubscriptionRemoteService(apiGatewayClient);
     final sessionClaims = SessionClaims(supabase);
 
     return MultiRepositoryProvider(
@@ -101,6 +105,12 @@ class DependencyInjectorWidget extends StatelessWidget {
         RepositoryProvider<InternalControlRepository>(
           create: (_) => InternalControlRepositoryImpl(
             internalControlRemoteService,
+            connectionChecker,
+          ),
+        ),
+        RepositoryProvider<SubscriptionRepository>(
+          create: (_) => SubscriptionRepositoryImpl(
+            subscriptionRemoteService,
             connectionChecker,
           ),
         ),

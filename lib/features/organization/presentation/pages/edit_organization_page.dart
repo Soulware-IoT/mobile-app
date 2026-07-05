@@ -9,6 +9,11 @@ import 'package:cocina360/features/organization/presentation/cubit/edit_organiza
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/features/subscription/domain/model/subscription.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/subscription_cubit.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/subscription_state.dart';
+import 'package:cocina360/features/subscription/presentation/widgets/subscription_section.dart';
+import 'package:cocina360/features/subscription/presentation/widgets/upgrade_plan_dialog.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
 import 'package:cocina360/shared/presentation/router/app_router.dart';
@@ -38,6 +43,9 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
     _nameController = TextEditingController(text: org.name);
     _addressController = TextEditingController(text: org.addressLineOne ?? '');
     _notesController = TextEditingController(text: org.addressReference ?? '');
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => context.read<SubscriptionCubit>().load(org.id),
+    );
   }
 
   @override
@@ -61,6 +69,48 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
       addressReference: _notesController.text.trim(),
     );
   }
+
+  Future<void> _changePlan(Subscription current) async {
+    final result = await showUpgradePlanDialog(
+      context,
+      current: current.plan,
+      requiresCard: !current.hasBillingOnFile,
+    );
+    if (result == null || !mounted) return;
+
+    await context.read<SubscriptionCubit>().changePlan(
+      widget.organization.id,
+      result.plan,
+      paymentMethodId: result.paymentMethodId,
+    );
+  }
+
+  Future<void> _downgradePlan() async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.subscriptionDowngradeConfirmTitle),
+        content: Text(l10n.subscriptionDowngradeConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.confirm),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) {
+      await context.read<SubscriptionCubit>().downgrade(widget.organization.id);
+    }
+  }
+
+  Future<void> _resumePlan() =>
+      context.read<SubscriptionCubit>().resume(widget.organization.id);
 
   Future<void> _deleteOrganization() async {
     final l10n = AppLocalizations.of(context)!;
@@ -176,6 +226,16 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
               }
             },
           ),
+          BlocListener<SubscriptionCubit, SubscriptionState>(
+            listenWhen: (prev, curr) =>
+                curr is SubscriptionLoaded && curr.updateError != null,
+            listener: (context, state) {
+              final error = (state as SubscriptionLoaded).updateError!;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(localizedError(context, error))),
+              );
+            },
+          ),
         ],
         child: BlocBuilder<EditOrganizationCubit, EditOrganizationState>(
           builder: (context, state) {
@@ -241,6 +301,45 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 32),
+                      Text(
+                        l10n.subscriptionTitle,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                      ),
+                      const SizedBox(height: 12),
+                      BlocBuilder<SubscriptionCubit, SubscriptionState>(
+                        builder: (context, subState) {
+                          return switch (subState) {
+                            SubscriptionInitial() ||
+                            SubscriptionLoading() => const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                            SubscriptionError(:final error) => Text(
+                              localizedError(context, error),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                            SubscriptionLoaded(
+                              :final subscription,
+                              :final updating,
+                            ) =>
+                              SubscriptionSection(
+                                subscription: subscription,
+                                organization: widget.organization,
+                                updating: updating,
+                                isOwner: isOwner,
+                                onChangePlan: () => _changePlan(subscription),
+                                onDowngrade: _downgradePlan,
+                                onResume: _resumePlan,
+                              ),
+                          };
+                        },
                       ),
                       if (isOwner) ...[
                         const SizedBox(height: 32),

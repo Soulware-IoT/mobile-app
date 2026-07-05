@@ -43,6 +43,14 @@
             android:name="flutterEmbedding"
             android:value="2"
         />
+
+        <!-- Impeller currently has known issues forwarding touch/keyboard focus to
+             embedded native views (e.g. the Stripe CardField), leaving them
+             unresponsive to typing. Disabled until upstream fixes land. -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false"
+        />
     </application>
 
     <queries>

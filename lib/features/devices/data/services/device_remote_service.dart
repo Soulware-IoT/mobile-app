@@ -53,6 +53,22 @@ class DeviceRemoteService {
     return IotDeviceDto.fromJson(data as JSON);
   }
 
+  /// `POST /organizations/{organizationId}/iot-devices` — claims a
+  /// factory-provisioned device by its code into the organization. Omit
+  /// [thresholds] to apply the backend's standard defaults.
+  Future<IotDeviceDto> claimDevice(
+    String organizationId, {
+    required String code,
+    required String name,
+    JSON? thresholds,
+  }) async {
+    final data = await client.postJson(
+      '/organizations/$organizationId/iot-devices',
+      body: {'code': code, 'name': name, 'thresholds': ?thresholds},
+    );
+    return IotDeviceDto.fromJson(data as JSON);
+  }
+
   /// `PATCH /iot-devices/{id}` — partial update of a claimed device. Only the
   /// provided fields travel in the body; omitted ones stay unchanged.
   Future<IotDeviceDto> updateDevice(
@@ -84,5 +100,20 @@ class DeviceRemoteService {
       if (e.statusCode == 404) return null;
       rethrow;
     }
+  }
+
+  /// `POST /organizations/{organizationId}/edge-device` — claims a
+  /// factory-provisioned edge gateway by its code into the organization. An
+  /// organization has at most one edge device.
+  Future<EdgeDeviceDto> claimEdgeDevice(
+    String organizationId, {
+    required String code,
+    required String name,
+  }) async {
+    final data = await client.postJson(
+      '/organizations/$organizationId/edge-device',
+      body: {'code': code, 'name': name},
+    );
+    return EdgeDeviceDto.fromJson(data as JSON);
   }
 }

@@ -26,6 +26,15 @@ abstract class OrganizationRepository {
   /// Returns the organizations the given profile (current user) belongs to.
   Future<List<Organization>> getMyOrganizations(String profileId);
 
+  /// Creates a new organization owned by the current user and returns it.
+  Future<Organization> createOrganization({
+    required String name,
+    String? imageUrl,
+    String? addressLineOne,
+    String? addressLineTwo,
+    String? addressReference,
+  });
+
   /// Updates the organization's editable details and returns the new state.
   Future<Organization> updateOrganization({
     required String organizationId,
@@ -43,6 +52,15 @@ abstract class OrganizationRepository {
     required MemberRole security,
     required MemberRole organization,
     required MemberRole internalControl,
+  });
+
+  /// Deletes the organization. Backend requires the requester to be its owner.
+  Future<void> deleteOrganization(String organizationId);
+
+  /// Removes a member from the organization.
+  Future<void> removeMember({
+    required String organizationId,
+    required String memberId,
   });
 
   /// Invites a member to the organization by email.

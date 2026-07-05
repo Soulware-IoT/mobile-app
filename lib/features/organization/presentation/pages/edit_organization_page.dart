@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
+import 'package:cocina360/features/organization/presentation/cubit/delete_organization_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/delete_organization_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_cubit.dart';
 import 'package:cocina360/features/organization/presentation/cubit/edit_organization_state.dart';
+import 'package:cocina360/features/organization/presentation/cubit/my_organizations_cubit.dart';
+import 'package:cocina360/features/organization/presentation/cubit/my_organizations_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
+import 'package:cocina360/features/subscription/domain/model/subscription.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/subscription_cubit.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/subscription_state.dart';
+import 'package:cocina360/features/subscription/presentation/widgets/subscription_section.dart';
+import 'package:cocina360/features/subscription/presentation/widgets/upgrade_plan_dialog.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
 import 'package:cocina360/shared/presentation/error/localized_error.dart';
+import 'package:cocina360/shared/presentation/router/app_router.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
+import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
 import 'package:cocina360/shared/presentation/theme/theme.dart';
 
 class EditOrganizationPage extends StatefulWidget {
@@ -31,6 +43,9 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
     _nameController = TextEditingController(text: org.name);
     _addressController = TextEditingController(text: org.addressLineOne ?? '');
     _notesController = TextEditingController(text: org.addressReference ?? '');
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => context.read<SubscriptionCubit>().load(org.id),
+    );
   }
 
   @override
@@ -55,88 +70,318 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
     );
   }
 
+  Future<void> _changePlan(Subscription current) async {
+    final result = await showUpgradePlanDialog(
+      context,
+      current: current.plan,
+      requiresCard: !current.hasBillingOnFile,
+    );
+    if (result == null || !mounted) return;
+
+    await context.read<SubscriptionCubit>().changePlan(
+      widget.organization.id,
+      result.plan,
+      paymentMethodId: result.paymentMethodId,
+    );
+  }
+
+  Future<void> _downgradePlan() async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.subscriptionDowngradeConfirmTitle),
+        content: Text(l10n.subscriptionDowngradeConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.confirm),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) {
+      await context.read<SubscriptionCubit>().downgrade(widget.organization.id);
+    }
+  }
+
+  Future<void> _resumePlan() =>
+      context.read<SubscriptionCubit>().resume(widget.organization.id);
+
+  Future<void> _deleteOrganization() async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.deleteOrganizationConfirmTitle),
+        content: Text(
+          l10n.deleteOrganizationConfirmBody(widget.organization.name),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+            ),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      await context.read<DeleteOrganizationCubit>().delete(
+        widget.organization.id,
+      );
+    }
+  }
+
+  /// The just-deleted membership may linger in the JWT's (not-yet-refreshed)
+  /// claims, so the next active organization is picked from the live,
+  /// API-backed list rather than the JWT-claims-based primary-organization
+  /// lookup.
+  Future<void> _afterDelete() async {
+    final userId = switch (context.read<AuthCubit>().state) {
+      Authenticated(:final userId) => userId,
+      OfflineAuthenticated(:final userId) => userId,
+      _ => null,
+    };
+    if (userId == null) return;
+
+    final myOrgsCubit = context.read<MyOrganizationsCubit>();
+    await myOrgsCubit.load(userId);
+    if (!mounted) return;
+
+    final remaining = switch (myOrgsCubit.state) {
+      MyOrganizationsLoaded(:final organizations) => organizations,
+      _ => const <Organization>[],
+    };
+
+    final organizationCubit = context.read<OrganizationCubit>();
+    if (remaining.isNotEmpty) {
+      await organizationCubit.selectOrganization(remaining.first.id);
+    } else {
+      organizationCubit.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isOwner = switch (context.watch<AuthCubit>().state) {
+      Authenticated(:final userId) => userId == widget.organization.ownedBy,
+      OfflineAuthenticated(:final userId) =>
+        userId == widget.organization.ownedBy,
+      _ => false,
+    };
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.editOrganizationTitle)),
-      body: BlocConsumer<EditOrganizationCubit, EditOrganizationState>(
-        listener: (context, state) {
-          if (state is EditOrganizationSuccess) {
-            context.read<OrganizationCubit>().applyUpdatedOrganization(
-              state.organization,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(l10n.organizationUpdated)),
-            );
-            context.pop();
-          } else if (state is EditOrganizationFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(localizedError(context, state.error))),
-            );
-          }
-        },
-        builder: (context, state) {
-          final saving = state is EditOrganizationSaving;
-          return AbsorbPointer(
-            absorbing: saving,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
-              children: [
-                _ImageCard(imageUrl: widget.organization.imageUrl),
-                const SizedBox(height: 16),
-                _DetailsCard(
-                  formKey: _formKey,
-                  nameController: _nameController,
-                  addressController: _addressController,
-                  notesController: _notesController,
-                  enabled: !saving,
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: saving ? null : () => context.pop(),
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(52),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text(l10n.cancel),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<EditOrganizationCubit, EditOrganizationState>(
+            listener: (context, state) {
+              if (state is EditOrganizationSuccess) {
+                context.read<OrganizationCubit>().applyUpdatedOrganization(
+                  state.organization,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(l10n.organizationUpdated)),
+                );
+                context.pop();
+              } else if (state is EditOrganizationFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(localizedError(context, state.error)),
+                  ),
+                );
+              }
+            },
+          ),
+          BlocListener<DeleteOrganizationCubit, DeleteOrganizationState>(
+            listener: (context, state) async {
+              if (state is DeleteOrganizationSuccess) {
+                await _afterDelete();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.organizationDeleted)),
+                  );
+                  context.go(AppRoutes.home);
+                }
+              } else if (state is DeleteOrganizationFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(localizedError(context, state.error)),
+                  ),
+                );
+              }
+            },
+          ),
+          BlocListener<SubscriptionCubit, SubscriptionState>(
+            listenWhen: (prev, curr) =>
+                curr is SubscriptionLoaded && curr.updateError != null,
+            listener: (context, state) {
+              final error = (state as SubscriptionLoaded).updateError!;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(localizedError(context, error))),
+              );
+            },
+          ),
+        ],
+        child: BlocBuilder<EditOrganizationCubit, EditOrganizationState>(
+          builder: (context, state) {
+            final saving = state is EditOrganizationSaving;
+            return BlocBuilder<
+              DeleteOrganizationCubit,
+              DeleteOrganizationState
+            >(
+              builder: (context, deleteState) {
+                final deleting = deleteState is DeleteOrganizationDeleting;
+                final busy = saving || deleting;
+                return AbsorbPointer(
+                  absorbing: busy,
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                    children: [
+                      _ImageCard(imageUrl: widget.organization.imageUrl),
+                      const SizedBox(height: 16),
+                      _DetailsCard(
+                        formKey: _formKey,
+                        nameController: _nameController,
+                        addressController: _addressController,
+                        notesController: _notesController,
+                        enabled: !busy,
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: saving ? null : _save,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppTheme.seedColor,
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size.fromHeight(52),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: saving
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.5,
-                                  color: Colors.white,
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: busy ? null : () => context.pop(),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size.fromHeight(52),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                              )
-                            : Text(l10n.saveChanges),
+                              ),
+                              child: Text(l10n.cancel),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: FilledButton(
+                              onPressed: busy ? null : _save,
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppTheme.seedColor,
+                                foregroundColor: Colors.white,
+                                minimumSize: const Size.fromHeight(52),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: saving
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.5,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Text(l10n.saveChanges),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
+                      const SizedBox(height: 32),
+                      Text(
+                        l10n.subscriptionTitle,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                      ),
+                      const SizedBox(height: 12),
+                      BlocBuilder<SubscriptionCubit, SubscriptionState>(
+                        builder: (context, subState) {
+                          return switch (subState) {
+                            SubscriptionInitial() ||
+                            SubscriptionLoading() => const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                            SubscriptionError(:final error) => Text(
+                              localizedError(context, error),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                            SubscriptionLoaded(
+                              :final subscription,
+                              :final updating,
+                            ) =>
+                              SubscriptionSection(
+                                subscription: subscription,
+                                organization: widget.organization,
+                                updating: updating,
+                                isOwner: isOwner,
+                                onChangePlan: () => _changePlan(subscription),
+                                onDowngrade: _downgradePlan,
+                                onResume: _resumePlan,
+                              ),
+                          };
+                        },
+                      ),
+                      if (isOwner) ...[
+                        const SizedBox(height: 32),
+                        Divider(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.error.withValues(alpha: 0.3),
+                        ),
+                        const SizedBox(height: 16),
+                        OutlinedButton.icon(
+                          onPressed: busy ? null : _deleteOrganization,
+                          icon: deleting
+                              ? const SizedBox(
+                                  height: 16,
+                                  width: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(Icons.delete_outline, size: 18),
+                          label: Text(l10n.deleteOrganizationTitle),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.error,
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                            minimumSize: const Size.fromHeight(52),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

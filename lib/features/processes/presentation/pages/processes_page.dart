@@ -63,6 +63,10 @@ class _ProcessesPageState extends State<ProcessesPage> {
           final format = state.selectedFormat;
           if (format == null) return const SizedBox.shrink();
           return FloatingActionButton(
+            // AppShell keeps all tabs mounted via IndexedStack, so this and
+            // the Devices tab's FAB coexist in the tree at once — without a
+            // distinct tag both would collide on Flutter's default Hero tag.
+            heroTag: 'processes-new-registry-fab',
             tooltip: l10n.newRegistryTitle,
             onPressed: () => _onNewRegistry(context, format),
             child: const Icon(Icons.add),

@@ -22,6 +22,14 @@
   "@cancel": {
     "description": "Generic cancel button"
   },
+  "delete": "DELETE",
+  "@delete": {
+    "description": "Generic destructive delete button on confirm dialogs"
+  },
+  "remove": "REMOVE",
+  "@remove": {
+    "description": "Generic destructive remove button on confirm dialogs"
+  },
   "saveChanges": "SAVE CHANGES",
   "@saveChanges": {
     "description": "Save button on edit forms"
@@ -140,6 +148,38 @@
   "devicesEmpty": "No devices.",
   "@devicesEmpty": {
     "description": "Empty state when the organization has no devices"
+  },
+  "claimDeviceTitle": "Register device",
+  "@claimDeviceTitle": {
+    "description": "App bar title on the claim-device screen, and the FAB tooltip that opens it"
+  },
+  "claimDeviceIntro": "Enter the code printed on the device to add it to this organization.",
+  "@claimDeviceIntro": {
+    "description": "Intro text on the claim-device screen"
+  },
+  "claimDeviceCodeLabel": "Device code",
+  "@claimDeviceCodeLabel": {
+    "description": "Label of the device/edge code field"
+  },
+  "claimDeviceCustomThresholds": "Set custom thresholds",
+  "@claimDeviceCustomThresholds": {
+    "description": "Switch to reveal the calibration threshold fields on the claim-device screen"
+  },
+  "claimDeviceDefaultThresholdsHint": "Off uses the standard defaults (35/50 °C, 1000/3000 PPM)",
+  "@claimDeviceDefaultThresholdsHint": {
+    "description": "Subtitle explaining what happens when custom thresholds are off"
+  },
+  "claimDeviceSubmit": "REGISTER",
+  "@claimDeviceSubmit": {
+    "description": "Submit button on the claim-device and claim-edge-device screens"
+  },
+  "claimEdgeDeviceTitle": "Register edge gateway",
+  "@claimEdgeDeviceTitle": {
+    "description": "App bar title on the claim-edge-device screen, and the button that opens it"
+  },
+  "claimEdgeDeviceIntro": "Enter the code printed on the edge gateway to add it to this organization.",
+  "@claimEdgeDeviceIntro": {
+    "description": "Intro text on the claim-edge-device screen"
   },
   "devicesLoadError": "Could not load devices.",
   "@devicesLoadError": {
@@ -293,6 +333,52 @@
   "organizationNotDetermined": "Could not determine the organization",
   "@organizationNotDetermined": {
     "description": "Snackbar when the active organization is unknown"
+  },
+  "createOrganizationTitle": "Create organization",
+  "@createOrganizationTitle": {
+    "description": "App bar title on the create-organization screen, and the button that opens it"
+  },
+  "organizationCreated": "Organization created",
+  "@organizationCreated": {
+    "description": "Snackbar after creating an organization"
+  },
+  "deleteOrganizationTitle": "Delete organization",
+  "@deleteOrganizationTitle": {
+    "description": "Danger-zone button on the edit-organization screen, owner only"
+  },
+  "deleteOrganizationConfirmTitle": "Delete organization?",
+  "@deleteOrganizationConfirmTitle": {
+    "description": "Confirm dialog title before deleting an organization"
+  },
+  "deleteOrganizationConfirmBody": "This permanently deletes \"{name}\" and everything in it. This cannot be undone.",
+  "@deleteOrganizationConfirmBody": {
+    "description": "Confirm dialog body before deleting an organization",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "organizationDeleted": "Organization deleted",
+  "@organizationDeleted": {
+    "description": "Snackbar after deleting an organization"
+  },
+  "removeMember": "Remove member",
+  "@removeMember": {
+    "description": "Danger-zone button on the member-detail screen"
+  },
+  "removeMemberConfirmTitle": "Remove member?",
+  "@removeMemberConfirmTitle": {
+    "description": "Confirm dialog title before removing a member"
+  },
+  "removeMemberConfirmBody": "{name} will lose access to this organization.",
+  "@removeMemberConfirmBody": {
+    "description": "Confirm dialog body before removing a member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "editOrganizationTitle": "Edit organization",
   "@editOrganizationTitle": {
@@ -621,5 +707,98 @@
   "validationSelectRequired": "Select an option",
   "@validationSelectRequired": {
     "description": "Validation error when no option is selected"
+  },
+
+  "subscriptionTitle": "Subscription",
+  "@subscriptionTitle": {
+    "description": "Section header on the Edit Organization screen, above the plan card"
+  },
+  "subscriptionCurrentPlanLabel": "CURRENT PLAN",
+  "@subscriptionCurrentPlanLabel": {
+    "description": "Uppercase label above the plan name on the Subscription screen"
+  },
+  "subscriptionPlanFree": "Free",
+  "@subscriptionPlanFree": {
+    "description": "FREE plan display name"
+  },
+  "subscriptionPlanBasic": "Basic",
+  "@subscriptionPlanBasic": {
+    "description": "BASIC plan display name"
+  },
+  "subscriptionPlanProfessional": "Professional",
+  "@subscriptionPlanProfessional": {
+    "description": "PROFESSIONAL plan display name"
+  },
+  "subscriptionUnlimitedDevices": "Unlimited devices",
+  "@subscriptionUnlimitedDevices": {
+    "description": "Device limit line for the unlimited (Professional) plan"
+  },
+  "subscriptionDeviceLimit": "Up to {limit} devices",
+  "@subscriptionDeviceLimit": {
+    "description": "Device limit line for FREE/BASIC plans",
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "subscriptionRenewsOn": "Renews on {date}",
+  "@subscriptionRenewsOn": {
+    "description": "Billing period end line, shown for paid plans",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionOwnedBy": "Owned by {name}",
+  "@subscriptionOwnedBy": {
+    "description": "Shows the organization owner's name on the plan card",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionCancelScheduled": "This subscription will move to Free on {date}.",
+  "@subscriptionCancelScheduled": {
+    "description": "Warning banner when a downgrade is scheduled",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionChangePlanTitle": "Change plan",
+  "@subscriptionChangePlanTitle": {
+    "description": "Button that opens the plan-change dialog, and its title"
+  },
+  "subscriptionDowngrade": "Downgrade to Free",
+  "@subscriptionDowngrade": {
+    "description": "Button that schedules a downgrade to Free at period end"
+  },
+  "subscriptionResume": "Keep current plan",
+  "@subscriptionResume": {
+    "description": "Button that cancels a scheduled downgrade"
+  },
+  "subscriptionDowngradeConfirmTitle": "Downgrade to Free?",
+  "@subscriptionDowngradeConfirmTitle": {
+    "description": "Confirm dialog title before scheduling a downgrade"
+  },
+  "subscriptionDowngradeConfirmBody": "Your plan stays active until the end of the current billing period, then moves to Free.",
+  "@subscriptionDowngradeConfirmBody": {
+    "description": "Confirm dialog body before scheduling a downgrade"
+  },
+  "subscriptionCardLabel": "Card details",
+  "@subscriptionCardLabel": {
+    "description": "Label above the Stripe CardField in the plan-change dialog"
+  },
+  "subscriptionCardIncomplete": "Enter complete card details",
+  "@subscriptionCardIncomplete": {
+    "description": "Validation error when the card field is incomplete on submit"
+  },
+  "subscriptionStripeNotConfigured": "Payments are not configured on this build",
+  "@subscriptionStripeNotConfigured": {
+    "description": "Shown when STRIPE_PUBLISHABLE_KEY is missing and the user tries to pay"
   }
 }

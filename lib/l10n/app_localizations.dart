@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'CANCEL'**
   String get cancel;
 
+  /// Generic destructive delete button on confirm dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE'**
+  String get delete;
+
+  /// Generic destructive remove button on confirm dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'REMOVE'**
+  String get remove;
+
   /// Save button on edit forms
   ///
   /// In en, this message translates to:
@@ -301,6 +313,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No devices.'**
   String get devicesEmpty;
+
+  /// App bar title on the claim-device screen, and the FAB tooltip that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Register device'**
+  String get claimDeviceTitle;
+
+  /// Intro text on the claim-device screen
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code printed on the device to add it to this organization.'**
+  String get claimDeviceIntro;
+
+  /// Label of the device/edge code field
+  ///
+  /// In en, this message translates to:
+  /// **'Device code'**
+  String get claimDeviceCodeLabel;
+
+  /// Switch to reveal the calibration threshold fields on the claim-device screen
+  ///
+  /// In en, this message translates to:
+  /// **'Set custom thresholds'**
+  String get claimDeviceCustomThresholds;
+
+  /// Subtitle explaining what happens when custom thresholds are off
+  ///
+  /// In en, this message translates to:
+  /// **'Off uses the standard defaults (35/50 °C, 1000/3000 PPM)'**
+  String get claimDeviceDefaultThresholdsHint;
+
+  /// Submit button on the claim-device and claim-edge-device screens
+  ///
+  /// In en, this message translates to:
+  /// **'REGISTER'**
+  String get claimDeviceSubmit;
+
+  /// App bar title on the claim-edge-device screen, and the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Register edge gateway'**
+  String get claimEdgeDeviceTitle;
+
+  /// Intro text on the claim-edge-device screen
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code printed on the edge gateway to add it to this organization.'**
+  String get claimEdgeDeviceIntro;
 
   /// Title on the devices error view
   ///
@@ -529,6 +589,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not determine the organization'**
   String get organizationNotDetermined;
+
+  /// App bar title on the create-organization screen, and the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Create organization'**
+  String get createOrganizationTitle;
+
+  /// Snackbar after creating an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization created'**
+  String get organizationCreated;
+
+  /// Danger-zone button on the edit-organization screen, owner only
+  ///
+  /// In en, this message translates to:
+  /// **'Delete organization'**
+  String get deleteOrganizationTitle;
+
+  /// Confirm dialog title before deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Delete organization?'**
+  String get deleteOrganizationConfirmTitle;
+
+  /// Confirm dialog body before deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes \"{name}\" and everything in it. This cannot be undone.'**
+  String deleteOrganizationConfirmBody(String name);
+
+  /// Snackbar after deleting an organization
+  ///
+  /// In en, this message translates to:
+  /// **'Organization deleted'**
+  String get organizationDeleted;
+
+  /// Danger-zone button on the member-detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member'**
+  String get removeMember;
+
+  /// Confirm dialog title before removing a member
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member?'**
+  String get removeMemberConfirmTitle;
+
+  /// Confirm dialog body before removing a member
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will lose access to this organization.'**
+  String removeMemberConfirmBody(String name);
 
   /// App bar title on the edit-organization screen
   ///
@@ -973,6 +1087,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select an option'**
   String get validationSelectRequired;
+
+  /// Section header on the Edit Organization screen, above the plan card
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get subscriptionTitle;
+
+  /// Uppercase label above the plan name on the Subscription screen
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENT PLAN'**
+  String get subscriptionCurrentPlanLabel;
+
+  /// FREE plan display name
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get subscriptionPlanFree;
+
+  /// BASIC plan display name
+  ///
+  /// In en, this message translates to:
+  /// **'Basic'**
+  String get subscriptionPlanBasic;
+
+  /// PROFESSIONAL plan display name
+  ///
+  /// In en, this message translates to:
+  /// **'Professional'**
+  String get subscriptionPlanProfessional;
+
+  /// Device limit line for the unlimited (Professional) plan
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited devices'**
+  String get subscriptionUnlimitedDevices;
+
+  /// Device limit line for FREE/BASIC plans
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {limit} devices'**
+  String subscriptionDeviceLimit(int limit);
+
+  /// Billing period end line, shown for paid plans
+  ///
+  /// In en, this message translates to:
+  /// **'Renews on {date}'**
+  String subscriptionRenewsOn(String date);
+
+  /// Shows the organization owner's name on the plan card
+  ///
+  /// In en, this message translates to:
+  /// **'Owned by {name}'**
+  String subscriptionOwnedBy(String name);
+
+  /// Warning banner when a downgrade is scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'This subscription will move to Free on {date}.'**
+  String subscriptionCancelScheduled(String date);
+
+  /// Button that opens the plan-change dialog, and its title
+  ///
+  /// In en, this message translates to:
+  /// **'Change plan'**
+  String get subscriptionChangePlanTitle;
+
+  /// Button that schedules a downgrade to Free at period end
+  ///
+  /// In en, this message translates to:
+  /// **'Downgrade to Free'**
+  String get subscriptionDowngrade;
+
+  /// Button that cancels a scheduled downgrade
+  ///
+  /// In en, this message translates to:
+  /// **'Keep current plan'**
+  String get subscriptionResume;
+
+  /// Confirm dialog title before scheduling a downgrade
+  ///
+  /// In en, this message translates to:
+  /// **'Downgrade to Free?'**
+  String get subscriptionDowngradeConfirmTitle;
+
+  /// Confirm dialog body before scheduling a downgrade
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan stays active until the end of the current billing period, then moves to Free.'**
+  String get subscriptionDowngradeConfirmBody;
+
+  /// Label above the Stripe CardField in the plan-change dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Card details'**
+  String get subscriptionCardLabel;
+
+  /// Validation error when the card field is incomplete on submit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter complete card details'**
+  String get subscriptionCardIncomplete;
+
+  /// Shown when STRIPE_PUBLISHABLE_KEY is missing and the user tries to pay
+  ///
+  /// In en, this message translates to:
+  /// **'Payments are not configured on this build'**
+  String get subscriptionStripeNotConfigured;
 }
 
 class _AppLocalizationsDelegate

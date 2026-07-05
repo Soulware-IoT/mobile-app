@@ -57,6 +57,38 @@ class DeviceRepositoryImpl implements DeviceRepository {
     return dto?.toDomain();
   }
 
+  @override
+  Future<IotDevice> claimDevice({
+    required String organizationId,
+    required String code,
+    required String name,
+    Thresholds? thresholds,
+  }) async {
+    await _requireConnection();
+    final dto = await remoteService.claimDevice(
+      organizationId,
+      code: code,
+      name: name,
+      thresholds: thresholds == null ? null : _thresholdsBody(thresholds),
+    );
+    return dto.toDomain();
+  }
+
+  @override
+  Future<EdgeDevice> claimEdgeDevice({
+    required String organizationId,
+    required String code,
+    required String name,
+  }) async {
+    await _requireConnection();
+    final dto = await remoteService.claimEdgeDevice(
+      organizationId,
+      code: code,
+      name: name,
+    );
+    return dto.toDomain();
+  }
+
   /// The backend requires all four values when thresholds are provided.
   Map<String, dynamic> _thresholdsBody(Thresholds t) => {
         'temperature': {

@@ -1,3 +1,4 @@
+import 'package:cocina360/features/organization/data/services/dto/create_organization_request.dart';
 import 'package:cocina360/features/organization/data/services/dto/invitation_dto.dart';
 import 'package:cocina360/features/organization/data/services/dto/organization_dto.dart';
 import 'package:cocina360/features/organization/data/services/dto/organization_member_dto.dart';
@@ -26,6 +27,15 @@ class OrganizationRemoteService {
     return list.map(OrganizationDto.fromJson).toList();
   }
 
+  /// `POST /organizations` — creates a new organization owned by the current
+  /// user (identity from the JWT) and returns it.
+  Future<OrganizationDto> createOrganization(
+    CreateOrganizationRequest request,
+  ) async {
+    final data = await client.postJson('/organizations', body: request.toJson());
+    return OrganizationDto.fromJson(data as JSON);
+  }
+
   /// `GET /organizations/{organizationId}/members` — members enriched with
   /// profile data and permission levels.
   Future<List<OrganizationMemberDto>> getMembers(String organizationId) async {
@@ -47,6 +57,18 @@ class OrganizationRemoteService {
       body: request.toJson(),
     );
     return OrganizationDto.fromJson(data as JSON);
+  }
+
+  /// `DELETE /organizations/{organizationId}` — deletes the organization.
+  /// Backend requires the requester to be its owner.
+  Future<void> deleteOrganization(String organizationId) async {
+    await client.deleteJson('/organizations/$organizationId');
+  }
+
+  /// `DELETE /organizations/{organizationId}/members/{memberId}` — removes a
+  /// member from the organization.
+  Future<void> removeMember(String organizationId, String memberId) async {
+    await client.deleteJson('/organizations/$organizationId/members/$memberId');
   }
 
   /// `PUT /organizations/{organizationId}/members/{memberId}/permissions` —

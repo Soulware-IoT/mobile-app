@@ -55,4 +55,19 @@ class OrganizationCubit extends Cubit<OrganizationState> {
       emit(OrganizationLoaded(current.organization, members));
     }
   }
+
+  /// Drops a member (by id) from the loaded list after its removal.
+  void applyRemovedMember(String memberId) {
+    final current = state;
+    if (current is OrganizationLoaded) {
+      final members = current.members.where((m) => m.id != memberId).toList();
+      emit(OrganizationLoaded(current.organization, members));
+    }
+  }
+
+  /// Clears the active organization after it's deleted. Callers should follow
+  /// up with [selectOrganization] if the user has another one, since a fresh
+  /// [load] would risk picking the just-deleted org back up from the JWT's
+  /// (not-yet-refreshed) membership claim.
+  void clear() => emit(const OrganizationEmpty());
 }

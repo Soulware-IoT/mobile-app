@@ -1,3 +1,4 @@
+import 'package:cocina360/features/organization/data/services/dto/create_organization_request.dart';
 import 'package:cocina360/features/organization/data/services/dto/update_member_permissions_request.dart';
 import 'package:cocina360/features/organization/data/services/dto/update_organization_request.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
@@ -69,6 +70,32 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
   }
 
   @override
+  Future<Organization> createOrganization({
+    required String name,
+    String? imageUrl,
+    String? addressLineOne,
+    String? addressLineTwo,
+    String? addressReference,
+  }) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw const NoConnectionException();
+    }
+
+    final created = await remoteService.createOrganization(
+      CreateOrganizationRequest(
+        name: name,
+        imageUrl: imageUrl,
+        addressLineOne: addressLineOne,
+        addressLineTwo: addressLineTwo,
+        addressReference: addressReference,
+      ),
+    );
+
+    return created.toDomain();
+  }
+
+  @override
   Future<Organization> updateOrganization({
     required String organizationId,
     required String name,
@@ -120,6 +147,29 @@ class OrganizationRepositoryImpl implements OrganizationRepository {
     );
 
     return updated.toDomain();
+  }
+
+  @override
+  Future<void> deleteOrganization(String organizationId) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw const NoConnectionException();
+    }
+
+    await remoteService.deleteOrganization(organizationId);
+  }
+
+  @override
+  Future<void> removeMember({
+    required String organizationId,
+    required String memberId,
+  }) async {
+    final online = await connectionChecker.isConnected;
+    if (!online) {
+      throw const NoConnectionException();
+    }
+
+    await remoteService.removeMember(organizationId, memberId);
   }
 
   @override

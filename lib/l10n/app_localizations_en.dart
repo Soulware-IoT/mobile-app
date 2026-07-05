@@ -24,6 +24,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'CANCEL';
 
   @override
+  String get delete => 'DELETE';
+
+  @override
+  String get remove => 'REMOVE';
+
+  @override
   String get saveChanges => 'SAVE CHANGES';
 
   @override
@@ -109,6 +115,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get devicesEmpty => 'No devices.';
+
+  @override
+  String get claimDeviceTitle => 'Register device';
+
+  @override
+  String get claimDeviceIntro =>
+      'Enter the code printed on the device to add it to this organization.';
+
+  @override
+  String get claimDeviceCodeLabel => 'Device code';
+
+  @override
+  String get claimDeviceCustomThresholds => 'Set custom thresholds';
+
+  @override
+  String get claimDeviceDefaultThresholdsHint =>
+      'Off uses the standard defaults (35/50 °C, 1000/3000 PPM)';
+
+  @override
+  String get claimDeviceSubmit => 'REGISTER';
+
+  @override
+  String get claimEdgeDeviceTitle => 'Register edge gateway';
+
+  @override
+  String get claimEdgeDeviceIntro =>
+      'Enter the code printed on the edge gateway to add it to this organization.';
 
   @override
   String get devicesLoadError => 'Could not load devices.';
@@ -225,6 +258,37 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get organizationNotDetermined =>
       'Could not determine the organization';
+
+  @override
+  String get createOrganizationTitle => 'Create organization';
+
+  @override
+  String get organizationCreated => 'Organization created';
+
+  @override
+  String get deleteOrganizationTitle => 'Delete organization';
+
+  @override
+  String get deleteOrganizationConfirmTitle => 'Delete organization?';
+
+  @override
+  String deleteOrganizationConfirmBody(String name) {
+    return 'This permanently deletes \"$name\" and everything in it. This cannot be undone.';
+  }
+
+  @override
+  String get organizationDeleted => 'Organization deleted';
+
+  @override
+  String get removeMember => 'Remove member';
+
+  @override
+  String get removeMemberConfirmTitle => 'Remove member?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return '$name will lose access to this organization.';
+  }
 
   @override
   String get editOrganizationTitle => 'Edit organization';
@@ -462,4 +526,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationSelectRequired => 'Select an option';
+
+  @override
+  String get subscriptionTitle => 'Subscription';
+
+  @override
+  String get subscriptionCurrentPlanLabel => 'CURRENT PLAN';
+
+  @override
+  String get subscriptionPlanFree => 'Free';
+
+  @override
+  String get subscriptionPlanBasic => 'Basic';
+
+  @override
+  String get subscriptionPlanProfessional => 'Professional';
+
+  @override
+  String get subscriptionUnlimitedDevices => 'Unlimited devices';
+
+  @override
+  String subscriptionDeviceLimit(int limit) {
+    return 'Up to $limit devices';
+  }
+
+  @override
+  String subscriptionRenewsOn(String date) {
+    return 'Renews on $date';
+  }
+
+  @override
+  String subscriptionOwnedBy(String name) {
+    return 'Owned by $name';
+  }
+
+  @override
+  String subscriptionCancelScheduled(String date) {
+    return 'This subscription will move to Free on $date.';
+  }
+
+  @override
+  String get subscriptionChangePlanTitle => 'Change plan';
+
+  @override
+  String get subscriptionDowngrade => 'Downgrade to Free';
+
+  @override
+  String get subscriptionResume => 'Keep current plan';
+
+  @override
+  String get subscriptionDowngradeConfirmTitle => 'Downgrade to Free?';
+
+  @override
+  String get subscriptionDowngradeConfirmBody =>
+      'Your plan stays active until the end of the current billing period, then moves to Free.';
+
+  @override
+  String get subscriptionCardLabel => 'Card details';
+
+  @override
+  String get subscriptionCardIncomplete => 'Enter complete card details';
+
+  @override
+  String get subscriptionStripeNotConfigured =>
+      'Payments are not configured on this build';
 }

@@ -41,11 +41,33 @@ class _DevicesPageState extends State<DevicesPage> {
     }
   }
 
+  Future<void> _claimDevice(String organizationId) async {
+    final claimed = await context.push<bool>(
+      AppRoutes.claimDevice,
+      extra: organizationId,
+    );
+    if (claimed == true) _reload();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.devicesTitle)),
+      floatingActionButton: BlocBuilder<OrganizationCubit, OrganizationState>(
+        builder: (context, orgState) {
+          if (orgState is! OrganizationLoaded) return const SizedBox.shrink();
+          return FloatingActionButton(
+            // AppShell keeps all tabs mounted via IndexedStack, so this and
+            // the Processes tab's FAB coexist in the tree at once — without a
+            // distinct tag both would collide on Flutter's default Hero tag.
+            heroTag: 'devices-claim-device-fab',
+            tooltip: l10n.claimDeviceTitle,
+            onPressed: () => _claimDevice(orgState.organization.id),
+            child: const Icon(Icons.add),
+          );
+        },
+      ),
       body: BlocListener<OrganizationCubit, OrganizationState>(
         listenWhen: (prev, curr) => curr is OrganizationLoaded,
         listener: (context, state) {
@@ -100,6 +122,25 @@ class _DevicesBody extends StatelessWidget {
                 edge: edge,
                 quota: quota,
               ),
+              if (edge == null) ...[
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    final orgState = context.read<OrganizationCubit>().state;
+                    if (orgState is! OrganizationLoaded) return;
+                    final claimed = await context.push<bool>(
+                      AppRoutes.claimEdgeDevice,
+                      extra: orgState.organization.id,
+                    );
+                    if (claimed == true) onRetry();
+                  },
+                  icon: const Icon(Icons.router_outlined, size: 18),
+                  label: Text(AppLocalizations.of(context)!.claimEdgeDeviceTitle),
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                  ),
+                ),
+              ],
               const SizedBox(height: 24),
               Text(
                 AppLocalizations.of(context)!.devicesInventoryTitle,

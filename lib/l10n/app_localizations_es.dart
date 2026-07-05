@@ -25,6 +25,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'CANCELAR';
 
   @override
+  String get delete => 'ELIMINAR';
+
+  @override
+  String get remove => 'QUITAR';
+
+  @override
   String get saveChanges => 'GUARDAR CAMBIOS';
 
   @override
@@ -111,6 +117,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get devicesEmpty => 'No hay dispositivos.';
+
+  @override
+  String get claimDeviceTitle => 'Registrar dispositivo';
+
+  @override
+  String get claimDeviceIntro =>
+      'Ingresa el código impreso en el dispositivo para agregarlo a esta organización.';
+
+  @override
+  String get claimDeviceCodeLabel => 'Código del dispositivo';
+
+  @override
+  String get claimDeviceCustomThresholds => 'Definir umbrales personalizados';
+
+  @override
+  String get claimDeviceDefaultThresholdsHint =>
+      'Desactivado usa los valores estándar (35/50 °C, 1000/3000 PPM)';
+
+  @override
+  String get claimDeviceSubmit => 'REGISTRAR';
+
+  @override
+  String get claimEdgeDeviceTitle => 'Registrar edge gateway';
+
+  @override
+  String get claimEdgeDeviceIntro =>
+      'Ingresa el código impreso en el edge gateway para agregarlo a esta organización.';
 
   @override
   String get devicesLoadError => 'No se pudieron cargar los dispositivos.';
@@ -228,6 +261,37 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get organizationNotDetermined =>
       'No se pudo determinar la organización';
+
+  @override
+  String get createOrganizationTitle => 'Crear organización';
+
+  @override
+  String get organizationCreated => 'Organización creada';
+
+  @override
+  String get deleteOrganizationTitle => 'Eliminar organización';
+
+  @override
+  String get deleteOrganizationConfirmTitle => '¿Eliminar organización?';
+
+  @override
+  String deleteOrganizationConfirmBody(String name) {
+    return 'Esto elimina permanentemente \"$name\" y todo su contenido. No se puede deshacer.';
+  }
+
+  @override
+  String get organizationDeleted => 'Organización eliminada';
+
+  @override
+  String get removeMember => 'Quitar miembro';
+
+  @override
+  String get removeMemberConfirmTitle => '¿Quitar miembro?';
+
+  @override
+  String removeMemberConfirmBody(String name) {
+    return '$name perderá el acceso a esta organización.';
+  }
 
   @override
   String get editOrganizationTitle => 'Editar organización';
@@ -466,4 +530,69 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get validationSelectRequired => 'Selecciona una opción';
+
+  @override
+  String get subscriptionTitle => 'Suscripción';
+
+  @override
+  String get subscriptionCurrentPlanLabel => 'PLAN ACTUAL';
+
+  @override
+  String get subscriptionPlanFree => 'Gratis';
+
+  @override
+  String get subscriptionPlanBasic => 'Básico';
+
+  @override
+  String get subscriptionPlanProfessional => 'Profesional';
+
+  @override
+  String get subscriptionUnlimitedDevices => 'Dispositivos ilimitados';
+
+  @override
+  String subscriptionDeviceLimit(int limit) {
+    return 'Hasta $limit dispositivos';
+  }
+
+  @override
+  String subscriptionRenewsOn(String date) {
+    return 'Se renueva el $date';
+  }
+
+  @override
+  String subscriptionOwnedBy(String name) {
+    return 'Propiedad de $name';
+  }
+
+  @override
+  String subscriptionCancelScheduled(String date) {
+    return 'Esta suscripción pasará a Gratis el $date.';
+  }
+
+  @override
+  String get subscriptionChangePlanTitle => 'Cambiar plan';
+
+  @override
+  String get subscriptionDowngrade => 'Bajar a Gratis';
+
+  @override
+  String get subscriptionResume => 'Mantener plan actual';
+
+  @override
+  String get subscriptionDowngradeConfirmTitle => '¿Bajar a Gratis?';
+
+  @override
+  String get subscriptionDowngradeConfirmBody =>
+      'Tu plan sigue activo hasta el final del período actual de facturación, luego pasa a Gratis.';
+
+  @override
+  String get subscriptionCardLabel => 'Datos de la tarjeta';
+
+  @override
+  String get subscriptionCardIncomplete =>
+      'Ingresa los datos completos de la tarjeta';
+
+  @override
+  String get subscriptionStripeNotConfigured =>
+      'Los pagos no están configurados en esta compilación';
 }

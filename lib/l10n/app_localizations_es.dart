@@ -565,9 +565,25 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String subscriptionCancelScheduled(String date) {
-    return 'Esta suscripción pasará a Gratis el $date.';
+  String subscriptionPendingPlanScheduled(String plan, String date) {
+    return 'Esta suscripción pasará a $plan el $date.';
   }
+
+  @override
+  String get subscriptionCurrentPlanTag => 'Plan actual';
+
+  @override
+  String subscriptionPlanMonthlyPrice(String price) {
+    return '$price / mes';
+  }
+
+  @override
+  String get subscriptionUpgradeImmediate =>
+      'Se aplica de inmediato con cargo prorrateado';
+
+  @override
+  String get subscriptionDowngradeAtPeriodEnd =>
+      'Se aplica al final del período actual';
 
   @override
   String get subscriptionChangePlanTitle => 'Cambiar plan';
@@ -595,4 +611,99 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get subscriptionStripeNotConfigured =>
       'Los pagos no están configurados en esta compilación';
+
+  @override
+  String get paymentSheetTotalToPay => 'Total a pagar';
+
+  @override
+  String get paymentSheetTabCard => 'Tarjeta';
+
+  @override
+  String get paymentSheetTabBank => 'Banco';
+
+  @override
+  String get paymentSheetCardholderNameLabel => 'Nombre del titular';
+
+  @override
+  String get paymentSheetCardholderNameHint => 'Como aparece en la tarjeta';
+
+  @override
+  String get paymentSheetCountryLabel => 'País';
+
+  @override
+  String get paymentSheetPostalCodeLabel => 'C.P.';
+
+  @override
+  String get paymentSheetBankAccountHolderLabel => 'Titular de la cuenta';
+
+  @override
+  String get paymentSheetClabeLabel => 'CLABE';
+
+  @override
+  String get paymentSheetClabeHint => '18 dígitos';
+
+  @override
+  String get paymentSheetClabeInvalid => 'La CLABE debe tener 18 dígitos';
+
+  @override
+  String get paymentSheetDirectDebitNotice =>
+      'Al confirmar autorizas un cargo por domiciliación a esta cuenta.';
+
+  @override
+  String get paymentSheetBankUnavailable =>
+      'El pago por transferencia bancaria aún no está disponible. Usa una tarjeta para continuar.';
+
+  @override
+  String paymentSheetPayButton(String amount) {
+    return 'Pagar $amount';
+  }
+
+  @override
+  String get paymentSheetSecurityNotice =>
+      'Pago cifrado · Procesado por Stripe';
+
+  @override
+  String get paymentSheetProcessingTitle => 'Procesando pago…';
+
+  @override
+  String get paymentSheetProcessingSubtitle => 'No cierres esta ventana';
+
+  @override
+  String get paymentSheetSuccessTitle => '¡Pago exitoso!';
+
+  @override
+  String paymentSheetSuccessBody(String amount) {
+    return 'Se cobraron $amount. Enviamos el recibo a tu correo.';
+  }
+
+  @override
+  String get paymentSheetDone => 'Listo';
+
+  @override
+  String get paymentSheetCardholderNameRequired =>
+      'Ingresa el nombre del titular';
+
+  @override
+  String get invoicesTitle => 'Facturas';
+
+  @override
+  String get invoicesEmpty => 'Aún no hay facturas';
+
+  @override
+  String get invoiceOpenError => 'No se pudo abrir la factura';
+
+  @override
+  String get invoiceStatusPaid => 'Pagada';
+
+  @override
+  String get invoiceStatusOpen => 'Pendiente';
+
+  @override
+  String get invoiceStatusDraft => 'Borrador';
+
+  @override
+  String get invoiceStatusVoid => 'Anulada';
+
+  @override
+  String get invoiceStatusUncollectible => 'Incobrable';
 }

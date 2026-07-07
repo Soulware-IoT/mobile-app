@@ -31,6 +31,7 @@ import 'package:cocina360/features/processes/presentation/cubit/new_registry_cub
 import 'package:cocina360/features/processes/presentation/pages/new_registry_page.dart';
 import 'package:cocina360/features/shell/presentation/app_shell.dart';
 import 'package:cocina360/features/subscription/domain/repositories/subscription_repository.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/invoices_cubit.dart';
 import 'package:cocina360/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -89,6 +90,10 @@ GoRouter createRouter(BuildContext context) {
             BlocProvider(
               create: (ctx) =>
                   SubscriptionCubit(ctx.read<SubscriptionRepository>()),
+            ),
+            BlocProvider(
+              create: (ctx) =>
+                  InvoicesCubit(ctx.read<SubscriptionRepository>()),
             ),
           ],
           child: EditOrganizationPage(

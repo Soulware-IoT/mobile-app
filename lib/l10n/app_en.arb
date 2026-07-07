@@ -760,14 +760,38 @@
       }
     }
   },
-  "subscriptionCancelScheduled": "This subscription will move to Free on {date}.",
-  "@subscriptionCancelScheduled": {
-    "description": "Warning banner when a downgrade is scheduled",
+  "subscriptionPendingPlanScheduled": "This subscription will move to {plan} on {date}.",
+  "@subscriptionPendingPlanScheduled": {
+    "description": "Warning banner when a downgrade (to Free or a cheaper paid plan) is scheduled",
     "placeholders": {
+      "plan": {
+        "type": "String"
+      },
       "date": {
         "type": "String"
       }
     }
+  },
+  "subscriptionCurrentPlanTag": "Current plan",
+  "@subscriptionCurrentPlanTag": {
+    "description": "Subtitle tag on the disabled current-plan option in the plan picker"
+  },
+  "subscriptionPlanMonthlyPrice": "{price} / month",
+  "@subscriptionPlanMonthlyPrice": {
+    "description": "Monthly price line in the plan picker, e.g. $5.00 / month",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionUpgradeImmediate": "Applies immediately with a prorated charge",
+  "@subscriptionUpgradeImmediate": {
+    "description": "Timing note under an upgrade option in the plan picker"
+  },
+  "subscriptionDowngradeAtPeriodEnd": "Applies at the end of the current period",
+  "@subscriptionDowngradeAtPeriodEnd": {
+    "description": "Timing note under a paid-to-paid downgrade option in the plan picker"
   },
   "subscriptionChangePlanTitle": "Change plan",
   "@subscriptionChangePlanTitle": {
@@ -800,5 +824,133 @@
   "subscriptionStripeNotConfigured": "Payments are not configured on this build",
   "@subscriptionStripeNotConfigured": {
     "description": "Shown when STRIPE_PUBLISHABLE_KEY is missing and the user tries to pay"
+  },
+
+  "paymentSheetTotalToPay": "Total to pay",
+  "@paymentSheetTotalToPay": {
+    "description": "Label above the amount in the payment bottom sheet header"
+  },
+  "paymentSheetTabCard": "Card",
+  "@paymentSheetTabCard": {
+    "description": "Segmented control option for the card payment mode"
+  },
+  "paymentSheetTabBank": "Bank",
+  "@paymentSheetTabBank": {
+    "description": "Segmented control option for the bank payment mode"
+  },
+  "paymentSheetCardholderNameLabel": "Cardholder name",
+  "@paymentSheetCardholderNameLabel": {
+    "description": "Label for the cardholder name field"
+  },
+  "paymentSheetCardholderNameHint": "As it appears on the card",
+  "@paymentSheetCardholderNameHint": {
+    "description": "Hint text for the cardholder name field"
+  },
+  "paymentSheetCountryLabel": "Country",
+  "@paymentSheetCountryLabel": {
+    "description": "Label for the billing country field"
+  },
+  "paymentSheetPostalCodeLabel": "ZIP",
+  "@paymentSheetPostalCodeLabel": {
+    "description": "Label for the billing postal code field"
+  },
+  "paymentSheetBankAccountHolderLabel": "Account holder",
+  "@paymentSheetBankAccountHolderLabel": {
+    "description": "Label for the bank account holder field"
+  },
+  "paymentSheetClabeLabel": "CLABE",
+  "@paymentSheetClabeLabel": {
+    "description": "Label for the CLABE (Mexican bank account) field"
+  },
+  "paymentSheetClabeHint": "18 digits",
+  "@paymentSheetClabeHint": {
+    "description": "Hint text for the CLABE field"
+  },
+  "paymentSheetClabeInvalid": "CLABE must be 18 digits",
+  "@paymentSheetClabeInvalid": {
+    "description": "Validation error for an incomplete/invalid CLABE"
+  },
+  "paymentSheetDirectDebitNotice": "By confirming you authorize a direct debit charge to this account.",
+  "@paymentSheetDirectDebitNotice": {
+    "description": "Notice shown under the bank fields"
+  },
+  "paymentSheetBankUnavailable": "Bank transfer payment isn't available yet. Use a card to continue.",
+  "@paymentSheetBankUnavailable": {
+    "description": "Shown when the user tries to pay from the bank tab, which has no backend support yet"
+  },
+  "paymentSheetPayButton": "Pay {amount}",
+  "@paymentSheetPayButton": {
+    "description": "Submit button label, with the formatted amount e.g. $5.00",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentSheetSecurityNotice": "Encrypted payment · Processed by Stripe",
+  "@paymentSheetSecurityNotice": {
+    "description": "Security notice shown below the pay button"
+  },
+  "paymentSheetProcessingTitle": "Processing payment…",
+  "@paymentSheetProcessingTitle": {
+    "description": "Title shown in the loading state of the payment sheet"
+  },
+  "paymentSheetProcessingSubtitle": "Don't close this window",
+  "@paymentSheetProcessingSubtitle": {
+    "description": "Subtitle shown in the loading state of the payment sheet"
+  },
+  "paymentSheetSuccessTitle": "Payment successful!",
+  "@paymentSheetSuccessTitle": {
+    "description": "Title shown in the success state of the payment sheet"
+  },
+  "paymentSheetSuccessBody": "{amount} was charged. We sent the receipt to your email.",
+  "@paymentSheetSuccessBody": {
+    "description": "Body text shown in the success state of the payment sheet",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentSheetDone": "Done",
+  "@paymentSheetDone": {
+    "description": "Button that closes the sheet after a successful payment"
+  },
+  "paymentSheetCardholderNameRequired": "Enter the cardholder name",
+  "@paymentSheetCardholderNameRequired": {
+    "description": "Validation error when the cardholder name field is empty on submit"
+  },
+
+  "invoicesTitle": "Invoices",
+  "@invoicesTitle": {
+    "description": "Header of the invoice-history section on the Edit Organization screen"
+  },
+  "invoicesEmpty": "No invoices yet",
+  "@invoicesEmpty": {
+    "description": "Shown when the organization has no invoices"
+  },
+  "invoiceOpenError": "Could not open the invoice",
+  "@invoiceOpenError": {
+    "description": "Snackbar when launching the hosted invoice URL fails"
+  },
+  "invoiceStatusPaid": "Paid",
+  "@invoiceStatusPaid": {
+    "description": "Invoice status chip: Stripe 'paid'"
+  },
+  "invoiceStatusOpen": "Open",
+  "@invoiceStatusOpen": {
+    "description": "Invoice status chip: Stripe 'open' (awaiting payment)"
+  },
+  "invoiceStatusDraft": "Draft",
+  "@invoiceStatusDraft": {
+    "description": "Invoice status chip: Stripe 'draft'"
+  },
+  "invoiceStatusVoid": "Void",
+  "@invoiceStatusVoid": {
+    "description": "Invoice status chip: Stripe 'void'"
+  },
+  "invoiceStatusUncollectible": "Uncollectible",
+  "@invoiceStatusUncollectible": {
+    "description": "Invoice status chip: Stripe 'uncollectible'"
   }
 }

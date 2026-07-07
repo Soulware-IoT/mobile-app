@@ -10,8 +10,10 @@ import 'package:cocina360/features/organization/presentation/cubit/my_organizati
 import 'package:cocina360/features/organization/presentation/cubit/my_organizations_state.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
 import 'package:cocina360/features/subscription/domain/model/subscription.dart';
+import 'package:cocina360/features/subscription/presentation/cubit/invoices_cubit.dart';
 import 'package:cocina360/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:cocina360/features/subscription/presentation/cubit/subscription_state.dart';
+import 'package:cocina360/features/subscription/presentation/widgets/payment_sheet.dart';
 import 'package:cocina360/features/subscription/presentation/widgets/subscription_section.dart';
 import 'package:cocina360/features/subscription/presentation/widgets/upgrade_plan_dialog.dart';
 import 'package:cocina360/l10n/app_localizations.dart';
@@ -43,10 +45,19 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
     _nameController = TextEditingController(text: org.name);
     _addressController = TextEditingController(text: org.addressLineOne ?? '');
     _notesController = TextEditingController(text: org.addressReference ?? '');
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => context.read<SubscriptionCubit>().load(org.id),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SubscriptionCubit>().load(org.id);
+      // Invoices are owner-only in the backend; requesting them as a plain
+      // member would just surface a 403 in the (hidden) section.
+      if (_isOwner) context.read<InvoicesCubit>().load(org.id);
+    });
   }
+
+  bool get _isOwner => switch (context.read<AuthCubit>().state) {
+    Authenticated(:final userId) ||
+    OfflineAuthenticated(:final userId) => userId == widget.organization.ownedBy,
+    _ => false,
+  };
 
   @override
   void dispose() {
@@ -71,18 +82,28 @@ class _EditOrganizationPageState extends State<EditOrganizationPage> {
   }
 
   Future<void> _changePlan(Subscription current) async {
-    final result = await showUpgradePlanDialog(
-      context,
-      current: current.plan,
-      requiresCard: !current.hasBillingOnFile,
-    );
-    if (result == null || !mounted) return;
+    final plan = await showUpgradePlanDialog(context, current: current.plan);
+    if (plan == null || !mounted) return;
 
-    await context.read<SubscriptionCubit>().changePlan(
-      widget.organization.id,
-      result.plan,
-      paymentMethodId: result.paymentMethodId,
-    );
+    if (current.hasBillingOnFile) {
+      await context.read<SubscriptionCubit>().changePlan(
+        widget.organization.id,
+        plan,
+      );
+    } else {
+      // No billing on file yet: the payment sheet captures the card and calls
+      // SubscriptionCubit.changePlan itself once tokenized.
+      await showPaymentSheet(
+        context,
+        organizationId: widget.organization.id,
+        plan: plan,
+      );
+    }
+
+    // Upgrades invoice the prorated difference immediately — refresh the list.
+    if (mounted) {
+      context.read<InvoicesCubit>().load(widget.organization.id);
+    }
   }
 
   Future<void> _downgradePlan() async {

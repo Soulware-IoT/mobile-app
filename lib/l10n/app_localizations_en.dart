@@ -410,6 +410,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deviceThresholdCritAboveWarn => 'Critical must be above warning';
 
   @override
+  String get edgeRenameTooltip => 'Rename edge gateway';
+
+  @override
+  String get edgeRenameTitle => 'Rename edge gateway';
+
+  @override
+  String get edgeControlsProvisioned =>
+      'This edge gateway hasn\'t been claimed yet, it cannot be operated.';
+
+  @override
+  String get edgeActivate => 'ACTIVATE EDGE GATEWAY';
+
+  @override
+  String get edgeDeactivate => 'STOP EDGE GATEWAY';
+
+  @override
+  String get edgeActivateConfirmTitle => 'Activate edge gateway?';
+
+  @override
+  String get edgeActivateConfirmBody =>
+      'The edge gateway will be back in service and able to forward its devices\' readings.';
+
+  @override
+  String get edgeDeactivateConfirmTitle => 'Stop edge gateway?';
+
+  @override
+  String get edgeDeactivateConfirmBody =>
+      'The edge gateway will be disabled and stop forwarding its devices\' readings.';
+
+  @override
   String get processesHeaderLabel => 'INTERNAL CONTROL';
 
   @override

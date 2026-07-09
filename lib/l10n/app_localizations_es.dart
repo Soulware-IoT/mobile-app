@@ -414,6 +414,36 @@ class AppLocalizationsEs extends AppLocalizations {
       'El crítico debe ser mayor que la advertencia';
 
   @override
+  String get edgeRenameTooltip => 'Renombrar edge gateway';
+
+  @override
+  String get edgeRenameTitle => 'Renombrar edge gateway';
+
+  @override
+  String get edgeControlsProvisioned =>
+      'Este edge gateway aún no ha sido reclamado, no puede operarse.';
+
+  @override
+  String get edgeActivate => 'ACTIVAR EDGE GATEWAY';
+
+  @override
+  String get edgeDeactivate => 'DETENER EDGE GATEWAY';
+
+  @override
+  String get edgeActivateConfirmTitle => '¿Activar edge gateway?';
+
+  @override
+  String get edgeActivateConfirmBody =>
+      'El edge gateway volverá a estar en servicio y podrá reenviar lecturas de sus dispositivos.';
+
+  @override
+  String get edgeDeactivateConfirmTitle => '¿Detener edge gateway?';
+
+  @override
+  String get edgeDeactivateConfirmBody =>
+      'El edge gateway quedará deshabilitado y dejará de reenviar lecturas de sus dispositivos.';
+
+  @override
   String get processesHeaderLabel => 'CONTROL INTERNO';
 
   @override

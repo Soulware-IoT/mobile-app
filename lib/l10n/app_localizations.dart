@@ -872,6 +872,60 @@ abstract class AppLocalizations {
   /// **'Critical must be above warning'**
   String get deviceThresholdCritAboveWarn;
 
+  /// Tooltip on the edge device detail page's rename icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Rename edge gateway'**
+  String get edgeRenameTooltip;
+
+  /// Title of the edge device rename dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Rename edge gateway'**
+  String get edgeRenameTitle;
+
+  /// Shown instead of the activate/deactivate button while the edge device is still PROVISIONED
+  ///
+  /// In en, this message translates to:
+  /// **'This edge gateway hasn\'t been claimed yet, it cannot be operated.'**
+  String get edgeControlsProvisioned;
+
+  /// Button label to activate an inactive edge device
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVATE EDGE GATEWAY'**
+  String get edgeActivate;
+
+  /// Button label to deactivate an active edge device
+  ///
+  /// In en, this message translates to:
+  /// **'STOP EDGE GATEWAY'**
+  String get edgeDeactivate;
+
+  /// Confirm dialog title before activating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'Activate edge gateway?'**
+  String get edgeActivateConfirmTitle;
+
+  /// Confirm dialog body before activating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'The edge gateway will be back in service and able to forward its devices\' readings.'**
+  String get edgeActivateConfirmBody;
+
+  /// Confirm dialog title before deactivating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'Stop edge gateway?'**
+  String get edgeDeactivateConfirmTitle;
+
+  /// Confirm dialog body before deactivating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'The edge gateway will be disabled and stop forwarding its devices\' readings.'**
+  String get edgeDeactivateConfirmBody;
+
   /// Uppercase section label at the top of the Processes tab
   ///
   /// In en, this message translates to:

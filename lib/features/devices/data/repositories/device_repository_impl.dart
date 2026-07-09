@@ -89,6 +89,21 @@ class DeviceRepositoryImpl implements DeviceRepository {
     return dto.toDomain();
   }
 
+  @override
+  Future<EdgeDevice> updateEdgeDevice(
+    String edgeDeviceId, {
+    String? name,
+    bool? active,
+  }) async {
+    await _requireConnection();
+    final dto = await remoteService.updateEdgeDevice(
+      edgeDeviceId,
+      name: name,
+      status: active == null ? null : (active ? 'ACTIVE' : 'INACTIVE'),
+    );
+    return dto.toDomain();
+  }
+
   /// The backend requires all four values when thresholds are provided.
   Map<String, dynamic> _thresholdsBody(Thresholds t) => {
         'temperature': {

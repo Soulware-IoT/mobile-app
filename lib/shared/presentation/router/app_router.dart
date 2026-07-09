@@ -9,11 +9,13 @@ import 'package:cocina360/features/devices/domain/repositories/telemetry_reposit
 import 'package:cocina360/features/devices/presentation/cubit/claim_device_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/claim_edge_device_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/device_detail_cubit.dart';
+import 'package:cocina360/features/devices/presentation/cubit/edge_device_detail_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/live_readings_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/servo_command_cubit.dart';
 import 'package:cocina360/features/devices/presentation/pages/claim_device_page.dart';
 import 'package:cocina360/features/devices/presentation/pages/claim_edge_device_page.dart';
 import 'package:cocina360/features/devices/presentation/pages/device_detail_page.dart';
+import 'package:cocina360/features/devices/presentation/pages/edge_device_detail_page.dart';
 import 'package:cocina360/features/devices/presentation/pages/live_readings_page.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
@@ -150,6 +152,15 @@ GoRouter createRouter(BuildContext context) {
         builder: (context, state) => BlocProvider(
           create: (ctx) => ClaimEdgeDeviceCubit(ctx.read<DeviceRepository>()),
           child: ClaimEdgeDevicePage(organizationId: state.extra as String),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.edgeDeviceDetail,
+        builder: (context, state) => BlocProvider(
+          create: (ctx) => EdgeDeviceDetailCubit(ctx.read<DeviceRepository>()),
+          child: EdgeDeviceDetailPage(
+            args: state.extra as EdgeDeviceDetailArgs,
+          ),
         ),
       ),
       GoRoute(

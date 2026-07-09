@@ -541,6 +541,43 @@
     "description": "Validation error when crit <= warn"
   },
 
+  "edgeRenameTooltip": "Rename edge gateway",
+  "@edgeRenameTooltip": {
+    "description": "Tooltip on the edge device detail page's rename icon button"
+  },
+  "edgeRenameTitle": "Rename edge gateway",
+  "@edgeRenameTitle": {
+    "description": "Title of the edge device rename dialog"
+  },
+  "edgeControlsProvisioned": "This edge gateway hasn't been claimed yet, it cannot be operated.",
+  "@edgeControlsProvisioned": {
+    "description": "Shown instead of the activate/deactivate button while the edge device is still PROVISIONED"
+  },
+  "edgeActivate": "ACTIVATE EDGE GATEWAY",
+  "@edgeActivate": {
+    "description": "Button label to activate an inactive edge device"
+  },
+  "edgeDeactivate": "STOP EDGE GATEWAY",
+  "@edgeDeactivate": {
+    "description": "Button label to deactivate an active edge device"
+  },
+  "edgeActivateConfirmTitle": "Activate edge gateway?",
+  "@edgeActivateConfirmTitle": {
+    "description": "Confirm dialog title before activating the edge device"
+  },
+  "edgeActivateConfirmBody": "The edge gateway will be back in service and able to forward its devices' readings.",
+  "@edgeActivateConfirmBody": {
+    "description": "Confirm dialog body before activating the edge device"
+  },
+  "edgeDeactivateConfirmTitle": "Stop edge gateway?",
+  "@edgeDeactivateConfirmTitle": {
+    "description": "Confirm dialog title before deactivating the edge device"
+  },
+  "edgeDeactivateConfirmBody": "The edge gateway will be disabled and stop forwarding its devices' readings.",
+  "@edgeDeactivateConfirmBody": {
+    "description": "Confirm dialog body before deactivating the edge device"
+  },
+
   "processesHeaderLabel": "INTERNAL CONTROL",
   "@processesHeaderLabel": {
     "description": "Uppercase section label at the top of the Processes tab"

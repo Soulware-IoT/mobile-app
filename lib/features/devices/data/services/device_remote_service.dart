@@ -116,4 +116,18 @@ class DeviceRemoteService {
     );
     return EdgeDeviceDto.fromJson(data as JSON);
   }
+
+  /// `PATCH /edge-device/{id}` — partial update of a claimed edge device.
+  /// Only the provided fields travel in the body; omitted ones stay unchanged.
+  Future<EdgeDeviceDto> updateEdgeDevice(
+    String edgeDeviceId, {
+    String? name,
+    String? status,
+  }) async {
+    final data = await client.patchJson(
+      '/edge-device/$edgeDeviceId',
+      body: {'name': ?name, 'status': ?status},
+    );
+    return EdgeDeviceDto.fromJson(data as JSON);
+  }
 }

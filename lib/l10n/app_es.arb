@@ -139,6 +139,16 @@
   "deviceThresholdsEditTooltip": "Editar umbrales",
   "deviceThresholdCritAboveWarn": "El crítico debe ser mayor que la advertencia",
 
+  "edgeRenameTooltip": "Renombrar edge gateway",
+  "edgeRenameTitle": "Renombrar edge gateway",
+  "edgeControlsProvisioned": "Este edge gateway aún no ha sido reclamado, no puede operarse.",
+  "edgeActivate": "ACTIVAR EDGE GATEWAY",
+  "edgeDeactivate": "DETENER EDGE GATEWAY",
+  "edgeActivateConfirmTitle": "¿Activar edge gateway?",
+  "edgeActivateConfirmBody": "El edge gateway volverá a estar en servicio y podrá reenviar lecturas de sus dispositivos.",
+  "edgeDeactivateConfirmTitle": "¿Detener edge gateway?",
+  "edgeDeactivateConfirmBody": "El edge gateway quedará deshabilitado y dejará de reenviar lecturas de sus dispositivos.",
+
   "processesHeaderLabel": "CONTROL INTERNO",
   "processesSectionProcesses": "Procesos de control",
   "processesSectionFormats": "Formatos de documento",

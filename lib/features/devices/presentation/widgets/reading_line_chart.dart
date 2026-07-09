@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:cocina360/l10n/app_localizations.dart';
 
 /// Hand-rolled single-series line chart with dashed warn/crit reference
 /// lines — mirror of the web app's SVG chart, kept dependency-free.
@@ -20,6 +21,7 @@ class ReadingLineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       height: 160,
       width: double.infinity,
@@ -28,6 +30,8 @@ class ReadingLineChart extends StatelessWidget {
           values: values,
           warn: warn,
           crit: crit,
+          warnLabel: l10n.severityWarning,
+          critLabel: l10n.severityCritical,
           lineColor: theme.colorScheme.primary,
           gridColor: theme.dividerColor.withValues(alpha: 0.3),
           labelColor: theme.colorScheme.onSurfaceVariant,
@@ -44,6 +48,8 @@ class _ReadingChartPainter extends CustomPainter {
   final List<double> values;
   final double? warn;
   final double? crit;
+  final String warnLabel;
+  final String critLabel;
   final Color lineColor;
   final Color gridColor;
   final Color labelColor;
@@ -54,6 +60,8 @@ class _ReadingChartPainter extends CustomPainter {
     required this.values,
     required this.warn,
     required this.crit,
+    required this.warnLabel,
+    required this.critLabel,
     required this.lineColor,
     required this.gridColor,
     required this.labelColor,
@@ -98,9 +106,9 @@ class _ReadingChartPainter extends CustomPainter {
       labelColor,
     );
 
-    // Threshold dashed lines with right-aligned value labels.
-    if (warn != null) _dashedLine(canvas, size, y(warn!), warnColor, warn!);
-    if (crit != null) _dashedLine(canvas, size, y(crit!), critColor, crit!);
+    // Threshold dashed lines with right-aligned name labels (Warning/Critical).
+    if (warn != null) _dashedLine(canvas, size, y(warn!), warnColor, warnLabel);
+    if (crit != null) _dashedLine(canvas, size, y(crit!), critColor, critLabel);
 
     // Series polyline.
     if (values.length >= 2) {
@@ -139,7 +147,7 @@ class _ReadingChartPainter extends CustomPainter {
     Size size,
     double dy,
     Color color,
-    double value,
+    String label,
   ) {
     if (dy < 0 || dy > size.height) return;
 
@@ -158,7 +166,7 @@ class _ReadingChartPainter extends CustomPainter {
       x += dash + gap;
     }
 
-    final painter = _textPainter(_format(value), color);
+    final painter = _textPainter(label, color);
     painter.paint(
       canvas,
       Offset(size.width - painter.width - 2, dy - painter.height - 2),

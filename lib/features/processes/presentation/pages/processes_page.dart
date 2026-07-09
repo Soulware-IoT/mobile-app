@@ -51,10 +51,19 @@ class _ProcessesPageState extends State<ProcessesPage> {
       appBar: AppBar(
         title: Text(l10n.processesTitle),
         actions: [
-          IconButton(
-            tooltip: l10n.processesNewProcess,
-            onPressed: () => _showCreateProcessDialog(context),
-            icon: const Icon(Icons.playlist_add),
+          // Creating a process needs an active organization — hide the action
+          // entirely when there is none, mirroring the Devices tab's gating.
+          BlocBuilder<OrganizationCubit, OrganizationState>(
+            builder: (context, orgState) {
+              if (orgState is! OrganizationLoaded) {
+                return const SizedBox.shrink();
+              }
+              return IconButton(
+                tooltip: l10n.processesNewProcess,
+                onPressed: () => _showCreateProcessDialog(context),
+                icon: const Icon(Icons.playlist_add),
+              );
+            },
           ),
         ],
       ),
@@ -86,7 +95,7 @@ class _ProcessesPageState extends State<ProcessesPage> {
               OrganizationLoaded() => _ProcessesBody(onRetry: _reload),
               OrganizationEmpty() => _Centered(
                 icon: Icons.apartment_outlined,
-                message: l10n.devicesSelectOrganization,
+                message: l10n.processesSelectOrganization,
               ),
               OrganizationError(:final error) => _Centered(
                 icon: Icons.cloud_off,

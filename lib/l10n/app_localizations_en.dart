@@ -443,6 +443,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get processesHeaderLabel => 'INTERNAL CONTROL';
 
   @override
+  String get processesSelectOrganization =>
+      'Select an organization to see its control processes.';
+
+  @override
   String get processesSectionProcesses => 'Control processes';
 
   @override

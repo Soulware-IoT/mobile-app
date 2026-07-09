@@ -932,6 +932,12 @@ abstract class AppLocalizations {
   /// **'INTERNAL CONTROL'**
   String get processesHeaderLabel;
 
+  /// Empty-state message on the Processes tab when no organization is active
+  ///
+  /// In en, this message translates to:
+  /// **'Select an organization to see its control processes.'**
+  String get processesSelectOrganization;
+
   /// Label of the process selector
   ///
   /// In en, this message translates to:

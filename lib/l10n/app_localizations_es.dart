@@ -447,6 +447,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get processesHeaderLabel => 'CONTROL INTERNO';
 
   @override
+  String get processesSelectOrganization =>
+      'Selecciona una organización para ver sus procesos de control.';
+
+  @override
   String get processesSectionProcesses => 'Procesos de control';
 
   @override

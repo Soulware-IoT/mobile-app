@@ -150,6 +150,7 @@
   "edgeDeactivateConfirmBody": "El edge gateway quedará deshabilitado y dejará de reenviar lecturas de sus dispositivos.",
 
   "processesHeaderLabel": "CONTROL INTERNO",
+  "processesSelectOrganization": "Selecciona una organización para ver sus procesos de control.",
   "processesSectionProcesses": "Procesos de control",
   "processesSectionFormats": "Formatos de documento",
   "processesRecentLogs": "REGISTROS RECIENTES",

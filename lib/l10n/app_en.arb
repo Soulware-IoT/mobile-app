@@ -582,6 +582,10 @@
   "@processesHeaderLabel": {
     "description": "Uppercase section label at the top of the Processes tab"
   },
+  "processesSelectOrganization": "Select an organization to see its control processes.",
+  "@processesSelectOrganization": {
+    "description": "Empty-state message on the Processes tab when no organization is active"
+  },
   "processesSectionProcesses": "Control processes",
   "@processesSectionProcesses": {
     "description": "Label of the process selector"

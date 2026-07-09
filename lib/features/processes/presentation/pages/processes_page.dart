@@ -69,8 +69,13 @@ class _ProcessesPageState extends State<ProcessesPage> {
       ),
       floatingActionButton: BlocBuilder<ProcessesCubit, ProcessesState>(
         builder: (context, state) {
+          // ProcessesCubit is app-scoped and keeps its selected format across
+          // org switches / sign-outs, so also require an active organization —
+          // otherwise the FAB lingers on the empty-state screen.
+          final orgLoaded =
+              context.watch<OrganizationCubit>().state is OrganizationLoaded;
           final format = state.selectedFormat;
-          if (format == null) return const SizedBox.shrink();
+          if (!orgLoaded || format == null) return const SizedBox.shrink();
           return FloatingActionButton(
             // AppShell keeps all tabs mounted via IndexedStack, so this and
             // the Devices tab's FAB coexist in the tree at once — without a

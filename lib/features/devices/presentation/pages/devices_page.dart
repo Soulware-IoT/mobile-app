@@ -53,7 +53,29 @@ class _DevicesPageState extends State<DevicesPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.devicesTitle)),
+      appBar: AppBar(
+        title: Text(l10n.devicesTitle),
+        actions: [
+          // Live readings entry point — an action (not a second FAB: the FAB
+          // slot is taken by claim-device and AppShell's IndexedStack would
+          // force more hero-tag juggling).
+          BlocBuilder<OrganizationCubit, OrganizationState>(
+            builder: (context, orgState) {
+              if (orgState is! OrganizationLoaded) {
+                return const SizedBox.shrink();
+              }
+              return IconButton(
+                icon: const Icon(Icons.monitor_heart_outlined),
+                tooltip: l10n.liveReadingsTitle,
+                onPressed: () => context.push(
+                  AppRoutes.liveReadings,
+                  extra: orgState.organization.id,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       floatingActionButton: BlocBuilder<OrganizationCubit, OrganizationState>(
         builder: (context, orgState) {
           if (orgState is! OrganizationLoaded) return const SizedBox.shrink();

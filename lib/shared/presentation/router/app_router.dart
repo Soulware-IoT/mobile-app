@@ -5,12 +5,16 @@ import 'package:cocina360/features/auth/presentation/pages/login/login_page.dart
 import 'package:cocina360/features/auth/presentation/pages/register/register_page.dart';
 import 'package:cocina360/features/devices/domain/model/iot_device.dart';
 import 'package:cocina360/features/devices/domain/repositories/device_repository.dart';
+import 'package:cocina360/features/devices/domain/repositories/telemetry_repository.dart';
 import 'package:cocina360/features/devices/presentation/cubit/claim_device_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/claim_edge_device_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/device_detail_cubit.dart';
+import 'package:cocina360/features/devices/presentation/cubit/live_readings_cubit.dart';
+import 'package:cocina360/features/devices/presentation/cubit/servo_command_cubit.dart';
 import 'package:cocina360/features/devices/presentation/pages/claim_device_page.dart';
 import 'package:cocina360/features/devices/presentation/pages/claim_edge_device_page.dart';
 import 'package:cocina360/features/devices/presentation/pages/device_detail_page.dart';
+import 'package:cocina360/features/devices/presentation/pages/live_readings_page.dart';
 import 'package:cocina360/features/organization/domain/model/organization.dart';
 import 'package:cocina360/features/organization/domain/model/organization_member.dart';
 import 'package:cocina360/features/organization/domain/repositories/organization_repository.dart';
@@ -146,6 +150,22 @@ GoRouter createRouter(BuildContext context) {
         builder: (context, state) => BlocProvider(
           create: (ctx) => ClaimEdgeDeviceCubit(ctx.read<DeviceRepository>()),
           child: ClaimEdgeDevicePage(organizationId: state.extra as String),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.liveReadings,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (ctx) =>
+                  LiveReadingsCubit(ctx.read<TelemetryRepository>()),
+            ),
+            BlocProvider(
+              create: (ctx) =>
+                  ServoCommandCubit(ctx.read<TelemetryRepository>()),
+            ),
+          ],
+          child: LiveReadingsPage(organizationId: state.extra as String),
         ),
       ),
       GoRoute(

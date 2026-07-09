@@ -700,4 +700,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceStatusUncollectible => 'Uncollectible';
+
+  @override
+  String get liveReadingsTitle => 'Live readings';
+
+  @override
+  String get liveReadingsSelectDevice => 'Select a device to monitor';
+
+  @override
+  String get liveReadingsNoDevices =>
+      'This organization has no IoT devices yet';
+
+  @override
+  String get liveReadingsWaiting => 'Waiting for readings…';
+
+  @override
+  String get liveReadingsReconnecting => 'Reconnecting…';
+
+  @override
+  String get liveReadingsOnline => 'Online';
+
+  @override
+  String get liveReadingsOffline => 'Offline';
+
+  @override
+  String get liveReadingsNoSignal => 'No signal';
+
+  @override
+  String get servoStart => 'Start';
+
+  @override
+  String get servoStop => 'Stop';
+
+  @override
+  String get chartTemperatureTitle => 'Temperature (°C)';
+
+  @override
+  String get chartGasTitle => 'Gas (PPM)';
+
+  @override
+  String get severitySafe => 'Safe';
+
+  @override
+  String get severityWarning => 'Warning';
+
+  @override
+  String get severityCritical => 'Critical';
 }

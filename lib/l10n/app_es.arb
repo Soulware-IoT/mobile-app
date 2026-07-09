@@ -231,5 +231,21 @@
   "invoiceStatusOpen": "Pendiente",
   "invoiceStatusDraft": "Borrador",
   "invoiceStatusVoid": "Anulada",
-  "invoiceStatusUncollectible": "Incobrable"
+  "invoiceStatusUncollectible": "Incobrable",
+
+  "liveReadingsTitle": "Lecturas en vivo",
+  "liveReadingsSelectDevice": "Selecciona un dispositivo para monitorear",
+  "liveReadingsNoDevices": "Esta organización aún no tiene dispositivos IoT",
+  "liveReadingsWaiting": "Esperando lecturas…",
+  "liveReadingsReconnecting": "Reconectando…",
+  "liveReadingsOnline": "En línea",
+  "liveReadingsOffline": "Desconectado",
+  "liveReadingsNoSignal": "Sin señal",
+  "servoStart": "Iniciar",
+  "servoStop": "Detener",
+  "chartTemperatureTitle": "Temperatura (°C)",
+  "chartGasTitle": "Gas (PPM)",
+  "severitySafe": "Seguro",
+  "severityWarning": "Advertencia",
+  "severityCritical": "Crítico"
 }

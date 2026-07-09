@@ -952,5 +952,66 @@
   "invoiceStatusUncollectible": "Uncollectible",
   "@invoiceStatusUncollectible": {
     "description": "Invoice status chip: Stripe 'uncollectible'"
+  },
+
+  "liveReadingsTitle": "Live readings",
+  "@liveReadingsTitle": {
+    "description": "AppBar title of the real-time sensor monitoring page"
+  },
+  "liveReadingsSelectDevice": "Select a device to monitor",
+  "@liveReadingsSelectDevice": {
+    "description": "Hint shown below the device selector before a device is chosen"
+  },
+  "liveReadingsNoDevices": "This organization has no IoT devices yet",
+  "@liveReadingsNoDevices": {
+    "description": "Shown on the live readings page when the org has no devices"
+  },
+  "liveReadingsWaiting": "Waiting for readings…",
+  "@liveReadingsWaiting": {
+    "description": "Status strip placeholder before the first reading arrives"
+  },
+  "liveReadingsReconnecting": "Reconnecting…",
+  "@liveReadingsReconnecting": {
+    "description": "Banner shown while an SSE stream is retrying its connection"
+  },
+  "liveReadingsOnline": "Online",
+  "@liveReadingsOnline": {
+    "description": "Presence pill when the device is online"
+  },
+  "liveReadingsOffline": "Offline",
+  "@liveReadingsOffline": {
+    "description": "Presence pill when the device is offline"
+  },
+  "liveReadingsNoSignal": "No signal",
+  "@liveReadingsNoSignal": {
+    "description": "Presence pill when no presence record has arrived for the device"
+  },
+  "servoStart": "Start",
+  "@servoStart": {
+    "description": "Button that sends the servo start command"
+  },
+  "servoStop": "Stop",
+  "@servoStop": {
+    "description": "Button that sends the servo stop command"
+  },
+  "chartTemperatureTitle": "Temperature (°C)",
+  "@chartTemperatureTitle": {
+    "description": "Title above the temperature line chart"
+  },
+  "chartGasTitle": "Gas (PPM)",
+  "@chartGasTitle": {
+    "description": "Title above the gas line chart"
+  },
+  "severitySafe": "Safe",
+  "@severitySafe": {
+    "description": "Reading severity label: within thresholds"
+  },
+  "severityWarning": "Warning",
+  "@severityWarning": {
+    "description": "Reading severity label: above the warn threshold"
+  },
+  "severityCritical": "Critical",
+  "@severityCritical": {
+    "description": "Reading severity label: above the crit threshold"
   }
 }

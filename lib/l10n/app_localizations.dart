@@ -1393,6 +1393,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uncollectible'**
   String get invoiceStatusUncollectible;
+
+  /// AppBar title of the real-time sensor monitoring page
+  ///
+  /// In en, this message translates to:
+  /// **'Live readings'**
+  String get liveReadingsTitle;
+
+  /// Hint shown below the device selector before a device is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Select a device to monitor'**
+  String get liveReadingsSelectDevice;
+
+  /// Shown on the live readings page when the org has no devices
+  ///
+  /// In en, this message translates to:
+  /// **'This organization has no IoT devices yet'**
+  String get liveReadingsNoDevices;
+
+  /// Status strip placeholder before the first reading arrives
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for readings…'**
+  String get liveReadingsWaiting;
+
+  /// Banner shown while an SSE stream is retrying its connection
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get liveReadingsReconnecting;
+
+  /// Presence pill when the device is online
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get liveReadingsOnline;
+
+  /// Presence pill when the device is offline
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get liveReadingsOffline;
+
+  /// Presence pill when no presence record has arrived for the device
+  ///
+  /// In en, this message translates to:
+  /// **'No signal'**
+  String get liveReadingsNoSignal;
+
+  /// Button that sends the servo start command
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get servoStart;
+
+  /// Button that sends the servo stop command
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get servoStop;
+
+  /// Title above the temperature line chart
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature (°C)'**
+  String get chartTemperatureTitle;
+
+  /// Title above the gas line chart
+  ///
+  /// In en, this message translates to:
+  /// **'Gas (PPM)'**
+  String get chartGasTitle;
+
+  /// Reading severity label: within thresholds
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get severitySafe;
+
+  /// Reading severity label: above the warn threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get severityWarning;
+
+  /// Reading severity label: above the crit threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get severityCritical;
 }
 
 class _AppLocalizationsDelegate

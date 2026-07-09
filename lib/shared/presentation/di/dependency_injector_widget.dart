@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:cocina360/features/devices/data/repositories/device_repository_impl.dart';
+import 'package:cocina360/features/devices/data/repositories/telemetry_repository_impl.dart';
 import 'package:cocina360/features/devices/data/services/device_remote_service.dart';
+import 'package:cocina360/features/devices/data/services/telemetry_remote_service.dart';
 import 'package:cocina360/features/devices/domain/repositories/device_repository.dart';
+import 'package:cocina360/features/devices/domain/repositories/telemetry_repository.dart';
 import 'package:cocina360/features/devices/presentation/cubit/devices_cubit.dart';
 import 'package:cocina360/features/organization/data/repositories/organization_repository_impl.dart';
 import 'package:cocina360/features/organization/data/services/organization_remote_service.dart';
@@ -32,6 +35,7 @@ import 'package:cocina360/shared/infrastructure/local/database.dart';
 import 'package:cocina360/shared/infrastructure/network/network_checker.dart';
 import 'package:cocina360/shared/infrastructure/remote/api_gateway_client.dart';
 import 'package:cocina360/shared/infrastructure/remote/session_claims.dart';
+import 'package:cocina360/shared/infrastructure/remote/sse_client.dart';
 import 'package:cocina360/shared/infrastructure/remote/supabase.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_cubit.dart';
 import 'package:cocina360/shared/presentation/session/auth/auth_state.dart';
@@ -68,8 +72,15 @@ class DependencyInjectorWidget extends StatelessWidget {
       baseUrl: dotenv.env['API_GATEWAY_URL'] ?? '',
       supabase: supabase,
     );
+    // SSE consumer for the live telemetry streams (same base URL/auth).
+    final sseClient = SseClient(
+      baseUrl: dotenv.env['API_GATEWAY_URL'] ?? '',
+      supabase: supabase,
+    );
     final organizationRemoteService = OrganizationRemoteService(apiGatewayClient);
     final deviceRemoteService = DeviceRemoteService(apiGatewayClient);
+    final telemetryRemoteService =
+        TelemetryRemoteService(apiGatewayClient, sseClient);
     final internalControlRemoteService =
         InternalControlRemoteService(apiGatewayClient);
     final subscriptionRemoteService = SubscriptionRemoteService(apiGatewayClient);
@@ -101,6 +112,12 @@ class DependencyInjectorWidget extends StatelessWidget {
         RepositoryProvider<DeviceRepository>(
           create: (_) =>
               DeviceRepositoryImpl(deviceRemoteService, connectionChecker),
+        ),
+        RepositoryProvider<TelemetryRepository>(
+          create: (_) => TelemetryRepositoryImpl(
+            telemetryRemoteService,
+            connectionChecker,
+          ),
         ),
         RepositoryProvider<InternalControlRepository>(
           create: (_) => InternalControlRepositoryImpl(

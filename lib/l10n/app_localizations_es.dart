@@ -706,4 +706,51 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceStatusUncollectible => 'Incobrable';
+
+  @override
+  String get liveReadingsTitle => 'Lecturas en vivo';
+
+  @override
+  String get liveReadingsSelectDevice =>
+      'Selecciona un dispositivo para monitorear';
+
+  @override
+  String get liveReadingsNoDevices =>
+      'Esta organización aún no tiene dispositivos IoT';
+
+  @override
+  String get liveReadingsWaiting => 'Esperando lecturas…';
+
+  @override
+  String get liveReadingsReconnecting => 'Reconectando…';
+
+  @override
+  String get liveReadingsOnline => 'En línea';
+
+  @override
+  String get liveReadingsOffline => 'Desconectado';
+
+  @override
+  String get liveReadingsNoSignal => 'Sin señal';
+
+  @override
+  String get servoStart => 'Iniciar';
+
+  @override
+  String get servoStop => 'Detener';
+
+  @override
+  String get chartTemperatureTitle => 'Temperatura (°C)';
+
+  @override
+  String get chartGasTitle => 'Gas (PPM)';
+
+  @override
+  String get severitySafe => 'Seguro';
+
+  @override
+  String get severityWarning => 'Advertencia';
+
+  @override
+  String get severityCritical => 'Crítico';
 }

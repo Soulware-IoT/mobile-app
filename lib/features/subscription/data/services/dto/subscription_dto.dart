@@ -10,7 +10,7 @@ class SubscriptionDto {
   final String ownedBy;
   final String? plan;
   final String? currentPeriodEnd;
-  final bool cancelAtPeriodEnd;
+  final String? pendingPlan;
 
   const SubscriptionDto({
     required this.id,
@@ -18,7 +18,7 @@ class SubscriptionDto {
     required this.ownedBy,
     this.plan,
     this.currentPeriodEnd,
-    this.cancelAtPeriodEnd = false,
+    this.pendingPlan,
   });
 
   factory SubscriptionDto.fromJson(JSON json) {
@@ -28,7 +28,7 @@ class SubscriptionDto {
       ownedBy: json['ownedBy'] as String,
       plan: json['plan'] as String?,
       currentPeriodEnd: json['currentPeriodEnd'] as String?,
-      cancelAtPeriodEnd: json['cancelAtPeriodEnd'] as bool? ?? false,
+      pendingPlan: json['pendingPlan'] as String?,
     );
   }
 
@@ -41,7 +41,11 @@ class SubscriptionDto {
       currentPeriodEnd: currentPeriodEnd == null
           ? null
           : DateTime.tryParse(currentPeriodEnd!),
-      cancelAtPeriodEnd: cancelAtPeriodEnd,
+      // subscriptionPlanFromString falls back to FREE, which is right for a
+      // pending cancellation but wrong for "nothing pending" — gate on null.
+      pendingPlan: pendingPlan == null
+          ? null
+          : subscriptionPlanFromString(pendingPlan),
     );
   }
 }

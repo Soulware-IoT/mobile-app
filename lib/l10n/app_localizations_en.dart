@@ -410,7 +410,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deviceThresholdCritAboveWarn => 'Critical must be above warning';
 
   @override
+  String get edgeRenameTooltip => 'Rename edge gateway';
+
+  @override
+  String get edgeRenameTitle => 'Rename edge gateway';
+
+  @override
+  String get edgeControlsProvisioned =>
+      'This edge gateway hasn\'t been claimed yet, it cannot be operated.';
+
+  @override
+  String get edgeActivate => 'ACTIVATE EDGE GATEWAY';
+
+  @override
+  String get edgeDeactivate => 'STOP EDGE GATEWAY';
+
+  @override
+  String get edgeActivateConfirmTitle => 'Activate edge gateway?';
+
+  @override
+  String get edgeActivateConfirmBody =>
+      'The edge gateway will be back in service and able to forward its devices\' readings.';
+
+  @override
+  String get edgeDeactivateConfirmTitle => 'Stop edge gateway?';
+
+  @override
+  String get edgeDeactivateConfirmBody =>
+      'The edge gateway will be disabled and stop forwarding its devices\' readings.';
+
+  @override
   String get processesHeaderLabel => 'INTERNAL CONTROL';
+
+  @override
+  String get processesSelectOrganization =>
+      'Select an organization to see its control processes.';
 
   @override
   String get processesSectionProcesses => 'Control processes';
@@ -561,9 +595,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String subscriptionCancelScheduled(String date) {
-    return 'This subscription will move to Free on $date.';
+  String subscriptionPendingPlanScheduled(String plan, String date) {
+    return 'This subscription will move to $plan on $date.';
   }
+
+  @override
+  String get subscriptionCurrentPlanTag => 'Current plan';
+
+  @override
+  String subscriptionPlanMonthlyPrice(String price) {
+    return '$price / month';
+  }
+
+  @override
+  String get subscriptionUpgradeImmediate =>
+      'Applies immediately with a prorated charge';
+
+  @override
+  String get subscriptionDowngradeAtPeriodEnd =>
+      'Applies at the end of the current period';
 
   @override
   String get subscriptionChangePlanTitle => 'Change plan';
@@ -590,4 +640,144 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get subscriptionStripeNotConfigured =>
       'Payments are not configured on this build';
+
+  @override
+  String get paymentSheetTotalToPay => 'Total to pay';
+
+  @override
+  String get paymentSheetTabCard => 'Card';
+
+  @override
+  String get paymentSheetTabBank => 'Bank';
+
+  @override
+  String get paymentSheetCardholderNameLabel => 'Cardholder name';
+
+  @override
+  String get paymentSheetCardholderNameHint => 'As it appears on the card';
+
+  @override
+  String get paymentSheetCountryLabel => 'Country';
+
+  @override
+  String get paymentSheetPostalCodeLabel => 'ZIP';
+
+  @override
+  String get paymentSheetBankAccountHolderLabel => 'Account holder';
+
+  @override
+  String get paymentSheetClabeLabel => 'CLABE';
+
+  @override
+  String get paymentSheetClabeHint => '18 digits';
+
+  @override
+  String get paymentSheetClabeInvalid => 'CLABE must be 18 digits';
+
+  @override
+  String get paymentSheetDirectDebitNotice =>
+      'By confirming you authorize a direct debit charge to this account.';
+
+  @override
+  String get paymentSheetBankUnavailable =>
+      'Bank transfer payment isn\'t available yet. Use a card to continue.';
+
+  @override
+  String paymentSheetPayButton(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get paymentSheetSecurityNotice =>
+      'Encrypted payment · Processed by Stripe';
+
+  @override
+  String get paymentSheetProcessingTitle => 'Processing payment…';
+
+  @override
+  String get paymentSheetProcessingSubtitle => 'Don\'t close this window';
+
+  @override
+  String get paymentSheetSuccessTitle => 'Payment successful!';
+
+  @override
+  String paymentSheetSuccessBody(String amount) {
+    return '$amount was charged. We sent the receipt to your email.';
+  }
+
+  @override
+  String get paymentSheetDone => 'Done';
+
+  @override
+  String get paymentSheetCardholderNameRequired => 'Enter the cardholder name';
+
+  @override
+  String get invoicesTitle => 'Invoices';
+
+  @override
+  String get invoicesEmpty => 'No invoices yet';
+
+  @override
+  String get invoiceOpenError => 'Could not open the invoice';
+
+  @override
+  String get invoiceStatusPaid => 'Paid';
+
+  @override
+  String get invoiceStatusOpen => 'Open';
+
+  @override
+  String get invoiceStatusDraft => 'Draft';
+
+  @override
+  String get invoiceStatusVoid => 'Void';
+
+  @override
+  String get invoiceStatusUncollectible => 'Uncollectible';
+
+  @override
+  String get liveReadingsTitle => 'Live readings';
+
+  @override
+  String get liveReadingsSelectDevice => 'Select a device to monitor';
+
+  @override
+  String get liveReadingsNoDevices =>
+      'This organization has no IoT devices yet';
+
+  @override
+  String get liveReadingsWaiting => 'Waiting for readings…';
+
+  @override
+  String get liveReadingsReconnecting => 'Reconnecting…';
+
+  @override
+  String get liveReadingsOnline => 'Online';
+
+  @override
+  String get liveReadingsOffline => 'Offline';
+
+  @override
+  String get liveReadingsNoSignal => 'No signal';
+
+  @override
+  String get servoStart => 'Start';
+
+  @override
+  String get servoStop => 'Stop';
+
+  @override
+  String get chartTemperatureTitle => 'Temperature (°C)';
+
+  @override
+  String get chartGasTitle => 'Gas (PPM)';
+
+  @override
+  String get severitySafe => 'Safe';
+
+  @override
+  String get severityWarning => 'Warning';
+
+  @override
+  String get severityCritical => 'Critical';
 }

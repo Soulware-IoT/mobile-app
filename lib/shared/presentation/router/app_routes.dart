@@ -12,5 +12,7 @@ abstract final class AppRoutes {
   static const deviceDetail = '/devices/detail';
   static const claimDevice = '/devices/claim';
   static const claimEdgeDevice = '/devices/claim-edge';
+  static const edgeDeviceDetail = '/devices/edge/detail';
+  static const liveReadings = '/devices/live';
   static const newRegistry = '/processes/registries/new';
 }

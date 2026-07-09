@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cocina360/features/devices/presentation/cubit/devices_cubit.dart';
 import 'package:cocina360/features/devices/presentation/cubit/devices_state.dart';
+import 'package:cocina360/features/devices/presentation/pages/edge_device_detail_page.dart';
 import 'package:cocina360/features/devices/presentation/widgets/device_card.dart';
 import 'package:cocina360/features/devices/presentation/widgets/devices_summary.dart';
 import 'package:cocina360/features/organization/presentation/cubit/organization_cubit.dart';
@@ -53,7 +54,29 @@ class _DevicesPageState extends State<DevicesPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.devicesTitle)),
+      appBar: AppBar(
+        title: Text(l10n.devicesTitle),
+        actions: [
+          // Live readings entry point — an action (not a second FAB: the FAB
+          // slot is taken by claim-device and AppShell's IndexedStack would
+          // force more hero-tag juggling).
+          BlocBuilder<OrganizationCubit, OrganizationState>(
+            builder: (context, orgState) {
+              if (orgState is! OrganizationLoaded) {
+                return const SizedBox.shrink();
+              }
+              return IconButton(
+                icon: const Icon(Icons.monitor_heart_outlined),
+                tooltip: l10n.liveReadingsTitle,
+                onPressed: () => context.push(
+                  AppRoutes.liveReadings,
+                  extra: orgState.organization.id,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       floatingActionButton: BlocBuilder<OrganizationCubit, OrganizationState>(
         builder: (context, orgState) {
           if (orgState is! OrganizationLoaded) return const SizedBox.shrink();
@@ -121,6 +144,20 @@ class _DevicesBody extends StatelessWidget {
                 active: state.activeCount,
                 edge: edge,
                 quota: quota,
+                onEdgeTap: edge == null
+                    ? null
+                    : () async {
+                        final orgState = context.read<OrganizationCubit>().state;
+                        if (orgState is! OrganizationLoaded) return;
+                        await context.push(
+                          AppRoutes.edgeDeviceDetail,
+                          extra: EdgeDeviceDetailArgs(
+                            organizationId: orgState.organization.id,
+                            device: edge,
+                          ),
+                        );
+                        onRetry();
+                      },
               ),
               if (edge == null) ...[
                 const SizedBox(height: 12),

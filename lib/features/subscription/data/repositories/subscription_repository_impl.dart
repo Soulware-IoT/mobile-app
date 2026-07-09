@@ -1,4 +1,5 @@
 import 'package:cocina360/features/subscription/data/services/subscription_remote_service.dart';
+import 'package:cocina360/features/subscription/domain/model/invoice.dart';
 import 'package:cocina360/features/subscription/domain/model/subscription.dart';
 import 'package:cocina360/features/subscription/domain/model/subscription_plan.dart';
 import 'package:cocina360/features/subscription/domain/repositories/subscription_repository.dart';
@@ -16,6 +17,13 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
     await _requireConnection();
     final dto = await remoteService.getSubscription(organizationId);
     return dto.toDomain();
+  }
+
+  @override
+  Future<List<Invoice>> listInvoices(String organizationId) async {
+    await _requireConnection();
+    final dtos = await remoteService.listInvoices(organizationId);
+    return dtos.map((dto) => dto.toDomain()).toList();
   }
 
   @override

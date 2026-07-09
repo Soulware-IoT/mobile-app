@@ -10,8 +10,10 @@ class Subscription {
   /// Null while on FREE (nothing billed, so no period to report).
   final DateTime? currentPeriodEnd;
 
-  /// True when a downgrade to FREE is scheduled for [currentPeriodEnd].
-  final bool cancelAtPeriodEnd;
+  /// The plan a scheduled downgrade will move to at [currentPeriodEnd] —
+  /// FREE for a pending cancellation, a cheaper paid plan for a paid→paid
+  /// downgrade. Null when no change is scheduled.
+  final SubscriptionPlan? pendingPlan;
 
   const Subscription({
     required this.id,
@@ -19,8 +21,12 @@ class Subscription {
     required this.ownedBy,
     required this.plan,
     this.currentPeriodEnd,
-    required this.cancelAtPeriodEnd,
+    this.pendingPlan,
   });
+
+  /// True when a downgrade (to FREE or a cheaper paid plan) is scheduled for
+  /// the end of the current period.
+  bool get hasPendingDowngrade => pendingPlan != null;
 
   /// Whether this organization already has billing on file (a paid plan not
   /// yet reverted to FREE), so a plan change doesn't need a new card.

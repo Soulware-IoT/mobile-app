@@ -1,3 +1,4 @@
+import 'package:cocina360/features/subscription/data/services/dto/invoice_dto.dart';
 import 'package:cocina360/features/subscription/data/services/dto/subscription_dto.dart';
 import 'package:cocina360/features/subscription/domain/model/subscription_plan.dart';
 import 'package:cocina360/shared/data/types/json.dart';
@@ -15,6 +16,16 @@ class SubscriptionRemoteService {
       '/organizations/$organizationId/subscription',
     );
     return SubscriptionDto.fromJson(data as JSON);
+  }
+
+  /// `GET /organizations/{organizationId}/subscription/invoices` (owner only)
+  Future<List<InvoiceDto>> listInvoices(String organizationId) async {
+    final data = await client.getJson(
+      '/organizations/$organizationId/subscription/invoices',
+    );
+    return (data as List<dynamic>)
+        .map((item) => InvoiceDto.fromJson(item as JSON))
+        .toList();
   }
 
   /// `POST /organizations/{organizationId}/subscription/plan`

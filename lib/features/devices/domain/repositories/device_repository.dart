@@ -40,4 +40,12 @@ abstract class DeviceRepository {
     required String code,
     required String name,
   });
+
+  /// Partial update of a claimed edge device. Omitted fields are left
+  /// unchanged; [active] maps to the backend's `status` (ACTIVE / INACTIVE).
+  Future<EdgeDevice> updateEdgeDevice(
+    String edgeDeviceId, {
+    String? name,
+    bool? active,
+  });
 }

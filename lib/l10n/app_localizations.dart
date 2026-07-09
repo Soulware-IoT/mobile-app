@@ -872,11 +872,71 @@ abstract class AppLocalizations {
   /// **'Critical must be above warning'**
   String get deviceThresholdCritAboveWarn;
 
+  /// Tooltip on the edge device detail page's rename icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Rename edge gateway'**
+  String get edgeRenameTooltip;
+
+  /// Title of the edge device rename dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Rename edge gateway'**
+  String get edgeRenameTitle;
+
+  /// Shown instead of the activate/deactivate button while the edge device is still PROVISIONED
+  ///
+  /// In en, this message translates to:
+  /// **'This edge gateway hasn\'t been claimed yet, it cannot be operated.'**
+  String get edgeControlsProvisioned;
+
+  /// Button label to activate an inactive edge device
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVATE EDGE GATEWAY'**
+  String get edgeActivate;
+
+  /// Button label to deactivate an active edge device
+  ///
+  /// In en, this message translates to:
+  /// **'STOP EDGE GATEWAY'**
+  String get edgeDeactivate;
+
+  /// Confirm dialog title before activating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'Activate edge gateway?'**
+  String get edgeActivateConfirmTitle;
+
+  /// Confirm dialog body before activating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'The edge gateway will be back in service and able to forward its devices\' readings.'**
+  String get edgeActivateConfirmBody;
+
+  /// Confirm dialog title before deactivating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'Stop edge gateway?'**
+  String get edgeDeactivateConfirmTitle;
+
+  /// Confirm dialog body before deactivating the edge device
+  ///
+  /// In en, this message translates to:
+  /// **'The edge gateway will be disabled and stop forwarding its devices\' readings.'**
+  String get edgeDeactivateConfirmBody;
+
   /// Uppercase section label at the top of the Processes tab
   ///
   /// In en, this message translates to:
   /// **'INTERNAL CONTROL'**
   String get processesHeaderLabel;
+
+  /// Empty-state message on the Processes tab when no organization is active
+  ///
+  /// In en, this message translates to:
+  /// **'Select an organization to see its control processes.'**
+  String get processesSelectOrganization;
 
   /// Label of the process selector
   ///
@@ -1142,11 +1202,35 @@ abstract class AppLocalizations {
   /// **'Owned by {name}'**
   String subscriptionOwnedBy(String name);
 
-  /// Warning banner when a downgrade is scheduled
+  /// Warning banner when a downgrade (to Free or a cheaper paid plan) is scheduled
   ///
   /// In en, this message translates to:
-  /// **'This subscription will move to Free on {date}.'**
-  String subscriptionCancelScheduled(String date);
+  /// **'This subscription will move to {plan} on {date}.'**
+  String subscriptionPendingPlanScheduled(String plan, String date);
+
+  /// Subtitle tag on the disabled current-plan option in the plan picker
+  ///
+  /// In en, this message translates to:
+  /// **'Current plan'**
+  String get subscriptionCurrentPlanTag;
+
+  /// Monthly price line in the plan picker, e.g. $5.00 / month
+  ///
+  /// In en, this message translates to:
+  /// **'{price} / month'**
+  String subscriptionPlanMonthlyPrice(String price);
+
+  /// Timing note under an upgrade option in the plan picker
+  ///
+  /// In en, this message translates to:
+  /// **'Applies immediately with a prorated charge'**
+  String get subscriptionUpgradeImmediate;
+
+  /// Timing note under a paid-to-paid downgrade option in the plan picker
+  ///
+  /// In en, this message translates to:
+  /// **'Applies at the end of the current period'**
+  String get subscriptionDowngradeAtPeriodEnd;
 
   /// Button that opens the plan-change dialog, and its title
   ///
@@ -1195,6 +1279,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payments are not configured on this build'**
   String get subscriptionStripeNotConfigured;
+
+  /// Label above the amount in the payment bottom sheet header
+  ///
+  /// In en, this message translates to:
+  /// **'Total to pay'**
+  String get paymentSheetTotalToPay;
+
+  /// Segmented control option for the card payment mode
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentSheetTabCard;
+
+  /// Segmented control option for the bank payment mode
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get paymentSheetTabBank;
+
+  /// Label for the cardholder name field
+  ///
+  /// In en, this message translates to:
+  /// **'Cardholder name'**
+  String get paymentSheetCardholderNameLabel;
+
+  /// Hint text for the cardholder name field
+  ///
+  /// In en, this message translates to:
+  /// **'As it appears on the card'**
+  String get paymentSheetCardholderNameHint;
+
+  /// Label for the billing country field
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get paymentSheetCountryLabel;
+
+  /// Label for the billing postal code field
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP'**
+  String get paymentSheetPostalCodeLabel;
+
+  /// Label for the bank account holder field
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder'**
+  String get paymentSheetBankAccountHolderLabel;
+
+  /// Label for the CLABE (Mexican bank account) field
+  ///
+  /// In en, this message translates to:
+  /// **'CLABE'**
+  String get paymentSheetClabeLabel;
+
+  /// Hint text for the CLABE field
+  ///
+  /// In en, this message translates to:
+  /// **'18 digits'**
+  String get paymentSheetClabeHint;
+
+  /// Validation error for an incomplete/invalid CLABE
+  ///
+  /// In en, this message translates to:
+  /// **'CLABE must be 18 digits'**
+  String get paymentSheetClabeInvalid;
+
+  /// Notice shown under the bank fields
+  ///
+  /// In en, this message translates to:
+  /// **'By confirming you authorize a direct debit charge to this account.'**
+  String get paymentSheetDirectDebitNotice;
+
+  /// Shown when the user tries to pay from the bank tab, which has no backend support yet
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer payment isn\'t available yet. Use a card to continue.'**
+  String get paymentSheetBankUnavailable;
+
+  /// Submit button label, with the formatted amount e.g. $5.00
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String paymentSheetPayButton(String amount);
+
+  /// Security notice shown below the pay button
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted payment · Processed by Stripe'**
+  String get paymentSheetSecurityNotice;
+
+  /// Title shown in the loading state of the payment sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Processing payment…'**
+  String get paymentSheetProcessingTitle;
+
+  /// Subtitle shown in the loading state of the payment sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t close this window'**
+  String get paymentSheetProcessingSubtitle;
+
+  /// Title shown in the success state of the payment sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Payment successful!'**
+  String get paymentSheetSuccessTitle;
+
+  /// Body text shown in the success state of the payment sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} was charged. We sent the receipt to your email.'**
+  String paymentSheetSuccessBody(String amount);
+
+  /// Button that closes the sheet after a successful payment
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get paymentSheetDone;
+
+  /// Validation error when the cardholder name field is empty on submit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the cardholder name'**
+  String get paymentSheetCardholderNameRequired;
+
+  /// Header of the invoice-history section on the Edit Organization screen
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get invoicesTitle;
+
+  /// Shown when the organization has no invoices
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet'**
+  String get invoicesEmpty;
+
+  /// Snackbar when launching the hosted invoice URL fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the invoice'**
+  String get invoiceOpenError;
+
+  /// Invoice status chip: Stripe 'paid'
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoiceStatusPaid;
+
+  /// Invoice status chip: Stripe 'open' (awaiting payment)
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoiceStatusOpen;
+
+  /// Invoice status chip: Stripe 'draft'
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get invoiceStatusDraft;
+
+  /// Invoice status chip: Stripe 'void'
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get invoiceStatusVoid;
+
+  /// Invoice status chip: Stripe 'uncollectible'
+  ///
+  /// In en, this message translates to:
+  /// **'Uncollectible'**
+  String get invoiceStatusUncollectible;
+
+  /// AppBar title of the real-time sensor monitoring page
+  ///
+  /// In en, this message translates to:
+  /// **'Live readings'**
+  String get liveReadingsTitle;
+
+  /// Hint shown below the device selector before a device is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Select a device to monitor'**
+  String get liveReadingsSelectDevice;
+
+  /// Shown on the live readings page when the org has no devices
+  ///
+  /// In en, this message translates to:
+  /// **'This organization has no IoT devices yet'**
+  String get liveReadingsNoDevices;
+
+  /// Status strip placeholder before the first reading arrives
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for readings…'**
+  String get liveReadingsWaiting;
+
+  /// Banner shown while an SSE stream is retrying its connection
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get liveReadingsReconnecting;
+
+  /// Presence pill when the device is online
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get liveReadingsOnline;
+
+  /// Presence pill when the device is offline
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get liveReadingsOffline;
+
+  /// Presence pill when no presence record has arrived for the device
+  ///
+  /// In en, this message translates to:
+  /// **'No signal'**
+  String get liveReadingsNoSignal;
+
+  /// Button that sends the servo start command
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get servoStart;
+
+  /// Button that sends the servo stop command
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get servoStop;
+
+  /// Title above the temperature line chart
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature (°C)'**
+  String get chartTemperatureTitle;
+
+  /// Title above the gas line chart
+  ///
+  /// In en, this message translates to:
+  /// **'Gas (PPM)'**
+  String get chartGasTitle;
+
+  /// Reading severity label: within thresholds
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get severitySafe;
+
+  /// Reading severity label: above the warn threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get severityWarning;
+
+  /// Reading severity label: above the crit threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get severityCritical;
 }
 
 class _AppLocalizationsDelegate

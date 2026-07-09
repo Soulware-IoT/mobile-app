@@ -541,9 +541,50 @@
     "description": "Validation error when crit <= warn"
   },
 
+  "edgeRenameTooltip": "Rename edge gateway",
+  "@edgeRenameTooltip": {
+    "description": "Tooltip on the edge device detail page's rename icon button"
+  },
+  "edgeRenameTitle": "Rename edge gateway",
+  "@edgeRenameTitle": {
+    "description": "Title of the edge device rename dialog"
+  },
+  "edgeControlsProvisioned": "This edge gateway hasn't been claimed yet, it cannot be operated.",
+  "@edgeControlsProvisioned": {
+    "description": "Shown instead of the activate/deactivate button while the edge device is still PROVISIONED"
+  },
+  "edgeActivate": "ACTIVATE EDGE GATEWAY",
+  "@edgeActivate": {
+    "description": "Button label to activate an inactive edge device"
+  },
+  "edgeDeactivate": "STOP EDGE GATEWAY",
+  "@edgeDeactivate": {
+    "description": "Button label to deactivate an active edge device"
+  },
+  "edgeActivateConfirmTitle": "Activate edge gateway?",
+  "@edgeActivateConfirmTitle": {
+    "description": "Confirm dialog title before activating the edge device"
+  },
+  "edgeActivateConfirmBody": "The edge gateway will be back in service and able to forward its devices' readings.",
+  "@edgeActivateConfirmBody": {
+    "description": "Confirm dialog body before activating the edge device"
+  },
+  "edgeDeactivateConfirmTitle": "Stop edge gateway?",
+  "@edgeDeactivateConfirmTitle": {
+    "description": "Confirm dialog title before deactivating the edge device"
+  },
+  "edgeDeactivateConfirmBody": "The edge gateway will be disabled and stop forwarding its devices' readings.",
+  "@edgeDeactivateConfirmBody": {
+    "description": "Confirm dialog body before deactivating the edge device"
+  },
+
   "processesHeaderLabel": "INTERNAL CONTROL",
   "@processesHeaderLabel": {
     "description": "Uppercase section label at the top of the Processes tab"
+  },
+  "processesSelectOrganization": "Select an organization to see its control processes.",
+  "@processesSelectOrganization": {
+    "description": "Empty-state message on the Processes tab when no organization is active"
   },
   "processesSectionProcesses": "Control processes",
   "@processesSectionProcesses": {
@@ -760,14 +801,38 @@
       }
     }
   },
-  "subscriptionCancelScheduled": "This subscription will move to Free on {date}.",
-  "@subscriptionCancelScheduled": {
-    "description": "Warning banner when a downgrade is scheduled",
+  "subscriptionPendingPlanScheduled": "This subscription will move to {plan} on {date}.",
+  "@subscriptionPendingPlanScheduled": {
+    "description": "Warning banner when a downgrade (to Free or a cheaper paid plan) is scheduled",
     "placeholders": {
+      "plan": {
+        "type": "String"
+      },
       "date": {
         "type": "String"
       }
     }
+  },
+  "subscriptionCurrentPlanTag": "Current plan",
+  "@subscriptionCurrentPlanTag": {
+    "description": "Subtitle tag on the disabled current-plan option in the plan picker"
+  },
+  "subscriptionPlanMonthlyPrice": "{price} / month",
+  "@subscriptionPlanMonthlyPrice": {
+    "description": "Monthly price line in the plan picker, e.g. $5.00 / month",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionUpgradeImmediate": "Applies immediately with a prorated charge",
+  "@subscriptionUpgradeImmediate": {
+    "description": "Timing note under an upgrade option in the plan picker"
+  },
+  "subscriptionDowngradeAtPeriodEnd": "Applies at the end of the current period",
+  "@subscriptionDowngradeAtPeriodEnd": {
+    "description": "Timing note under a paid-to-paid downgrade option in the plan picker"
   },
   "subscriptionChangePlanTitle": "Change plan",
   "@subscriptionChangePlanTitle": {
@@ -800,5 +865,194 @@
   "subscriptionStripeNotConfigured": "Payments are not configured on this build",
   "@subscriptionStripeNotConfigured": {
     "description": "Shown when STRIPE_PUBLISHABLE_KEY is missing and the user tries to pay"
+  },
+
+  "paymentSheetTotalToPay": "Total to pay",
+  "@paymentSheetTotalToPay": {
+    "description": "Label above the amount in the payment bottom sheet header"
+  },
+  "paymentSheetTabCard": "Card",
+  "@paymentSheetTabCard": {
+    "description": "Segmented control option for the card payment mode"
+  },
+  "paymentSheetTabBank": "Bank",
+  "@paymentSheetTabBank": {
+    "description": "Segmented control option for the bank payment mode"
+  },
+  "paymentSheetCardholderNameLabel": "Cardholder name",
+  "@paymentSheetCardholderNameLabel": {
+    "description": "Label for the cardholder name field"
+  },
+  "paymentSheetCardholderNameHint": "As it appears on the card",
+  "@paymentSheetCardholderNameHint": {
+    "description": "Hint text for the cardholder name field"
+  },
+  "paymentSheetCountryLabel": "Country",
+  "@paymentSheetCountryLabel": {
+    "description": "Label for the billing country field"
+  },
+  "paymentSheetPostalCodeLabel": "ZIP",
+  "@paymentSheetPostalCodeLabel": {
+    "description": "Label for the billing postal code field"
+  },
+  "paymentSheetBankAccountHolderLabel": "Account holder",
+  "@paymentSheetBankAccountHolderLabel": {
+    "description": "Label for the bank account holder field"
+  },
+  "paymentSheetClabeLabel": "CLABE",
+  "@paymentSheetClabeLabel": {
+    "description": "Label for the CLABE (Mexican bank account) field"
+  },
+  "paymentSheetClabeHint": "18 digits",
+  "@paymentSheetClabeHint": {
+    "description": "Hint text for the CLABE field"
+  },
+  "paymentSheetClabeInvalid": "CLABE must be 18 digits",
+  "@paymentSheetClabeInvalid": {
+    "description": "Validation error for an incomplete/invalid CLABE"
+  },
+  "paymentSheetDirectDebitNotice": "By confirming you authorize a direct debit charge to this account.",
+  "@paymentSheetDirectDebitNotice": {
+    "description": "Notice shown under the bank fields"
+  },
+  "paymentSheetBankUnavailable": "Bank transfer payment isn't available yet. Use a card to continue.",
+  "@paymentSheetBankUnavailable": {
+    "description": "Shown when the user tries to pay from the bank tab, which has no backend support yet"
+  },
+  "paymentSheetPayButton": "Pay {amount}",
+  "@paymentSheetPayButton": {
+    "description": "Submit button label, with the formatted amount e.g. $5.00",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentSheetSecurityNotice": "Encrypted payment · Processed by Stripe",
+  "@paymentSheetSecurityNotice": {
+    "description": "Security notice shown below the pay button"
+  },
+  "paymentSheetProcessingTitle": "Processing payment…",
+  "@paymentSheetProcessingTitle": {
+    "description": "Title shown in the loading state of the payment sheet"
+  },
+  "paymentSheetProcessingSubtitle": "Don't close this window",
+  "@paymentSheetProcessingSubtitle": {
+    "description": "Subtitle shown in the loading state of the payment sheet"
+  },
+  "paymentSheetSuccessTitle": "Payment successful!",
+  "@paymentSheetSuccessTitle": {
+    "description": "Title shown in the success state of the payment sheet"
+  },
+  "paymentSheetSuccessBody": "{amount} was charged. We sent the receipt to your email.",
+  "@paymentSheetSuccessBody": {
+    "description": "Body text shown in the success state of the payment sheet",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentSheetDone": "Done",
+  "@paymentSheetDone": {
+    "description": "Button that closes the sheet after a successful payment"
+  },
+  "paymentSheetCardholderNameRequired": "Enter the cardholder name",
+  "@paymentSheetCardholderNameRequired": {
+    "description": "Validation error when the cardholder name field is empty on submit"
+  },
+
+  "invoicesTitle": "Invoices",
+  "@invoicesTitle": {
+    "description": "Header of the invoice-history section on the Edit Organization screen"
+  },
+  "invoicesEmpty": "No invoices yet",
+  "@invoicesEmpty": {
+    "description": "Shown when the organization has no invoices"
+  },
+  "invoiceOpenError": "Could not open the invoice",
+  "@invoiceOpenError": {
+    "description": "Snackbar when launching the hosted invoice URL fails"
+  },
+  "invoiceStatusPaid": "Paid",
+  "@invoiceStatusPaid": {
+    "description": "Invoice status chip: Stripe 'paid'"
+  },
+  "invoiceStatusOpen": "Open",
+  "@invoiceStatusOpen": {
+    "description": "Invoice status chip: Stripe 'open' (awaiting payment)"
+  },
+  "invoiceStatusDraft": "Draft",
+  "@invoiceStatusDraft": {
+    "description": "Invoice status chip: Stripe 'draft'"
+  },
+  "invoiceStatusVoid": "Void",
+  "@invoiceStatusVoid": {
+    "description": "Invoice status chip: Stripe 'void'"
+  },
+  "invoiceStatusUncollectible": "Uncollectible",
+  "@invoiceStatusUncollectible": {
+    "description": "Invoice status chip: Stripe 'uncollectible'"
+  },
+
+  "liveReadingsTitle": "Live readings",
+  "@liveReadingsTitle": {
+    "description": "AppBar title of the real-time sensor monitoring page"
+  },
+  "liveReadingsSelectDevice": "Select a device to monitor",
+  "@liveReadingsSelectDevice": {
+    "description": "Hint shown below the device selector before a device is chosen"
+  },
+  "liveReadingsNoDevices": "This organization has no IoT devices yet",
+  "@liveReadingsNoDevices": {
+    "description": "Shown on the live readings page when the org has no devices"
+  },
+  "liveReadingsWaiting": "Waiting for readings…",
+  "@liveReadingsWaiting": {
+    "description": "Status strip placeholder before the first reading arrives"
+  },
+  "liveReadingsReconnecting": "Reconnecting…",
+  "@liveReadingsReconnecting": {
+    "description": "Banner shown while an SSE stream is retrying its connection"
+  },
+  "liveReadingsOnline": "Online",
+  "@liveReadingsOnline": {
+    "description": "Presence pill when the device is online"
+  },
+  "liveReadingsOffline": "Offline",
+  "@liveReadingsOffline": {
+    "description": "Presence pill when the device is offline"
+  },
+  "liveReadingsNoSignal": "No signal",
+  "@liveReadingsNoSignal": {
+    "description": "Presence pill when no presence record has arrived for the device"
+  },
+  "servoStart": "Start",
+  "@servoStart": {
+    "description": "Button that sends the servo start command"
+  },
+  "servoStop": "Stop",
+  "@servoStop": {
+    "description": "Button that sends the servo stop command"
+  },
+  "chartTemperatureTitle": "Temperature (°C)",
+  "@chartTemperatureTitle": {
+    "description": "Title above the temperature line chart"
+  },
+  "chartGasTitle": "Gas (PPM)",
+  "@chartGasTitle": {
+    "description": "Title above the gas line chart"
+  },
+  "severitySafe": "Safe",
+  "@severitySafe": {
+    "description": "Reading severity label: within thresholds"
+  },
+  "severityWarning": "Warning",
+  "@severityWarning": {
+    "description": "Reading severity label: above the warn threshold"
+  },
+  "severityCritical": "Critical",
+  "@severityCritical": {
+    "description": "Reading severity label: above the crit threshold"
   }
 }

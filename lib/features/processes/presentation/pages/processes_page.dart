@@ -51,17 +51,31 @@ class _ProcessesPageState extends State<ProcessesPage> {
       appBar: AppBar(
         title: Text(l10n.processesTitle),
         actions: [
-          IconButton(
-            tooltip: l10n.processesNewProcess,
-            onPressed: () => _showCreateProcessDialog(context),
-            icon: const Icon(Icons.playlist_add),
+          // Creating a process needs an active organization — hide the action
+          // entirely when there is none, mirroring the Devices tab's gating.
+          BlocBuilder<OrganizationCubit, OrganizationState>(
+            builder: (context, orgState) {
+              if (orgState is! OrganizationLoaded) {
+                return const SizedBox.shrink();
+              }
+              return IconButton(
+                tooltip: l10n.processesNewProcess,
+                onPressed: () => _showCreateProcessDialog(context),
+                icon: const Icon(Icons.playlist_add),
+              );
+            },
           ),
         ],
       ),
       floatingActionButton: BlocBuilder<ProcessesCubit, ProcessesState>(
         builder: (context, state) {
+          // ProcessesCubit is app-scoped and keeps its selected format across
+          // org switches / sign-outs, so also require an active organization —
+          // otherwise the FAB lingers on the empty-state screen.
+          final orgLoaded =
+              context.watch<OrganizationCubit>().state is OrganizationLoaded;
           final format = state.selectedFormat;
-          if (format == null) return const SizedBox.shrink();
+          if (!orgLoaded || format == null) return const SizedBox.shrink();
           return FloatingActionButton(
             // AppShell keeps all tabs mounted via IndexedStack, so this and
             // the Devices tab's FAB coexist in the tree at once — without a
@@ -86,7 +100,7 @@ class _ProcessesPageState extends State<ProcessesPage> {
               OrganizationLoaded() => _ProcessesBody(onRetry: _reload),
               OrganizationEmpty() => _Centered(
                 icon: Icons.apartment_outlined,
-                message: l10n.devicesSelectOrganization,
+                message: l10n.processesSelectOrganization,
               ),
               OrganizationError(:final error) => _Centered(
                 icon: Icons.cloud_off,
